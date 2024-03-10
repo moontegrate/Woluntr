@@ -1,6 +1,10 @@
 @import './style/nullstyle.scss';
 @import './style/variables.scss';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
