@@ -1,6 +1,11 @@
-import Header from '../Header/Header';
+// Стилистические импорты
 import './App.scss';
 
+// Вспомогательные компоненты
+import Header from '../Header/Header';
+import AppMode from '../AppMode/AppMode';
+
+// Прочие библиотеки
 import { load } from '@2gis/mapgl';
 
 const App = () => {
@@ -18,6 +23,7 @@ const App = () => {
     <div className="App">
       <Header/>
       <div id="map-wrapper" style={{ 'height': '100vh'}}/>
+      <AppMode/>
     </div>
   );
 };

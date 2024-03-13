@@ -1,0 +1,29 @@
+@import '../../style/variables.scss';
+
+.app-mode {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+}
+
+.customer-btn {
+    &-active {
+        background-color: $light-main-bg-color;
+        font-weight: 700;
+    }
+
+    &:hover {
+        background-color: $light-main-hover;
+    }
+}
+
+.volunteer-btn {
+    &-active {
+        background-color: $light-volunteer-bg-color;
+        font-weight: 700;
+    }
+
+    &:hover {
+        background-color: $light-volunteer-hover;
+    }
+}
