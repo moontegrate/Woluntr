@@ -4,26 +4,34 @@
     position: absolute;
     right: 30px;
     bottom: 30px;
+    border-radius: 30px;
+    box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    animation-name: fadeUp;
+    animation-duration: 1s;
 }
 
 .customer-btn {
     &-active {
-        background-color: $light-main-bg-color;
+        background-color: $main-accent-color;
         font-weight: 700;
     }
 
     &:hover {
-        background-color: $light-main-hover;
+        background-color: $main-accent-color-hover;
     }
 }
 
 .volunteer-btn {
     &-active {
-        background-color: $light-volunteer-bg-color;
+        background-color: $volunteer-accent-color;
         font-weight: 700;
     }
 
     &:hover {
-        background-color: $light-volunteer-hover;
+        background-color: $volunteer-accent-color-hover;
     }
 }

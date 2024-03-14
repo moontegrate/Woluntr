@@ -19,7 +19,7 @@ const AppMode = () => {
         <div className='app-mode'>
             <Button.Group>
                 <Button theme={AppModeBtnTheme} className={`rounded-[30px] rounded-r-none customer-btn ${appMode === 'customer' ? ' customer-btn-active' : null}`} onClick={() => dispatch(setMode('customer'))}>Заказчик</Button>
-                <Button theme={AppModeBtnTheme} className={`rounded-[30px] rounded-l-none volunteer-btn ${appMode === 'volunteer' ? ' volunteer-btn-active' : null}`}onClick={() => dispatch(setMode('volunteer'))}>Волонтёр</Button>
+                <Button theme={AppModeBtnTheme} className={`rounded-[30px] rounded-l-none volunteer-btn ${appMode === 'volunteer' ? ' volunteer-btn-active' : null}`} onClick={() => dispatch(setMode('volunteer'))}>Волонтёр</Button>
             </Button.Group>
         </div>
     );
