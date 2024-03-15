@@ -27,13 +27,9 @@ const Header = () => {
         window.removeEventListener('click', handleClick);
     };
 
-    if (isHamburgerToggled) {
-        window.addEventListener('click', handleClick)
-    }
-
     return (
         <header className="header">
-            <div className={wrapperClass}></div>
+            <div className={wrapperClass} onClick={() => dispatch(setHamburgerToggled())}></div>
             <div className='header__bar'>
                 <div className='header__burger'>
                     <Hamburger toggled={isHamburgerToggled} onToggle={() => dispatch(setHamburgerToggled())}/>

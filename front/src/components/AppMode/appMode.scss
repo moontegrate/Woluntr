@@ -35,3 +35,15 @@
         background-color: $volunteer-accent-color-hover;
     }
 }
+
+@media (max-width: 560px) {
+
+    .customer-btn, .volunteer-btn {
+        height: 70px;
+        padding: 0 10px;
+        
+        span {
+            font-size: 20px;
+        }
+    }
+}

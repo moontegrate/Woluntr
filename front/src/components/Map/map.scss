@@ -50,3 +50,12 @@
         }
     }
 }
+
+@media (max-width: 560px) {
+    .zoom {
+        &-in, &-out {
+            width: 60px;
+            height: 60px;
+        }
+    }
+}
