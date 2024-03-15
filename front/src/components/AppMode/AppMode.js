@@ -1,6 +1,5 @@
 // Стилистические импорты
 import './appMode.scss';
-import { ButtonTheme } from '../../style/flowbiteThemes';
 import { AppModeBtnTheme } from '../../style/flowbiteThemes/appModeBtn';
 
 // Вспомогательные компоненты

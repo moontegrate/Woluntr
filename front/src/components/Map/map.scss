@@ -40,3 +40,13 @@
         border-radius: 0 0 30px 30px;
     }
 }
+
+@media (max-width: 925px) {
+    .zoom {
+        &-in, &-out {
+            &:hover {
+                background-color: #fff;
+            }
+        }
+    }
+}
