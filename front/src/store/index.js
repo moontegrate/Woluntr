@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import appMode from '../components/AppMode/appModeSlice';
+import header from '../components/Header/headerSlice';
 
 const store = configureStore({
     reducer: {
-        appMode
+        appMode,
+        header
     },
     devTools: process.env.NODE_ENV !== 'production'
 })
