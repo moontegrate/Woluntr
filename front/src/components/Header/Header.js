@@ -17,16 +17,31 @@ const Header = () => {
     const isHamburgerToggled = useSelector((state) => state.header.hamburgerToggled);
 
     const hamburgerClass = isHamburgerToggled ? 'header__bar-menu header__bar-menu-active' : 'header__bar-menu';
+    const wrapperClass = isHamburgerToggled ? 'header__bar-menu-wrapper header__bar-menu-wrapper-active' : 'header__bar-menu-wrapper';
+
+    const handleClick = (e) => {
+        if (e.target.classList.contains('header__bar-menu-wrapper')) {
+            dispatch(setHamburgerToggled())
+        };
+
+        window.removeEventListener('click', handleClick);
+    };
+
+    if (isHamburgerToggled) {
+        window.addEventListener('click', handleClick)
+    }
 
     return (
         <header className="header">
+            <div className={wrapperClass}></div>
             <div className='header__bar'>
                 <div className='header__burger'>
-                    <Hamburger onToggle={() => dispatch(setHamburgerToggled())}/>
+                    <Hamburger toggled={isHamburgerToggled} onToggle={() => dispatch(setHamburgerToggled())}/>
                 </div>
                 <div className='header__bar-logo'>
                     <img src={appMode === 'customer' ? 'http://localhost:3000/logo-line.svg' : 'http://localhost:3000/logo-line-volunteer.svg'} alt='logo'/>
                 </div>
+                
                 <div className={hamburgerClass}>
                     <div className={'header__bar-menu-item header__bar-menu-item-active ' + appMode + '-hover'}>Создать задание</div>
                     <div className={'header__bar-menu-item ' + appMode + '-hover'}>Лучшие волонтеры</div>

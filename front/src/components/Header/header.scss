@@ -90,6 +90,7 @@
 
     &__bar {
       position: relative;
+      z-index: 2;
 
       &-menu {
         position: absolute;
@@ -102,6 +103,26 @@
         border-radius: 30px;
         transform: translateX(-120%);
         transition: .2s transform;
+        z-index: 2;
+
+        &-wrapper {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 100%;
+          background-color: #000;
+          display: none;
+          opacity: 0;
+          z-index: 1;
+          transition: .2s all;
+
+          &-active {
+            display: block;
+            opacity: 0.1;
+            transition: .2s all;
+          }
+        }
 
         &-active {
           transform: translateX(0);
