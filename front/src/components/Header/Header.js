@@ -19,9 +19,11 @@ const Header = () => {
     const hamburgerClass = isHamburgerToggled ? 'header__bar-menu header__bar-menu-active' : 'header__bar-menu';
     const wrapperClass = isHamburgerToggled ? 'header__bar-menu-wrapper header__bar-menu-wrapper-active' : 'header__bar-menu-wrapper';
 
+    const screenWidth = window.innerWidth;
+
     return (
         <header className="header">
-            <div className={wrapperClass} onClick={() => dispatch(setHamburgerToggled())}></div>
+            <div className={wrapperClass} style={{'height': screenWidth < 925 ? window.innerHeight : '100%'}} onClick={() => dispatch(setHamburgerToggled())}></div>
             <div className='header__bar'>
                 <div className='header__burger'>
                     <Hamburger toggled={isHamburgerToggled} onToggle={() => dispatch(setHamburgerToggled())}/>
@@ -30,7 +32,7 @@ const Header = () => {
                     <img src={appMode === 'customer' ? 'http://localhost:3000/logo-line.svg' : 'http://localhost:3000/logo-line-volunteer.svg'} alt='logo'/>
                 </div>
                 
-                <div className={hamburgerClass}>
+                <div className={hamburgerClass} style={{'height': screenWidth < 925 ? window.innerHeight : '100%'}}>
                     <div className={'header__bar-menu-item header__bar-menu-item-active ' + appMode + '-hover'}>Создать задание</div>
                     <div className={'header__bar-menu-item ' + appMode + '-hover'}>Лучшие волонтеры</div>
                     <div className={'header__bar-menu-item ' + appMode + '-hover'}>Мои задания</div>

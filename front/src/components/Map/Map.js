@@ -46,8 +46,8 @@ const Map = () => {
 
                 const marker = new mapglAPI.Marker(map, {
                     coordinates: [longitude, latitude],
-                    icon: 'https://cdn.lovattro.kz/woluntr/user-marker.svg',
-                    size: [30, 39]
+                    icon: 'http://localhost:3000/user-marker.svg',
+                    size: [30, 30]
                 });
                 setMarker(marker);
             })
@@ -67,7 +67,7 @@ const Map = () => {
     }, []);
 
     return <div className='map'>
-        <div id="map-wrapper" style={{ 'height': '100vh'}}>
+        <div id="map-wrapper" style={{ 'height': window.innerHeight}}>
         </div>
         <div className='map-controls'>
             <div className='zoom-control'>

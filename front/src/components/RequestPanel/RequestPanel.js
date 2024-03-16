@@ -8,43 +8,48 @@ import CustomerRequestForm from '../CustomerRequestForm/CustomerRequestForm';
 import { useState } from 'react';
 
 const RequestPanel = () => {
-    const [top, setTop] = useState(0);
+    const [height, setHeight] = useState(window.innerWidth > 925 ? 'auto' : '100px');
+    const [transition, setTransition] = useState('0s');
     const [isDragging, setIsDragging] = useState(false);
-    const [startY, setStartY] = useState(0);
 
     const handleMouseDown = (e) => {
         setIsDragging(true);
-        setStartY(e.clientY - top);
+        setTransition('0s')
     };
 
     const handleMouseMove = (e) => {
         if (isDragging) {
-            const newY = e.clientY - startY;
-            if (newY >= 0 && newY <= 200) { // Ограничение движения от 0 до 200 пикселей по оси Y
-                setTop(newY);
+            const newY = window.innerHeight - e.touches[0].clientY;
+            if (newY >= 0 && newY <= 500) { // Ограничение движения от 0 до 200 пикселей по оси Y
+                setHeight(newY);
+                console.log(newY);
             }
         }
     };
 
     const handleMouseUp = () => {
+        setTransition('.3s height');
+
+        if (height > 200) {
+            setHeight('374px')
+        } else if (height < 200) {
+            setHeight('100px')
+        };
+        
         setIsDragging(false);
     };
 
     return (
         <div
             className='request-panel'
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
+            style={{ height: height, transition: transition }}
         >
             <div
                 className='request-panel__container'
-                style={{ top: `${top}px` }}
-                onMouseDown={handleMouseDown}
+                onTouchStart={handleMouseDown}
+                onTouchMove={handleMouseMove}
+                onTouchEnd={handleMouseUp}
             >
-                <div className='request-panel__head'>
-                    <img src='http://localhost:3000/task.svg' alt='task'/>
-                    <span>Создать задание</span>
-                </div>
                 <CustomerRequestForm/>
             </div>
         </div>

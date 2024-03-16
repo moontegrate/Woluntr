@@ -14,6 +14,10 @@ const CustomerRequestForm = () => {
 
     return (
         <form className='customer-request-form'>
+                <div className='customer-request-form__head'>
+                    <img src='http://localhost:3000/task.svg' alt='task'/>
+                    <span>Создать задание</span>
+                </div>
                 <div className='customer-request-form-field'>
                     <FloatingLabel theme={FloatingLabelCustomerTheme} variant='standard' label='Опишите задачу'/>
                 </div>
