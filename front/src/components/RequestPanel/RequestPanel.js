@@ -12,13 +12,14 @@ const RequestPanel = () => {
     const [transition, setTransition] = useState('0s');
     const [isDragging, setIsDragging] = useState(false);
 
-    const handleMouseDown = (e) => {
+    const handleMouseDown = () => {
         setIsDragging(true);
-        setTransition('0s')
+        setTransition('0s');
     };
 
     const handleMouseMove = (e) => {
         if (isDragging) {
+            document.activeElement.blur();
             const newY = window.innerHeight - e.touches[0].clientY;
             if (newY >= 0 && newY <= 500) { // Ограничение движения от 0 до 200 пикселей по оси Y
                 setHeight(newY);
