@@ -19,14 +19,6 @@ const Header = () => {
     const hamburgerClass = isHamburgerToggled ? 'header__bar-menu header__bar-menu-active' : 'header__bar-menu';
     const wrapperClass = isHamburgerToggled ? 'header__bar-menu-wrapper header__bar-menu-wrapper-active' : 'header__bar-menu-wrapper';
 
-    const handleClick = (e) => {
-        if (e.target.classList.contains('header__bar-menu-wrapper')) {
-            dispatch(setHamburgerToggled())
-        };
-
-        window.removeEventListener('click', handleClick);
-    };
-
     return (
         <header className="header">
             <div className={wrapperClass} onClick={() => dispatch(setHamburgerToggled())}></div>

@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async"
 
 import Map from "../../../components/Map/Map"
 import AppMode from "../../../components/AppMode/AppMode"
+import RequestPanel from "../../../components/RequestPanel/RequestPanel";
 
 const IndexLayout = () => {
     return (
@@ -11,6 +12,7 @@ const IndexLayout = () => {
                 <title>Главная страница - Woluntr</title>
             </Helmet>
             <Map/>
+            <RequestPanel/>
             <AppMode/>
         </div>
     );

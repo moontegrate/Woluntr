@@ -14,6 +14,7 @@ import { HelmetProvider } from "react-helmet-async";
 const IndexLayout = lazy(() => import("../../pages/layouts/index"));
 
 const App = () => {
+
   return (
     <Router>
       <HelmetProvider>

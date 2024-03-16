@@ -10,7 +10,9 @@ module.exports = {
         'main-color': '#2DD1AA',
         'volunteer-color': '#ABB8EE',
         'main-accent-color': '#c0fce1',
-        'main-accent-color-hover': '#d7fbec'
+        'main-accent-hover': '#d7fbec',
+        'volunteer-accent-color': '#c0fce1',
+        'volunteer-accent-hover': '#d7fbec'
       }
     },
   },

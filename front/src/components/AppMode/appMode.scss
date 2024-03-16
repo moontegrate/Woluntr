@@ -36,11 +36,16 @@
     }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 925px) {
+    .app-mode {
+        bottom: 400px;
+    }
 
     .customer-btn, .volunteer-btn {
-        height: 70px;
+        height: 60px;
         padding: 0 10px;
+
+        line-height: 0;
         
         span {
             font-size: 20px;
