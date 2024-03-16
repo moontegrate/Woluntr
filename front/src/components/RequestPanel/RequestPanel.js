@@ -22,7 +22,6 @@ const RequestPanel = () => {
             const newY = window.innerHeight - e.touches[0].clientY;
             if (newY >= 0 && newY <= 500) { // Ограничение движения от 0 до 200 пикселей по оси Y
                 setHeight(newY);
-                console.log(newY);
             }
         }
     };

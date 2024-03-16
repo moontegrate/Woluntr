@@ -29,7 +29,7 @@ const Header = () => {
                     <Hamburger toggled={isHamburgerToggled} onToggle={() => dispatch(setHamburgerToggled())}/>
                 </div>
                 <div className='header__bar-logo'>
-                    <img src={appMode === 'customer' ? 'http://localhost:3000/logo-line.svg' : 'http://localhost:3000/logo-line-volunteer.svg'} alt='logo'/>
+                    <img src={appMode === 'customer' ? 'https://cdn.lovattro.kz/woluntr/logo-line.svg' : 'https://cdn.lovattro.kz/woluntr/logo-line-volunteer.svg'} alt='logo'/>
                 </div>
                 
                 <div className={hamburgerClass} style={{'height': screenWidth < 925 ? window.innerHeight : '100%'}}>
