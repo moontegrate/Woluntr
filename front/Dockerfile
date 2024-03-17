@@ -5,7 +5,7 @@ FROM node:alpine as build
 WORKDIR /app
 
 # Копируем файлы package.json и package-lock.json
-COPY front/package*.json ./app
+COPY package*.json ./
 
 # Устанавливаем зависимости
 RUN npm install
@@ -13,8 +13,9 @@ RUN npm install
 # Копируем все файлы из текущей директории в рабочую директорию
 COPY . .
 
-# Экспонируем порт 3000
+
+# Экспортируем порт 3000 (вы можете убрать это, если приложение React использует другой порт)
 EXPOSE 3000
 
-# Команда для запуска сервера Nginx внутри контейнера
+# Команда для запуска приложения
 CMD ["npm", "start"]

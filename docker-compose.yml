@@ -27,11 +27,11 @@ services:
   react-app:
     container_name: my-react-app
     build:
-      context: .
+      context: ./front
       dockerfile: front/Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - .:/app
+      - ./front:/app
     environment:
       - NODE_ENV=development
