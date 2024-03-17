@@ -1,5 +1,5 @@
 // Стилистические импорты
-import './requestPanel.scss';
+import './customerRequestPanel.scss';
 
 // Вспомогательные компоненты
 import CustomerRequestForm from '../CustomerRequestForm/CustomerRequestForm';
@@ -7,7 +7,7 @@ import CustomerRequestForm from '../CustomerRequestForm/CustomerRequestForm';
 // Хуки
 import { useState } from 'react';
 
-const RequestPanel = () => {
+const CustomerRequestPanel = () => {
     const [height, setHeight] = useState(window.innerWidth > 925 ? 'auto' : '100px');
     const [transition, setTransition] = useState('0s');
     const [isDragging, setIsDragging] = useState(false);
@@ -41,11 +41,11 @@ const RequestPanel = () => {
 
     return (
         <div
-            className='request-panel'
+            className='customer-request-panel'
             style={{ height: height, transition: transition }}
         >
             <div
-                className='request-panel__container'
+                className='customer-request-panel__container'
                 onTouchStart={handleMouseDown}
                 onTouchMove={handleMouseMove}
                 onTouchEnd={handleMouseUp}
@@ -56,4 +56,4 @@ const RequestPanel = () => {
     );
 };
 
-export default RequestPanel;
+export default CustomerRequestPanel;

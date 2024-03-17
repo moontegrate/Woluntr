@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async"
 
 import Map from "../../../components/Map/Map"
 import AppMode from "../../../components/AppMode/AppMode"
-import RequestPanel from "../../../components/RequestPanel/RequestPanel";
+import CustomerRequestPanel from "../../../components/CustomerRequestPanel/CustomerRequestPanel";
 import { useSelector } from "react-redux";
 
 const IndexLayout = () => {
@@ -16,7 +16,7 @@ const IndexLayout = () => {
                 <link rel="icon" href={appMode === 'customer' ? "https://cdn.lovattro.kz/woluntr/logo.svg" : "https://cdn.lovattro.kz/woluntr/logo-volunteer.svg"} />                
             </Helmet>
             <Map/>
-            <RequestPanel/>
+            <CustomerRequestPanel/>
             <AppMode/>
         </div>
     );

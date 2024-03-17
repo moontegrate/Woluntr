@@ -5,6 +5,7 @@ import './App.scss';
 import Header from '../Header/Header';
 import LoginModal from '../LoginModal/LoginModal';
 import RegisterModal from '../RegisterModal/RegisterModal';
+import { Spinner } from 'flowbite-react';
 
 // Маршрутизация
 import { lazy, Suspense } from "react";
@@ -22,7 +23,7 @@ const App = () => {
       <HelmetProvider>
         <div className="App">
           <Header />
-          <Suspense fallback={<div className='fallback'>page loading...</div>}>
+          <Suspense fallback={<div className='fallback'><Spinner theme={{color: {info: "fill-main-color"}}} aria-label="Extra large spinner example" size="xl" /></div>}>
             <Routes>
               <Route path="/" element={<IndexLayout />} />
             </Routes>
