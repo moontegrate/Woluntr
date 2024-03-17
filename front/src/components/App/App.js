@@ -3,6 +3,8 @@ import './App.scss';
 
 // Вспомогательные компоненты
 import Header from '../Header/Header';
+import LoginModal from '../LoginModal/LoginModal';
+import RegisterModal from '../RegisterModal/RegisterModal';
 
 // Маршрутизация
 import { lazy, Suspense } from "react";
@@ -10,7 +12,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 // React Helmet
 import { HelmetProvider } from "react-helmet-async";
-import LoginModal from '../LoginModal/LoginModal';
 
 const IndexLayout = lazy(() => import("../../pages/layouts/index"));
 
@@ -28,6 +29,7 @@ const App = () => {
           </Suspense>
         </div>
         <LoginModal/>
+        <RegisterModal/>
       </HelmetProvider>
     </Router>
   );

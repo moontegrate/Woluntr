@@ -37,7 +37,7 @@ const Map = () => {
                 const [longitude, latitude] = coordinates;
 
                 const map = new mapglAPI.Map('map-wrapper', {
-                    key: 'rudcgu3317',
+                    key: '8aa9d22a-14aa-408d-bbdd-faa892eb1d05',
                     center: [longitude, latitude],
                     zoom: 10,
                     zoomControl: false

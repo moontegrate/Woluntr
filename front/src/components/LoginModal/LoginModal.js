@@ -8,6 +8,7 @@ import { Button, Checkbox, FloatingLabel, Label, Modal } from 'flowbite-react';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsModalOpen } from './loginModalSlice';
+import { setIsModalOpen as openRegModal } from '../RegisterModal/registerModalSlice';
 
 const LoginModal = () => {
     const dispatch = useDispatch();
@@ -33,6 +34,10 @@ const LoginModal = () => {
                         <Label htmlFor="remember" className="flex">Запомнить меня</Label>
                     </div>
                     <Button theme={ButtonTheme} className='login-form__submit' color={appMode === 'customer' ? 'green' : 'purple'} size='xl'>Войти</Button>
+                    <div>Нет аккаунта? <span className={appMode === 'customer' ? "text-main-color hover:underline dark:text-main-color" : "text-volunteer-color hover:underline dark:text-volunteer-color"} onClick={() => {
+                        dispatch(openRegModal(true));
+                        dispatch(setIsModalOpen(false));
+                    }}>Зарегистрироваться.</span></div>
                 </form>
             </Modal.Body>
         </Modal>
