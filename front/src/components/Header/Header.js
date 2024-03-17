@@ -1,6 +1,7 @@
 // Стилистические импорты
 import './header.scss';
 import { ButtonTheme } from '../../style/flowbiteThemes';
+import { TbLogin2 } from "react-icons/tb";
 
 // Вспомогательные компоненты
 // import Profile from './Profile/Profile';
@@ -10,6 +11,7 @@ import { Sling as Hamburger } from 'hamburger-react'
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setHamburgerToggled } from './headerSlice';
+import { setIsModalOpen } from '../LoginModal/loginModalSlice';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -26,7 +28,7 @@ const Header = () => {
             <div className={wrapperClass} style={{'height': screenWidth < 925 ? window.innerHeight : '100%'}} onClick={() => dispatch(setHamburgerToggled())}></div>
             <div className='header__bar'>
                 <div className='header__burger'>
-                    <Hamburger toggled={isHamburgerToggled} onToggle={() => dispatch(setHamburgerToggled())}/>
+                    <Hamburger toggled={isHamburgerToggled} size={window.innerWidth > 560 ? 30 : 25} onToggle={() => dispatch(setHamburgerToggled())}/>
                 </div>
                 <div className='header__bar-logo'>
                     <img src={appMode === 'customer' ? 'https://cdn.lovattro.kz/woluntr/logo-line.svg' : 'https://cdn.lovattro.kz/woluntr/logo-line-volunteer.svg'} alt='logo'/>
@@ -38,7 +40,7 @@ const Header = () => {
                     <div className={'header__bar-menu-item ' + appMode + '-hover'}>Мои задания</div>
                     <div className={'header__bar-menu-item ' + appMode + '-hover'}>Поддержка</div>
                 </div>
-                <Button className={'header__login-btn ' + appMode + '-bg-accent'} theme={ButtonTheme} size='xl'>Войти</Button>
+                <Button className='header__login-btn' color={appMode === 'customer' ? 'green' : 'purple'} theme={ButtonTheme} onClick={() => dispatch(setIsModalOpen(true))} size='xl'><TbLogin2 size={window.innerWidth > 560 ? 30 : 20}/></Button>
             </div>
             {/* <Profile/> */}
         </header>

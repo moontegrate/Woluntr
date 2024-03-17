@@ -21,19 +21,19 @@ const RequestPanel = () => {
         if (isDragging) {
             document.activeElement.blur();
             const newY = window.innerHeight - e.touches[0].clientY;
-            if (newY >= 0 && newY <= 500) { // Ограничение движения от 0 до 200 пикселей по оси Y
+            if (newY >= 0 && newY <= 500) {
                 setHeight(newY);
-            }
-        }
+            };
+        };
     };
 
     const handleMouseUp = () => {
         setTransition('.3s height');
 
         if (height > 200) {
-            setHeight('374px')
+            setHeight('374px');
         } else if (height < 200) {
-            setHeight('100px')
+            setHeight('100px');
         };
         
         setIsDragging(false);

@@ -11,8 +11,8 @@ module.exports = {
         'volunteer-color': '#ABB8EE',
         'main-accent-color': '#c0fce1',
         'main-accent-hover': '#d7fbec',
-        'volunteer-accent-color': '#c0fce1',
-        'volunteer-accent-hover': '#d7fbec'
+        'volunteer-accent-color': '#d9e0ff',
+        'volunteer-accent-hover': '#e9eeff'
       }
     },
   },

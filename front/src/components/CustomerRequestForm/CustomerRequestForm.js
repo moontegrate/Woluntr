@@ -46,7 +46,7 @@ const CustomerRequestForm = () => {
                 <div className='customer-request-form-field'>
                     <FloatingLabel theme={FloatingLabelCustomerTheme} ref={(el) => inputRefs.current.push(el)} variant='standard' label='Комментарий волонтёру'/>
                 </div>
-                <Button className={'customer-request-form-submit ' + appMode + '-bg-accent'}  theme={ButtonTheme} size='xl'>Создать</Button>
+                <Button className='customer-request-form-submit' color={appMode === 'customer' ? 'green' : 'purple'}  theme={ButtonTheme} size='xl'>Создать</Button>
             </form>
     );
 };
