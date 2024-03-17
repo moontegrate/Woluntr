@@ -21,7 +21,7 @@ class TeamInvite(Base):
     id = Column(Integer, primary_key=True, index=True)
     team_id = Column(Integer, ForeignKey('teams.id'))
     user_id = Column(Integer, ForeignKey('users.id'))
-    status = Column(String)
+    status = Column(Boolean, nullable=True)
 
     team = relationship("Team", back_populates="invites")
     user = relationship("User")
