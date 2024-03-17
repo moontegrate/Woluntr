@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     volumes:
-      - .:/app
+      - ./backend:/app
     ports:
       - "8000:8000"
     depends_on:
@@ -27,11 +27,11 @@ services:
   react-app:
     container_name: woluntr-frontend
     build:
-      context: ./frontend
+      context: .
       dockerfile: frontend/Dockerfile
     ports:
       - "3000:3000"
-    volumes:
-      - ./frontend:/app
+    # volumes:
+    #   - ./frontend:/app
     environment:
       - NODE_ENV=development
