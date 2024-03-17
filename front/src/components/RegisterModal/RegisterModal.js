@@ -1,9 +1,9 @@
 // Стилистические импорты
 import './registerModal.scss';
-import { ButtonTheme, CheckboxTheme, FloatingLabelCustomerTheme, FloatingLabelVolunteerTheme, ModalTheme } from '../../style/flowbiteThemes';
+import { ButtonTheme, FloatingLabelCustomerTheme, FloatingLabelVolunteerTheme, ModalTheme } from '../../style/flowbiteThemes';
 
 // Вспомогательные компоненты
-import { Button, Checkbox, FloatingLabel, Label, Modal } from 'flowbite-react';
+import { Button, FloatingLabel, Modal } from 'flowbite-react';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
