@@ -2,8 +2,8 @@ export const AppModeBtnTheme = {
     base: "group flex items-stretch items-center justify-center p-0.5 text-center font-medium relative focus:z-10 focus:outline-none transition-[color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow]",
     fullSized: "w-full",
     color: {
-        purple: "text-black bg-white border border-transparent enabled:hover:bg-purple-100 focus:ring-4 focus:ring-purple-300 dark:bg-purple-600 dark:enabled:hover:bg-purple-700 dark:focus:ring-purple-900",
-        green: "text-black bg-white border border-transparent enabled:hover:bg-green-100 focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:text-white dark:border-green-600 dark:enabled:hover:bg-green-700 dark:enabled:hover:border-green-700 dark:focus:ring-green-700",
+        purple: "text-black bg-white border border-transparent enabled:hover:bg-purple-100 focus:ring-2 focus:ring-purple-300 dark:bg-purple-600 dark:enabled:hover:bg-purple-700 dark:focus:ring-purple-900",
+        green: "text-black bg-white border border-transparent enabled:hover:bg-green-100 focus:ring-2 focus:ring-green-300 dark:bg-green-600 dark:text-white dark:border-green-600 dark:enabled:hover:bg-green-700 dark:enabled:hover:border-green-700 dark:focus:ring-green-700",
     },
     disabled: "cursor-not-allowed opacity-50",
     isProcessing: "cursor-wait",
