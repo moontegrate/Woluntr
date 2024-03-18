@@ -13,7 +13,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setHamburgerToggled } from './headerSlice';
 import { setIsModalOpen } from '../LoginModal/loginModalSlice';
 
+// Хуки
+import { useNavigate } from 'react-router-dom';
+
 const Header = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const appMode = useSelector((state) => state.appMode.appMode);
     const isHamburgerToggled = useSelector((state) => state.header.hamburgerToggled);
@@ -30,13 +34,13 @@ const Header = () => {
                 <div className='header__burger'>
                     <Hamburger toggled={isHamburgerToggled} size={window.innerWidth > 560 ? 30 : 25} onToggle={() => dispatch(setHamburgerToggled())}/>
                 </div>
-                <div className='header__bar-logo'>
+                <div className='header__bar-logo' onClick={() => navigate('/')}>
                     <img src={appMode === 'customer' ? 'https://cdn.lovattro.kz/woluntr/logo-line.svg' : 'https://cdn.lovattro.kz/woluntr/logo-line-volunteer.svg'} alt='logo'/>
                 </div>
                 
                 <div className={hamburgerClass} style={{'height': screenWidth < 925 ? window.innerHeight : '100%'}}>
                     <div className={'header__bar-menu-item ' + appMode + '-hover'}>Создать задание</div>
-                    <div className={'header__bar-menu-item ' + appMode + '-hover'}>Лучшие волонтеры</div>
+                    <div onClick={() => navigate('/best-volunteers')} className={'header__bar-menu-item ' + appMode + '-hover'}>Лучшие волонтеры</div>
                     <div className={'header__bar-menu-item ' + appMode + '-hover'}>Мои задания</div>
                     <div className={'header__bar-menu-item ' + appMode + '-hover'}>Поддержка</div>
                 </div>
