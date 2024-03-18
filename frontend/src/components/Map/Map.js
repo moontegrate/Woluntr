@@ -46,7 +46,7 @@ const Map = () => {
 
                 const marker = new mapglAPI.Marker(map, {
                     coordinates: [longitude, latitude],
-                    icon: 'https://cdn.lovattro.kz/woluntr/user-marker.svg',
+                    icon: 'http://localhost:3000/user-marker.svg',
                     size: [30, 30]
                 });
                 setMarker(marker);

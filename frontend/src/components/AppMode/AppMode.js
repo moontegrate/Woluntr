@@ -1,6 +1,6 @@
 // Стилистические импорты
 import './appMode.scss';
-import { AppModeBtnTheme } from '../../style/flowbiteThemes/appModeBtn';
+import { AppModeBtnTheme } from '../../style/flowbiteThemes';
 
 // Вспомогательные компоненты
 import { Button } from 'flowbite-react';
@@ -17,8 +17,8 @@ const AppMode = () => {
     return (
         <div className='app-mode'>
             <Button.Group>
-                <Button theme={AppModeBtnTheme} className={`rounded-[30px] rounded-r-none customer-btn ${appMode === 'customer' ? ' customer-btn-active' : null}`} onClick={() => dispatch(setMode('customer'))}>Заказчик</Button>
-                <Button theme={AppModeBtnTheme} className={`rounded-[30px] rounded-l-none volunteer-btn ${appMode === 'volunteer' ? ' volunteer-btn-active' : null}`} onClick={() => dispatch(setMode('volunteer'))}>Волонтёр</Button>
+                <Button theme={AppModeBtnTheme} color='green' className={`rounded-[30px] rounded-r-none customer-btn ${appMode === 'customer' ? ' customer-btn-active' : null}`} onClick={() => dispatch(setMode('customer'))}>Заказчик</Button>
+                <Button theme={AppModeBtnTheme} color='purple' className={`rounded-[30px] rounded-l-none volunteer-btn ${appMode === 'volunteer' ? ' volunteer-btn-active' : null}`} onClick={() => dispatch(setMode('volunteer'))}>Волонтёр</Button>
             </Button.Group>
         </div>
     );
