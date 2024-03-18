@@ -1,17 +1,20 @@
 from fastapi import FastAPI, APIRouter
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
 
-router = APIRouter(tags=["users"])
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
 
-@router.get('get/')
-async def get_user(id : int | None = None):
-    return {"id":id, 
-            "msg":"hello"
-            }
 
-app.include_router(router)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "PUT", "POST", "PATCH", "DELETE"],
+    allow_headers=["*"],
+)
