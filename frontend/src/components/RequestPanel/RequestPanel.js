@@ -1,16 +1,22 @@
 // Стилистические импорты
-import './customerRequestPanel.scss';
+import './RequestPanel.scss';
 
 // Вспомогательные компоненты
-import CustomerRequestForm from '../CustomerRequestForm/CustomerRequestForm';
+import CustomerRequestForm from './CustomerRequestForm/CustomerRequestForm';
 
 // Хуки
 import { useState } from 'react';
 
-const CustomerRequestPanel = () => {
+// Redux
+import { useSelector } from 'react-redux';
+import VolunteerOrdersPanel from './VolunteerOrdersPanel/VolunteerOrdersPanel';
+
+const RequestPanel = () => {
     const [height, setHeight] = useState(window.innerWidth > 925 ? 'auto' : '100px');
     const [transition, setTransition] = useState('0s');
     const [isDragging, setIsDragging] = useState(false);
+
+    const appMode = useSelector((state) => state.appMode.appMode);
 
     const handleMouseDown = () => {
         setIsDragging(true);
@@ -41,19 +47,19 @@ const CustomerRequestPanel = () => {
 
     return (
         <div
-            className='customer-request-panel'
+            className='request-panel'
             style={{ height: height, transition: transition }}
         >
             <div
-                className='customer-request-panel__container'
+                className='request-panel__container'
                 onTouchStart={handleMouseDown}
                 onTouchMove={handleMouseMove}
                 onTouchEnd={handleMouseUp}
             >
-                <CustomerRequestForm/>
+                {appMode === 'customer' ? <CustomerRequestForm/> : <VolunteerOrdersPanel/>}
             </div>
         </div>
     );
 };
 
-export default CustomerRequestPanel;
+export default RequestPanel;

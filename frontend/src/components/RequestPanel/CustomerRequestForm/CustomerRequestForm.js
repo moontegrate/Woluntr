@@ -1,10 +1,10 @@
 // Стилистические импорты
 import './customerRequestForm.scss';
-import { FloatingLabelCustomerTheme } from '../../style/flowbiteThemes/floatingLabelCustomer';
+import { FloatingLabelCustomerTheme } from '../../../style/flowbiteThemes';
 
 // Вспомогательные компоненты
 import { Button, FloatingLabel } from 'flowbite-react';
-import { ButtonTheme } from '../../style/flowbiteThemes';
+import { ButtonTheme } from '../../../style/flowbiteThemes';
 
 // Хуки
 import { useRef } from 'react';

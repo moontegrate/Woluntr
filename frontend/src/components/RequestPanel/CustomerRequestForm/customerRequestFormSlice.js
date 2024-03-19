@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { postRequest, _apiBase } from "../../services/http";
+import { postRequest, _apiBase } from "../../../services/http";
 
 // Исходные состояния (состояния по умолчанию)
 const initialState = {

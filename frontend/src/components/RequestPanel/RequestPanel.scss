@@ -1,4 +1,4 @@
-.customer-request-panel {
+.request-panel {
     position: absolute;
     padding: 20px;
     max-width: 400px;
@@ -21,7 +21,7 @@
 }
 
 @media (max-width: 925px) {
-    .customer-request-panel {
+    .request-panel {
         top: auto;
         bottom: 0;
         height: 374px;
