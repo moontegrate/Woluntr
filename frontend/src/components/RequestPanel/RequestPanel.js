@@ -1,15 +1,21 @@
-// Стилистические импорты
+// Style imports
 import './RequestPanel.scss';
 
-// Вспомогательные компоненты
-import CustomerRequestForm from './CustomerRequestForm/CustomerRequestForm';
+// Components
+import { Spinner } from 'flowbite-react';
 
-// Хуки
+// Hooks
 import { useState } from 'react';
 
 // Redux
 import { useSelector } from 'react-redux';
-import VolunteerOrdersPanel from './VolunteerOrdersPanel/VolunteerOrdersPanel';
+
+// React lazy
+import { lazy, Suspense } from 'react';
+
+// Lazy imports
+const CustomerRequestForm = lazy(() => import("../../components/RequestPanel/CustomerRequestForm/CustomerRequestForm"));
+const VolunteerOrdersPanel = lazy(() => import("../../components/RequestPanel/VolunteerOrdersPanel/VolunteerOrdersPanel"));
 
 const RequestPanel = () => {
     const [height, setHeight] = useState(window.innerWidth > 925 ? 'auto' : '100px');
@@ -56,7 +62,9 @@ const RequestPanel = () => {
                 onTouchMove={handleMouseMove}
                 onTouchEnd={handleMouseUp}
             >
-                {appMode === 'customer' ? <CustomerRequestForm/> : <VolunteerOrdersPanel/>}
+                <Suspense fallback={<div className='fallback'><Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}>
+                    {appMode === 'customer' ? <CustomerRequestForm/> : <VolunteerOrdersPanel/>}
+                </Suspense>
             </div>
         </div>
     );

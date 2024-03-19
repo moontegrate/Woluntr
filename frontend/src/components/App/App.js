@@ -22,19 +22,25 @@ import { getCurrentUserInfo } from './appUserSlice';
 
 // Notifications
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 
 // layouts for routes
 const IndexLayout = lazy(() => import("../../pages/layouts/index"));
 const BestVolunteersLayout = lazy(() => import("../../pages/layouts/bestVolunteers"));
 const SupportLayout = lazy(() => import("../../pages/layouts/support"));
-const ProfileLayout = lazy(() => import("../../pages/layouts/profile"));
-const SettingsLayout = lazy(() => import("../../pages/layouts/settings"));
 const HistoryLayout = lazy(() => import("../../pages/layouts/history"));
 const OrdersLayout = lazy(() => import("../../pages/layouts/orders"));
 const TeamsLayout = lazy(() => import("../../pages/layouts/teams"));
 
+// lazy components
+const ProfileModal = lazy(() => import("../../components/ProfileModal/ProfileModal"));
+const SettingsModal = lazy(() => import("../../components/SettingsModal/SettingsModal"));
+
 const App = () => {
+    const isProfileModalOpen = useSelector((state) => state.profileModal.isModalOpen);
+    const isSettingsModalOpen = useSelector((state) => state.settingsModal.isModalOpen);
+
     useEffect(() => {
         if (localStorage.getItem('refresh_token') && localStorage.getItem('rememberMe')) {
             getTokens()
@@ -61,8 +67,6 @@ const App = () => {
                             <Route path="/" element={<IndexLayout />} />
                             <Route path="/best-volunteers" element={<BestVolunteersLayout />} />
                             <Route path="/support" element={<SupportLayout />} />
-                            <Route path="/@username" element={<ProfileLayout />} />
-                            <Route path="/settings" element={<SettingsLayout />} />
                             <Route path="/history" element={<HistoryLayout />} />
                             <Route path="/orders" element={<OrdersLayout />} />
                             <Route path="/teams" element={<TeamsLayout />} />
@@ -71,6 +75,10 @@ const App = () => {
                 </div>
                 <LoginModal />
                 <RegisterModal />
+                <Suspense fallback={<div className='fallback'><Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}>
+                    {isProfileModalOpen ? <ProfileModal/> : null}
+                    {isSettingsModalOpen ? <SettingsModal/> : null}
+                </Suspense>
             </HelmetProvider>
         </Router>
     );

@@ -11,7 +11,7 @@ import { Sling as Hamburger } from 'hamburger-react'
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setHamburgerToggled } from './headerSlice';
-import { setIsModalOpen } from '../LoginModal/loginModalSlice';
+import { setIsModalOpen as setLoginModal } from '../LoginModal/loginModalSlice';
 
 // Хуки
 import { useNavigate } from 'react-router-dom';
@@ -68,7 +68,7 @@ const Header = () => {
                     className='header__login-btn'
                     color={appMode === 'customer' ? 'green' : 'purple'}
                     theme={ButtonTheme}
-                    onClick={() => dispatch(setIsModalOpen(true))}
+                    onClick={() => dispatch(setLoginModal(true))}
                     size='xl'
                 >
                     <TbLogin2 size={window.innerWidth > 560 ? 30 : 20}/>

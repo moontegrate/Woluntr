@@ -1,15 +1,17 @@
-// Стилистические импорты
+// Style imports
 import './profile.scss';
 import { DropdownTheme } from '../../../style/flowbiteThemes';
 
-// Вспомогательные компоненты
+// Components
 import { Dropdown } from 'flowbite-react';
 
-// Хуки
-import { useNavigate } from 'react-router-dom';
+// Redux
+import { useDispatch } from 'react-redux';
+import { setIsModalOpen as setProfileModal } from '../../ProfileModal/profileModalSlice';
+import { setIsModalOpen as setSettingsModal } from '../../SettingsModal/settingsModalSlice';
 
 const Profile = () => {
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     return (
         <Dropdown theme={DropdownTheme} label="Profile" dismissOnClick={false} renderTrigger={() => <div className='profile'>
@@ -19,8 +21,8 @@ const Profile = () => {
                 <span className="block text-sm">Bonnie Green</span>
                 <span className="block truncate text-sm font-medium">name@flowbite.com</span>
             </Dropdown.Header>
-            <Dropdown.Item onClick={() => navigate('/@username')}>Профиль</Dropdown.Item>
-            <Dropdown.Item onClick={() => navigate('/settings')}>Настройки</Dropdown.Item>
+            <Dropdown.Item onClick={() => dispatch(setProfileModal(true))}>Профиль</Dropdown.Item>
+            <Dropdown.Item onClick={() => dispatch(setSettingsModal(true))}>Настройки</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item onClick={() => {}}>Выйти</Dropdown.Item>
         </Dropdown>
