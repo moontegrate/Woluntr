@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 const Map = () => {
     const [map, setMap] = useState(null);
     // eslint-disable-next-line
-    const [marker, setMarker] = useState(null);
+    const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
     const [zoom, setZoom] = useState(10);
 
     const getUserLocation = () => {
@@ -32,37 +32,44 @@ const Map = () => {
     };
 
     useEffect(() => {
-        load().then((mapglAPI) => {
-            getUserLocation().then((coordinates) => {
+        let mapInstance = null;
+        let markerInstance = null;
+
+        const loadMap = async () => {
+            try {
+                const mapglAPI = await load();
+                const coordinates = await getUserLocation();
                 const [longitude, latitude] = coordinates;
 
-                const map = new mapglAPI.Map('map-wrapper', {
+                mapInstance = new mapglAPI.Map('map-wrapper', {
                     key: '8aa9d22a-14aa-408d-bbdd-faa892eb1d05',
                     center: [longitude, latitude],
                     zoom: 10,
                     zoomControl: false
                 });
-                setMap(map);
+                setMap(mapInstance);
 
-                const marker = new mapglAPI.Marker(map, {
+                markerInstance = new mapglAPI.Marker(mapInstance, {
                     coordinates: [longitude, latitude],
                     icon: 'http://localhost:3000/user-marker.svg',
                     size: [30, 30]
                 });
-                setMarker(marker);
-            })
-            .catch(() => {
-                const map = new mapglAPI.Map('map-wrapper', {
-                    key: '8aa9d22a-14aa-408d-bbdd-faa892eb1d05',
-                    center: [71.43, 51.12],
-                    zoom: 10,
-                    zoomControl: false
-                });
-                setMap(map);
-            });
+                setCurrentLocationMarker(markerInstance);
+            } catch (error) {
+                console.error('Error loading map:', error);
+            }
+        };
 
-            
-        });
+        loadMap();
+
+        return () => {
+            if (mapInstance) {
+                mapInstance.destroy(); // Уничтожаем карту
+            }
+            if (markerInstance) {
+                markerInstance.destroy(); // Уничтожаем маркер
+            }
+        };
         // eslint-disable-next-line
     }, []);
 
@@ -83,6 +90,9 @@ const Map = () => {
             <div className='current-location' onClick={() => {
                 getUserLocation().then((coordinates) => {
                     map.setCenter(coordinates);
+                    if (currentLocationMarker) {
+                        currentLocationMarker.setCoordinates(coordinates);
+                    };
                 });
             }}>
                 <PiNavigationArrowBold/>
