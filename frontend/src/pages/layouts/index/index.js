@@ -1,8 +1,12 @@
+// React Helmet
 import { Helmet } from "react-helmet-async"
 
+// Components
 import Map from "../../../components/Map/Map"
 import AppMode from "../../../components/AppMode/AppMode"
 import RequestPanel from "../../../components/RequestPanel/RequestPanel";
+
+// Redux
 import { useSelector } from "react-redux";
 
 const IndexLayout = () => {

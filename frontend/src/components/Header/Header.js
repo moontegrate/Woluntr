@@ -29,17 +29,17 @@ const Header = () => {
 
     const customerMenu = (
         <>
-            <div onClick={() => navigate('/')} className={'header__bar-menu-item customer-hover'}>Создать задание</div>
-            <div onClick={() => navigate('/orders')} className={'header__bar-menu-item customer-hover'}>Мои задания</div>
-            <div onClick={() => navigate('/best-volunteers')} className={'header__bar-menu-item customer-hover'}>Лучшие волонтеры</div>
+            <div onClick={() => {navigate('/'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item customer-hover'}>Создать задание</div>
+            <div onClick={() => {navigate('/orders'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item customer-hover'}>Мои задания</div>
+            <div onClick={() => {navigate('/best-volunteers'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item customer-hover'}>Лучшие волонтеры</div>
         </>
     );
 
     const volunteerMenu = (
         <>
-            <div onClick={() => navigate('/')} className={'header__bar-menu-item volunteer-hover'}>Выполнить задание</div>
-            <div onClick={() => navigate('/history')} className={'header__bar-menu-item volunteer-hover'}>История заданий</div>
-            <div onClick={() => navigate('/teams')} className={'header__bar-menu-item volunteer-hover'}>Команды</div>
+            <div onClick={() => {navigate('/'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>Выполнить задание</div>
+            <div onClick={() => {navigate('/history'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>История заданий</div>
+            <div onClick={() => {navigate('/teams'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>Команды</div>
         </>
     );
 
@@ -60,7 +60,7 @@ const Header = () => {
                 {/* Навигационное меню */}
                 <div className={hamburgerClass} style={{'height': screenWidth < 925 ? window.innerHeight : '100%'}}>
                     {appMode === 'customer' ? customerMenu : volunteerMenu}
-                    <div onClick={() => navigate('/support')} className={'header__bar-menu-item ' + appMode + '-hover'}>Поддержка</div>
+                    <div onClick={() => {navigate('/support'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item ' + appMode + '-hover'}>Поддержка</div>
                 </div>
 
                 {/* Кнопка "Войти" */}
