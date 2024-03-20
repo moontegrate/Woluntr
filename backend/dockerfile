@@ -24,9 +24,3 @@ COPY . /app
 
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
-
-COPY start.sh start.sh
-RUN  chmod +x start.sh
-#CMD ["gunicorn", "--bind", "0.0.0.0:8000", "core.wsgi:application"]
-#CMD ["manage.py runserver"]
-CMD  ./start.sh
