@@ -1,27 +1,17 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
-from sqlalchemy.orm import relationship
-from database import Base
+from django.db import models
+from django.conf import settings
 
-class Team(Base):
-    __tablename__ = 'teams'
+user = settings.AUTH_USER_MODEL
 
-    id = Column(Integer, primary_key=True, index=True)
-    leader_id = Column(Integer, ForeignKey('users.id'))
-    name = Column(String)
-    description = Column(String)
-    time_create = Column(String)
-    opened = Column(Boolean)
+# Create your models here.
+class Team(models.Model):
+    leader = models.ForeignKey(user, on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank = True, null = True)
+    time_create = models.DateTimeField(auto_now_add=True)
+    opened = models.BooleanField(default=False)
 
-    leader = relationship("User", back_populates="teams")
-    invites = relationship("TeamInvite", back_populates="team")
-
-class TeamInvite(Base):
-    __tablename__ = 'team_invites'
-
-    id = Column(Integer, primary_key=True, index=True)
-    team_id = Column(Integer, ForeignKey('teams.id'))
-    user_id = Column(Integer, ForeignKey('users.id'))
-    status = Column(Boolean, nullable=True)
-
-    team = relationship("Team", back_populates="invites")
-    user = relationship("User")
+class TeamInvite(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    user = models.ForeignKey(user, on_delete=models.CASCADE)
+    status = models.BooleanField(null = True, blank = True)

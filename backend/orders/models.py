@@ -1,31 +1,36 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Enum
-from sqlalchemy.orm import relationship
-from database import Base
+from django.db import models
+from django.conf import settings
 
-class Order(Base):
-    __tablename__ = 'orders'
+from teams.models import Team
+from users.models import Skill
 
-    id = Column(Integer, primary_key=True, index=True)
-    status = Column(Enum('complete', 'in process', 'not complete'))
-    time_create = Column(DateTime)
-    customer_id = Column(Integer, ForeignKey('users.id'))
-    title = Column(String)
-    description = Column(String)
-    difficulty = Column(Enum('easy', 'medium', 'hard'))
-    location = Column(String)
+user = settings.AUTH_USER_MODEL
 
-    customer = relationship("User", backref="orders")
-
-class OrderComplete(Base):
-    __tablename__ = 'order_complete'
-
-    id = Column(Integer, primary_key=True, index=True)
-    order_id = Column(Integer, ForeignKey('orders.id'))
-    executor_id = Column(Integer, ForeignKey('users.id'))
-    executor_team_id = Column(Integer, ForeignKey('teams.id'))
-    time_accept = Column(DateTime)
-    time_complete = Column(DateTime)
-    stars = Column(Integer)
-
-    executor = relationship("User")
-    executor_team = relationship("Team")
+# Create your models here.
+class Order(models.Model):
+    STATUS_CHOICES = (
+        ('Complete', 'Complete'),
+        ('In Process', 'In Process'),
+        ('Not Complete', 'Not Complete')
+    )
+    DIFFICULTY_CHOICES = (
+        ('Easy', 'Easy'),
+        ('Medium', 'Medium'),
+        ('Hard', 'Hard')
+    )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    time_create = models.DateTimeField(auto_now_add=True)
+    customer = models.ForeignKey(user, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES)
+    location = models.CharField(max_length=255)
+    skills = models.ManyToManyField(Skill, blank=True)
+    
+class OrderComplete(models.Model):
+    executor = models.ForeignKey(user, on_delete=models.CASCADE, null = True, blank = True)
+    executor_team = models.ForeignKey(Team, on_delete=models.CASCADE, null = True, blank = True)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    time_accept = models.DateTimeField(auto_now_add = True)
+    time_complete = models.DateTimeField()
+    stars = models.IntegerField()
