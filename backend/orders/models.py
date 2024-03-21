@@ -28,9 +28,9 @@ class Order(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     
 class OrderComplete(models.Model):
-    executor = models.ForeignKey(user, on_delete=models.CASCADE, null = True, blank = True)
-    executor_team = models.ForeignKey(Team, on_delete=models.CASCADE, null = True, blank = True)
-    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    executor = models.ForeignKey(user, on_delete=models.DO_NOTHING, null = True, blank = True)
+    executor_team = models.ForeignKey(Team, on_delete=models.DO_NOTHING, null = True, blank = True)
+    order = models.OneToOneField(Order, on_delete=models.DO_NOTHING)
     time_accept = models.DateTimeField(auto_now_add = True)
     time_complete = models.DateTimeField()
     stars = models.IntegerField()
