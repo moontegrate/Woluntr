@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Table
 from sqlalchemy.orm import relationship
-from backend.database import Base
+from database import Base
 
 association_table = Table('user_skills', Base.metadata,
                           Column('user_id', Integer, ForeignKey('users.id')),
