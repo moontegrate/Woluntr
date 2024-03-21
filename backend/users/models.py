@@ -17,6 +17,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('surname'), max_length=30, blank=True)
     date_joined = models.DateTimeField(_('registered'), auto_now_add=True)
     is_active = models.BooleanField(_('is_active'), default=True)
+    is_superuser = models.BooleanField(_('is_superuser'), default=False)
+    is_staff = models.BooleanField(_('is_staff'), default=False)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     checked_email = models.BooleanField(default = False)
     avatar  = models.ImageField(upload_to='images/avatars/', blank=True)
