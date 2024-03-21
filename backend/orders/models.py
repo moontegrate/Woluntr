@@ -18,14 +18,16 @@ class Order(models.Model):
         ('Medium', 'Medium'),
         ('Hard', 'Hard')
     )
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default ='Not Complete', blank = True)
     time_create = models.DateTimeField(auto_now_add=True)
     customer = models.ForeignKey(user, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    description = models.TextField()
-    difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES)
-    location = models.CharField(max_length=255)
+    description = models.TextField(blank = True)
+    difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, blank= True, null=True)
+    location = models.CharField(max_length=255, blank = True)
     skills = models.ManyToManyField(Skill, blank=True)
+    #todo photo add
+    
     
 class OrderComplete(models.Model):
     executor = models.ForeignKey(user, on_delete=models.DO_NOTHING, null = True, blank = True)
@@ -34,3 +36,4 @@ class OrderComplete(models.Model):
     time_accept = models.DateTimeField(auto_now_add = True)
     time_complete = models.DateTimeField()
     stars = models.IntegerField()
+    #todo photo add
