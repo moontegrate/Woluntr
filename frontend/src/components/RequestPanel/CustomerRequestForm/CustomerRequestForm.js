@@ -3,8 +3,8 @@ import './customerRequestForm.scss';
 import { FloatingLabelCustomerTheme } from '../../../style/flowbiteThemes';
 
 // Вспомогательные компоненты
-import { Button, FloatingLabel } from 'flowbite-react';
-import { ButtonTheme } from '../../../style/flowbiteThemes';
+import { Button, FileInput, FloatingLabel, Label } from 'flowbite-react';
+import { ButtonTheme, FileinputTheme } from '../../../style/flowbiteThemes';
 
 // Хуки
 import { useRef } from 'react';
@@ -107,6 +107,23 @@ const CustomerRequestForm = () => {
                         }
                     />
                     <span className="error">{errors.orderAddress?.message}</span>
+                </div>
+                <div className='customer-request-form-field'>
+                <Label className='input-label' htmlFor="order-photos" style={{'fontSize': '16px'}} value="Добавить фотографии" />
+                    <Controller
+                        name="orderPhotos"
+                        id="order-photos"
+                        control={control}
+                        render={({ field }) => <FileInput
+                                theme={FileinputTheme}
+                                ref={(el) => inputRefs.current.push(el)}
+                                onChange={(e) => {
+                                    field.onChange(e.target.value);
+                                }}
+                            />
+                        }
+                    />
+                    <span className="error">{errors.orderDesc?.message}</span>
                 </div>
                 <div className='customer-request-form-field'>
                     <FloatingLabel theme={FloatingLabelCustomerTheme} ref={(el) => inputRefs.current.push(el)} variant='standard' label='Комментарий волонтёру'/>
