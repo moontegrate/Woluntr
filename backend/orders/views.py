@@ -15,3 +15,10 @@ class OrderCompleteViewSet(viewsets.ModelViewSet):
     queryset = OrderComplete.objects.all()
     serializer_class = OrderCompleteSerializer
     permission_classes = [permissions.IsAuthenticated]
+    
+    def perform_create(self, serializer):
+        if self.request.POST['executor_team']:
+            return serializer.save(executor_team = self.request.POST['executor_team'])
+        return serializer.save(executor = self.request.user)
+
+    
