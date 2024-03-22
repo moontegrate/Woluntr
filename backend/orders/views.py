@@ -17,7 +17,7 @@ class OrderCompleteViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     
     def perform_create(self, serializer):
-        if self.request.POST['executor_team']:
+        if self.request.POST.get('executor_team', False):
             return serializer.save(executor_team = self.request.POST['executor_team'])
         return serializer.save(executor = self.request.user)
 
