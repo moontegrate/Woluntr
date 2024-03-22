@@ -4,7 +4,7 @@ import { FloatingLabelCustomerTheme } from '../../../style/flowbiteThemes';
 
 // Вспомогательные компоненты
 import { Button, FileInput, FloatingLabel, Label } from 'flowbite-react';
-import { ButtonTheme, FileinputTheme } from '../../../style/flowbiteThemes';
+import { ButtonTheme, FileInputTheme } from '../../../style/flowbiteThemes';
 
 // Хуки
 import { useRef } from 'react';
@@ -58,9 +58,9 @@ const CustomerRequestForm = () => {
     });
 
     // Обработка отправки формы
-    const onSubmit = (data) => {
+    const onSubmit = handleSubmit((data) => {
         console.log(data);
-    };
+    });
 
     return (
         <form className='customer-request-form' onSubmit={handleSubmit(onSubmit)}>
@@ -109,13 +109,16 @@ const CustomerRequestForm = () => {
                     <span className="error">{errors.orderAddress?.message}</span>
                 </div>
                 <div className='customer-request-form-field'>
-                <Label className='input-label' htmlFor="order-photos" style={{'fontSize': '16px'}} value="Добавить фотографии" />
+                    <Label className='input-label' htmlFor="order-photos" style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '10px'}} value="Добавить фотографии" />
                     <Controller
                         name="orderPhotos"
                         id="order-photos"
                         control={control}
                         render={({ field }) => <FileInput
-                                theme={FileinputTheme}
+                                theme={FileInputTheme}
+                                style={{
+                                    'fontSize': '0.875rem'
+                                }}
                                 ref={(el) => inputRefs.current.push(el)}
                                 onChange={(e) => {
                                     field.onChange(e.target.value);

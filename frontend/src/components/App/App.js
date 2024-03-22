@@ -6,6 +6,7 @@ import Header from '../Header/Header';
 import LoginModal from '../LoginModal/LoginModal';
 import RegisterModal from '../RegisterModal/RegisterModal';
 import { Spinner } from 'flowbite-react';
+import TokenRefresher from '../TokenRefresher/TokenRefresher';
 
 // Helper functions
 import getTokens from '../../services/getTokens';
@@ -18,7 +19,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 // Redux
-import { getCurrentUserInfo } from './appUserSlice';
+import { useDispatch } from 'react-redux';
+import { getCurrentUserInfo, setIsAuthorized } from './appUserSlice';
 
 // Notifications
 import toast from 'react-hot-toast';
@@ -38,6 +40,8 @@ const ProfileModal = lazy(() => import("../../components/ProfileModal/ProfileMod
 const SettingsModal = lazy(() => import("../../components/SettingsModal/SettingsModal"));
 
 const App = () => {
+    const dispatch = useDispatch();
+
     const isProfileModalOpen = useSelector((state) => state.profileModal.isModalOpen);
     const isSettingsModalOpen = useSelector((state) => state.settingsModal.isModalOpen);
 
@@ -45,7 +49,8 @@ const App = () => {
         if (localStorage.getItem('refresh_token') && localStorage.getItem('rememberMe')) {
             getTokens()
                 .then(() => {
-                    getCurrentUserInfo();
+                    dispatch(setIsAuthorized(true));
+                    dispatch(getCurrentUserInfo());
                 })
                 .catch((e) => {
                     console.log("Token refresh error", e.response?.data);
@@ -61,6 +66,7 @@ const App = () => {
         <Router>
             <HelmetProvider>
                 <div className="App">
+                    <TokenRefresher/>
                     <Header />
                     <Suspense fallback={<div className='fallback'><Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}>
                         <Routes>

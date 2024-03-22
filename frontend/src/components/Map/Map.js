@@ -36,38 +36,44 @@ const Map = () => {
         let markerInstance = null;
 
         const loadMap = async () => {
-            try {
-                const mapglAPI = await load();
-                const coordinates = await getUserLocation();
-                const [longitude, latitude] = coordinates;
+            load()
+            .then((mapglAPI) => {
+                try {
+                    mapInstance = new mapglAPI.Map('map-wrapper', {
+                        key: '8aa9d22a-14aa-408d-bbdd-faa892eb1d05',
+                        center: [71.43, 51.12],
+                        zoom: 10,
+                        zoomControl: false
+                    });
+                    setMap(mapInstance);
+                } catch (error) {
+                    console.error('Error loading map:', error);
+                };
 
-                mapInstance = new mapglAPI.Map('map-wrapper', {
-                    key: '8aa9d22a-14aa-408d-bbdd-faa892eb1d05',
-                    center: [longitude, latitude],
-                    zoom: 10,
-                    zoomControl: false
-                });
-                setMap(mapInstance);
-
-                markerInstance = new mapglAPI.Marker(mapInstance, {
-                    coordinates: [longitude, latitude],
-                    icon: 'http://localhost:3000/user-marker.svg',
-                    size: [30, 30]
-                });
-                setCurrentLocationMarker(markerInstance);
-            } catch (error) {
-                console.error('Error loading map:', error);
-            }
+                getUserLocation()
+                .then((coordinates) => {
+                    const [longitude, latitude] = coordinates;
+                    markerInstance = new mapglAPI.Marker(mapInstance, {
+                        coordinates: [longitude, latitude],
+                        icon: 'http://localhost:3000/user-marker.svg',
+                        size: [30, 30]
+                    });
+                    mapInstance.setCenter(coordinates);
+                    mapInstance.setZoom(15);
+                    setCurrentLocationMarker(markerInstance);
+                }).catch((e) => console.error(e));
+            })
+            .catch((e) => console.error(e));
         };
 
         loadMap();
 
         return () => {
             if (mapInstance) {
-                mapInstance.destroy(); // Уничтожаем карту
+                mapInstance.destroy();
             }
             if (markerInstance) {
-                markerInstance.destroy(); // Уничтожаем маркер
+                markerInstance.destroy();
             }
         };
         // eslint-disable-next-line
@@ -88,12 +94,15 @@ const Map = () => {
                 }}>-</div>
             </div>
             <div className='current-location' onClick={() => {
-                getUserLocation().then((coordinates) => {
+                getUserLocation()
+                .then((coordinates) => {
                     map.setCenter(coordinates);
+                    map.setZoom(15);
                     if (currentLocationMarker) {
                         currentLocationMarker.setCoordinates(coordinates);
                     };
-                });
+                })
+                .catch((e) => console.error(e));
             }}>
                 <PiNavigationArrowBold/>
             </div>

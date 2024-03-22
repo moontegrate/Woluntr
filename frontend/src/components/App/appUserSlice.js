@@ -1,27 +1,32 @@
 // RTK
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
 // Запросы на сервер
-import { getRequest, _apiBase } from "../../services/http";
+import { getRequest } from "../../services/http";
 
 // Уведомления
 import toast from "react-hot-toast";
 
-const initialState = {
+export const appUserAdapter = createEntityAdapter();
+
+const initialState = appUserAdapter.getInitialState({
     data: {
+        id: null,
         firstName: '',
         lastName: '',
-        email: ''
+        email: '',
+        profilePic: ''
     },
-    dataState: 'idle'
-};
+    dataState: 'idle',
+    isAuthorized: false
+});
 
 export const getCurrentUserInfo = createAsyncThunk(
     'appUser/getCurrentUserInfo',
-    async (data) => {
-        return await getRequest(`${_apiBase}user/`, data, {
+    async () => {
+        return await getRequest('http://localhost:8000/auth/users/me/', {
             "Accept": "application/json",
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            'Authorization': `JWT ${localStorage.getItem('access_token')}`
         });
     }
 );
@@ -30,14 +35,15 @@ const appUser = createSlice({
     name: 'appUser',
     initialState,
     reducers: {
-        setData: (state, action) => {state.data = action.payload}
+        setData: (state, action) => {state.data = action.payload},
+        setIsAuthorized: (state, action) => {state.isAuthorized = action.payload}
     },
     extraReducers: (builder) => {
         builder
         .addCase(getCurrentUserInfo.pending, (state) => {state.dataState = 'fetching'})
         .addCase(getCurrentUserInfo.fulfilled, (state, action) => {
             state.dataState = 'idle';
-            setData(action.payload);
+            state.data = action.payload;
         })
         .addCase(getCurrentUserInfo.rejected, () => {
             toast('Упс! Что-то пошло не так.', {
@@ -49,4 +55,4 @@ const appUser = createSlice({
 });
 
 export default appUser.reducer;
-export const { setData } = appUser.actions;
+export const { setData, setIsAuthorized } = appUser.actions;

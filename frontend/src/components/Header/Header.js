@@ -20,6 +20,7 @@ const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const appMode = useSelector((state) => state.appMode.appMode);
+    const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
     const isHamburgerToggled = useSelector((state) => state.header.hamburgerToggled);
 
     const hamburgerClass = isHamburgerToggled ? 'header__bar-menu header__bar-menu-active' : 'header__bar-menu';
@@ -30,7 +31,7 @@ const Header = () => {
     const customerMenu = (
         <>
             <div onClick={() => {navigate('/'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item customer-hover'}>Создать задание</div>
-            <div onClick={() => {navigate('/orders'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item customer-hover'}>Мои задания</div>
+            <div onClick={() => {if (isAuthorized) {navigate('/orders')} else {dispatch(setLoginModal(true))}; dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item customer-hover'}>Мои задания</div>
             <div onClick={() => {navigate('/best-volunteers'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item customer-hover'}>Лучшие волонтеры</div>
         </>
     );
@@ -63,8 +64,7 @@ const Header = () => {
                     <div onClick={() => {navigate('/support'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item ' + appMode + '-hover'}>Поддержка</div>
                 </div>
 
-                {/* Кнопка "Войти" */}
-                {/* <Button
+                {isAuthorized ? <Profile/> : <Button
                     className='header__login-btn'
                     color={appMode === 'customer' ? 'green' : 'purple'}
                     theme={ButtonTheme}
@@ -72,10 +72,8 @@ const Header = () => {
                     size='xl'
                 >
                     <TbLogin2 size={window.innerWidth > 560 ? 30 : 20}/>
-                </Button> */}
+                </Button>}
 
-                {/* Кнопка профиля */}
-                <Profile/>
             </div>
 
 

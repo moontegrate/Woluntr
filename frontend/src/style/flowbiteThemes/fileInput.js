@@ -1,4 +1,4 @@
-export const FileinputTheme = {
+export const FileInputTheme = {
     "root": {
         "base": "flex"
     },

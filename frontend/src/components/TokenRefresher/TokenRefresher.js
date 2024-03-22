@@ -2,21 +2,23 @@
 import { useEffect } from "react";
 
 // Redux
-import { useAppSelector } from "../../hooks/state";
+import { useSelector } from "react-redux";
+
+// Services
+import getTokens from "../../services/getTokens";
 
 const TokenRefresher = () => {
-    const { getNewTokens } = useAPI();
-    const isAuthorized = useAppSelector((state) => state.auth.isAuthorized);
+    const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
 
     useEffect(() => {
         const intervalId = setInterval(async () => {
             if (isAuthorized) {
-                await getNewTokens();
+                await getTokens();
             }
-        }, 180000);
+        }, 86400000);
 
         return () => clearInterval(intervalId);
-    }, [getNewTokens, isAuthorized]);
+    }, [isAuthorized]);
 
     return null;
 };
