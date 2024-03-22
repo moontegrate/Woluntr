@@ -1,14 +1,22 @@
-// Стилистические импорты
+// Style imports
 import './map.scss';
 import { PiNavigationArrowBold } from "react-icons/pi";
 
-// Прочие библиотеки
+// Libs
 import { load } from '@2gis/mapgl';
 
-// Хуки
+// Hooks
 import { useEffect, useState } from 'react';
 
+// Redux
+import { useDispatch } from 'react-redux';
+import { setCurrentLocation } from './mapSlice';
+
+export const _key = '8aa9d22a-14aa-408d-bbdd-faa892eb1d05'
+
 const Map = () => {
+    const dispatch = useDispatch();
+
     const [map, setMap] = useState(null);
     // eslint-disable-next-line
     const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
@@ -40,7 +48,7 @@ const Map = () => {
             .then((mapglAPI) => {
                 try {
                     mapInstance = new mapglAPI.Map('map-wrapper', {
-                        key: '8aa9d22a-14aa-408d-bbdd-faa892eb1d05',
+                        key: _key,
                         center: [71.43, 51.12],
                         zoom: 10,
                         zoomControl: false
@@ -60,6 +68,7 @@ const Map = () => {
                     });
                     mapInstance.setCenter(coordinates);
                     mapInstance.setZoom(15);
+                    dispatch(setCurrentLocation(coordinates));
                     setCurrentLocationMarker(markerInstance);
                 }).catch((e) => console.error(e));
             })
@@ -98,6 +107,7 @@ const Map = () => {
                 .then((coordinates) => {
                     map.setCenter(coordinates);
                     map.setZoom(15);
+                    dispatch(setCurrentLocation(coordinates));
                     if (currentLocationMarker) {
                         currentLocationMarker.setCoordinates(coordinates);
                     };

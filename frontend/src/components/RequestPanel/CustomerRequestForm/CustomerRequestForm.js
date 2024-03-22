@@ -1,27 +1,33 @@
-// Стилистические импорты
+// Style imports
 import './customerRequestForm.scss';
 import { FloatingLabelCustomerTheme } from '../../../style/flowbiteThemes';
 
-// Вспомогательные компоненты
+// Components
 import { Button, FileInput, FloatingLabel, Label } from 'flowbite-react';
 import { ButtonTheme, FileInputTheme } from '../../../style/flowbiteThemes';
 
-// Хуки
+// Hooks
 import { useRef } from 'react';
 
-// Валидация формы
+// Form validation
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setFormData } from './customerRequestFormSlice';
+import { setCoordinates, setFormData, setSearchResult } from './customerRequestFormSlice';
+
+import { getRequest } from '../../../services/http';
+import { _key } from '../../Map/Map';
 
 const CustomerRequestForm = () => {
     const dispatch = useDispatch();
+
     const appMode = useSelector((state) => state.appMode.appMode);
+    const currentLocation = useSelector((state) => state.map.currentLocation);
     const formData = useSelector((state) => state.customerRequestForm.formData);
+    const searchResult = useSelector((state) => state.customerRequestForm.addressSearchResult);
 
     // Следующий код служит для скрытия клавиатуры на мобилках при клике на все кроме инпутов. Сделано это для избежания багов при скролле с раскрытой клавиатурой.
     const inputRefs = useRef([]);
@@ -48,7 +54,7 @@ const CustomerRequestForm = () => {
         note: yup.string()
     });
 
-    const { control, handleSubmit, formState: { errors } } = useForm({
+    const { control, handleSubmit, formState: { errors }, setValue } = useForm({
         defaultValue: {
             orderDesc: formData.orderDesc,
             orderAddress: formData.orderAddress,
@@ -61,6 +67,40 @@ const CustomerRequestForm = () => {
     const onSubmit = handleSubmit((data) => {
         console.log(data);
     });
+
+    // Поиск по адресу
+    const searchAddress = async (address) => {
+        const response = await getRequest(`https://catalog.api.2gis.ru/3.0/items/geocode?type=street%2Cbuilding%2Cattraction%2Cstation_platform%2Cadm_div.place%2Cadm_div.city%2Cadm_div.district&key=${_key}&fields=items.point%2Citems.region_id%2Citems.segment_id&location=${currentLocation[0]}%2C${currentLocation[1]}&q=${address}`);
+        
+        try {
+            dispatch(setSearchResult(response.result.items));
+        } catch (error) {
+            console.error(error);
+        };
+    };
+
+    // Рендер результатов поиска
+    const renderAddressSuggestions = () => {
+        if (searchResult) {
+            const result = searchResult.map((item, i) => {
+                return <div
+                    key={i}
+                    className='customer-request-form-field__result-item'
+                    onClick={() => {
+                        dispatch(setFormData({...formData, orderAddress: item.address_name}));
+                        dispatch(setSearchResult(null));
+                        dispatch(setCoordinates([item.point.lon, item.point.lat]));
+                        setValue('orderAddress', item.address_name);
+                    }}
+                >
+                    <p className='customer-request-form-field__result-item_name'>{item.name}</p>
+                    <p className='customer-request-form-field__result-item_address'>{item.address_name}</p>
+                </div>
+            });
+    
+            return result;
+        };
+    };
 
     return (
         <form className='customer-request-form' onSubmit={handleSubmit(onSubmit)}>
@@ -91,21 +131,26 @@ const CustomerRequestForm = () => {
                 <div className='customer-request-form-field'>
                     <Controller
                         name="orderAddress"
+                        className='customer-request-form-address'
                         control={control}
                         defaultValue={formData.orderAddress}
                         render={({ field }) => <FloatingLabel
                                 theme={FloatingLabelCustomerTheme}
                                 ref={(el) => inputRefs.current.push(el)}
                                 variant='standard'
-                                defaultValue={formData.orderAddress}
+                                value={formData.orderAddress}
                                 label='Укажите адрес'
                                 onChange={(e) => {
+                                    searchAddress(e.target.value);
                                     field.onChange(e.target.value);
                                     dispatch(setFormData({...formData, orderAddress: e.target.value}));
                                 }}
                             />
                         }
                     />
+                    <div className='customer-request-form-field__result'>
+                        {renderAddressSuggestions()}
+                    </div>
                     <span className="error">{errors.orderAddress?.message}</span>
                 </div>
                 <div className='customer-request-form-field'>

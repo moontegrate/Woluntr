@@ -6,6 +6,7 @@ import customerRequestForm from '../components/RequestPanel/CustomerRequestForm/
 import header from '../components/Header/headerSlice';
 import loginForm from '../components/LoginForm/loginFormSlice';
 import loginModal from '../components/LoginModal/loginModalSlice';
+import map from '../components/Map/mapSlice';
 import profileModal from '../components/ProfileModal/profileModalSlice';
 import registerModal from '../components/RegisterModal/registerModalSlice';
 import settingsModal from '../components/SettingsModal/settingsModalSlice';
@@ -18,6 +19,7 @@ const store = configureStore({
         header,
         loginForm,
         loginModal,
+        map,
         profileModal,
         registerModal,
         settingsModal

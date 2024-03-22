@@ -6,10 +6,12 @@ import { postRequest, _apiBase } from "../../../services/http";
 const initialState = {
     formData: {
         orderDesc: '',
-        orderAddress: '',
+        orderAddress: null,
         note: ''
     },
-    formState: 'idle'
+    orderCoordinates: null,
+    formState: 'idle',
+    addressSearchResult: null
 };
 
 export const sendFormData = createAsyncThunk(
@@ -27,7 +29,9 @@ const customerRequestFormSlice = createSlice({
     name: 'customerRequestForm',
     initialState,
     reducers: {
-        setFormData: (state, action) => {state.formData = action.payload}
+        setFormData: (state, action) => {state.formData = action.payload},
+        setCoordinates: (state, action) => {state.orderCoordinates = action.payload},
+        setSearchResult: (state, action) => {state.addressSearchResult = action.payload}
     },
     extraReducers: (builder) => {
         builder
@@ -38,4 +42,4 @@ const customerRequestFormSlice = createSlice({
 });
 
 export default customerRequestFormSlice.reducer;
-export const { setFormData } = customerRequestFormSlice.actions;
+export const { setCoordinates, setFormData, setSearchResult } = customerRequestFormSlice.actions;

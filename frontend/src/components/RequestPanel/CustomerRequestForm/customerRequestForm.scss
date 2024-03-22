@@ -1,3 +1,5 @@
+@import '../../../style/variables.scss';
+
 .customer-request-form {
     display: flex;
     flex-direction: column;
@@ -26,6 +28,32 @@
             font-size: 20px;
             line-height: 1.5;
         }
+
+        &__result {
+            position: absolute;
+            z-index: 2;
+            max-height: 600px;
+            overflow-y: scroll;
+            background-color: #fff;
+            border: 0.5px solid $border-color;
+            border-radius: 10px;
+
+            &-item {
+                cursor: pointer;
+                padding: 10px 20px;
+                background-color: #fff;
+                border: 0.5px solid $border-color;
+
+                &_address {
+                    font-size: 14px;
+                    color: #606060;
+                }
+            }
+        }
+    }
+
+    &-address {
+        position: relative;
     }
 
     &-submit {
