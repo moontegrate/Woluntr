@@ -5,9 +5,9 @@ class OrderSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ['title','description', 'difficulty', 'location', 'skills', 'img']
 
 class OrderCompleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderComplete
-        fields = '__all__'
+        fields = ['executor', 'executor_team', 'order', 'img', 'stars']

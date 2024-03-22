@@ -14,4 +14,4 @@ class OrderViewSet(viewsets.ModelViewSet):
 class OrderCompleteViewSet(viewsets.ModelViewSet):
     queryset = OrderComplete.objects.all()
     serializer_class = OrderCompleteSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]

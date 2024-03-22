@@ -26,7 +26,7 @@ class Order(models.Model):
     difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, blank= True, null=True)
     location = models.CharField(max_length=255, blank = True)
     skills = models.ManyToManyField(Skill, blank=True)
-    #todo photo add
+    img = models.ImageField(upload_to='images/orders/', blank=True)
     
     
 class OrderComplete(models.Model):
@@ -34,6 +34,6 @@ class OrderComplete(models.Model):
     executor_team = models.ForeignKey(Team, on_delete=models.DO_NOTHING, null = True, blank = True)
     order = models.OneToOneField(Order, on_delete=models.DO_NOTHING)
     time_accept = models.DateTimeField(auto_now_add = True)
-    time_complete = models.DateTimeField()
-    stars = models.IntegerField()
-    #todo photo add
+    time_complete = models.DateTimeField(blank = True)
+    stars = models.IntegerField(blank = True, null=True)
+    img = models.ImageField(upload_to='images/avatars/', blank=True)
