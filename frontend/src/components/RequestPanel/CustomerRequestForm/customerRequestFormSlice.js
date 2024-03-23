@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { postRequest, _apiBase } from "../../../services/http";
+import { postRequest } from "../../../services/http";
 
 // Исходные состояния (состояния по умолчанию)
 const initialState = {
@@ -17,10 +17,10 @@ const initialState = {
 export const sendFormData = createAsyncThunk(
     'customRequestForm/sendFormData',
     async (data) => {
-        return await postRequest(`${_apiBase}order/`, data, {
+        return await postRequest('http://localhost:8000/api/v1/order/', data, {
             "Content-Type": "multipart/form-data",
             "Accept": "application/json",
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            'Authorization': `JWT ${localStorage.getItem('access_token')}`
         });
     }
 );

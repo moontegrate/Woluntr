@@ -37,14 +37,14 @@ const RequestPanel = () => {
             dispatch(setSearchResult(null))
             setTransition('0s');
             setStartY(e.touches[0].clientY);
-        }
+        };
     };
 
     const handleMouseMove = (e) => {
         if (isDragging) {
             const newY = startY - e.touches[0].clientY;
             setHeight((startHeight + newY) < 600 ? startHeight + newY : 600);
-        }
+        };
     };
 
     const handleMouseUp = () => {

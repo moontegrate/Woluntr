@@ -51,6 +51,22 @@ const CustomerRequestForm = () => {
     const schema = yup.object().shape({
         orderDesc: yup.string().required('Заполните описание'),
         orderAddress: yup.string().required('Укажите адрес'),
+        orderPhotos: yup.array().test('is-valid-files', 'Недопустимый тип файла или слишком большой размер (5 МБ)', function (files) {
+            const validTypes = ['image/png', 'image/jpeg'];
+            const maxSizeMB = 5;
+            if (files) {
+                return files.every(file => {
+                    if (!validTypes.includes(file.type)) {
+                        return false;
+                    };
+            
+                    const maxSizeBytes = maxSizeMB * 1024 * 1024;
+                    return file.size <= maxSizeBytes;
+                });
+            } else {
+                return true;
+            };
+        }),
         note: yup.string()
     });
 
@@ -141,6 +157,7 @@ const CustomerRequestForm = () => {
                                 variant='standard'
                                 value={field.value || ''}
                                 label='Укажите адрес'
+                                onBlur={() => dispatch(setSearchResult(null))}
                                 onChange={(e) => {
                                     dispatch(setFormData({...formData, orderAddress: e.target.value}));
                                     searchAddress(e.target.value);
@@ -150,7 +167,7 @@ const CustomerRequestForm = () => {
                             />
                         }
                     />
-                    <div className='customer-request-form-field__result dsbswp'>
+                    <div className='customer-request-form-field__result dsbswp' style={{display: searchResult ? 'block' : 'none'}}>
                         {renderAddressSuggestions()}
                     </div>
                     <span className="error">{errors.orderAddress?.message}</span>
@@ -168,12 +185,12 @@ const CustomerRequestForm = () => {
                                 }}
                                 ref={(el) => inputRefs.current.push(el)}
                                 onChange={(e) => {
-                                    field.onChange(e.target.value);
+                                    field.onChange(Array.from(e.target.files));
                                 }}
                             />
                         }
                     />
-                    <span className="error">{errors.orderDesc?.message}</span>
+                    <span className="error">{errors.orderPhotos?.message}</span>
                 </div>
                 <div className='customer-request-form-field'>
                     <FloatingLabel theme={FloatingLabelCustomerTheme} ref={(el) => inputRefs.current.push(el)} variant='standard' label='Комментарий волонтёру'/>
