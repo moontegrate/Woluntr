@@ -113,7 +113,7 @@ const LoginForm = () => {
                 className='login-form__submit'
                 color={appMode === 'customer' ? 'green' : 'purple'}
                 size='xl'
-                isProcessing={formState === 'fetching'}
+                isProcessing={formState === 'sending'}
                 processingSpinner={<Spinner theme={{ base: "inline animate-spin text-main-accent-color", color: { info: "fill-main-color" } }}/>}
                 type='submit'
             >Войти</Button>

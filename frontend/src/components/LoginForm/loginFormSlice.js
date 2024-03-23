@@ -40,9 +40,7 @@ const loginFormSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(authorize.pending, state => {
-            state.formState = 'fetching';
-        })
+        .addCase(authorize.pending, state => {state.formState = 'sending'})
         .addCase(authorize.fulfilled, (state, action) => {
             state.formState = 'idle';
             localStorage.setItem('refresh_token', action.payload.refresh)

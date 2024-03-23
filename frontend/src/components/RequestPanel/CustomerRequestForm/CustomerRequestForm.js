@@ -3,7 +3,7 @@ import './customerRequestForm.scss';
 import { FloatingLabelCustomerTheme } from '../../../style/flowbiteThemes';
 
 // Components
-import { Button, FileInput, FloatingLabel, Label } from 'flowbite-react';
+import { Button, FileInput, FloatingLabel, Label, Spinner } from 'flowbite-react';
 import { ButtonTheme, FileInputTheme } from '../../../style/flowbiteThemes';
 
 // Hooks
@@ -16,7 +16,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setCoordinates, setFormData, setSearchResult } from './customerRequestFormSlice';
+import { sendFormData, setFormData, setSearchResult } from './customerRequestFormSlice';
 
 import { getRequest } from '../../../services/http';
 import { _key } from '../../Map/Map';
@@ -27,6 +27,7 @@ const CustomerRequestForm = () => {
     const appMode = useSelector((state) => state.appMode.appMode);
     const currentLocation = useSelector((state) => state.map.currentLocation);
     const formData = useSelector((state) => state.customerRequestForm.formData);
+    const formState = useSelector((state) => state.customerRequestForm.formState);
     const searchResult = useSelector((state) => state.customerRequestForm.addressSearchResult);
 
     // Следующий код служит для скрытия клавиатуры на мобилках при клике на все кроме инпутов. Сделано это для избежания багов при скролле с раскрытой клавиатурой.
@@ -49,9 +50,9 @@ const CustomerRequestForm = () => {
 
     // Валидация формы
     const schema = yup.object().shape({
-        orderDesc: yup.string().required('Заполните описание'),
-        orderAddress: yup.string().required('Укажите адрес'),
-        orderPhotos: yup.array().test('is-valid-files', 'Недопустимый тип файла или слишком большой размер (5 МБ)', function (files) {
+        title: yup.string().required('Заполните описание'),
+        location: yup.string().required('Укажите адрес'),
+        img: yup.array().test('is-valid-files', 'Недопустимый тип файла или слишком большой размер (5 МБ)', function (files) {
             const validTypes = ['image/png', 'image/jpeg'];
             const maxSizeMB = 5;
             if (files) {
@@ -67,21 +68,22 @@ const CustomerRequestForm = () => {
                 return true;
             };
         }),
-        note: yup.string()
+        description: yup.string()
     });
 
     const { control, handleSubmit, formState: { errors }, setValue } = useForm({
         defaultValue: {
-            orderDesc: formData.orderDesc,
-            orderAddress: formData.orderAddress,
-            note: formData.note
+            title: formData.title,
+            location: formData.location,
+            description: formData.description
         },
         resolver: yupResolver(schema)
     });
 
     // Обработка отправки формы
     const onSubmit = handleSubmit((data) => {
-        console.log(data);
+        console.log(data)
+        dispatch(sendFormData(data));
     });
 
     // Поиск по адресу
@@ -104,10 +106,11 @@ const CustomerRequestForm = () => {
                     key={i}
                     className='customer-request-form-field__result-item dsbswp'
                     onClick={() => {
-                        dispatch(setFormData({...formData, orderAddress: item.address_name}));
+                        dispatch(setFormData({...formData, location: item.address_name}));
                         dispatch(setSearchResult(null));
-                        dispatch(setCoordinates([item.point.lon, item.point.lat]));
-                        setValue('orderAddress', item.address_name);
+                        dispatch(setFormData({...formData, coordinates: [item.point.lon, item.point.lat]}));
+                        setValue('location', item.address_name);
+                        document.activeElement.blur();
                     }}
                 >
                     <p className='customer-request-form-field__result-item_name dsbswp'>{item.name}</p>
@@ -120,49 +123,48 @@ const CustomerRequestForm = () => {
     };
 
     return (
-        <form className='customer-request-form' onSubmit={handleSubmit(onSubmit)}>
+        <form className='customer-request-form' encType='multipart/form-data' onSubmit={handleSubmit(onSubmit)}>
                 <div className='customer-request-form__head'>
                     <img src='https://cdn.lovattro.kz/woluntr/task.svg' alt='task'/>
                     <span>Создать задание</span>
                 </div>
                 <div className='customer-request-form-field'>
                     <Controller
-                        name="orderDesc"
+                        name="title"
                         control={control}
-                        defaultValue={formData.orderDesc}
+                        defaultValue={formData.title}
                         render={({ field }) => <FloatingLabel
                                 theme={FloatingLabelCustomerTheme}
                                 ref={(el) => inputRefs.current.push(el)}
                                 variant='standard'
-                                defaultValue={formData.orderDesc}
+                                defaultValue={formData.title}
                                 label='Опишите задачу'
                                 onChange={(e) => {
                                     field.onChange(e.target.value);
-                                    dispatch(setFormData({...formData, orderDesc: e.target.value}));
+                                    dispatch(setFormData({...formData, title: e.target.value}));
                                 }}
                             />
                         }
                     />
-                    <span className="error">{errors.orderDesc?.message}</span>
+                    <span className="error">{errors.title?.message}</span>
                 </div>
                 <div className='customer-request-form-field'>
                     <Controller
-                        name="orderAddress"
+                        name="location"
                         className='customer-request-form-address'
                         control={control}
-                        defaultValue={formData.orderAddress}
+                        defaultValue={formData.location}
                         render={({ field }) => <FloatingLabel
                                 theme={FloatingLabelCustomerTheme}
                                 ref={(el) => inputRefs.current.push(el)}
                                 variant='standard'
                                 value={field.value || ''}
                                 label='Укажите адрес'
-                                onBlur={() => dispatch(setSearchResult(null))}
                                 onChange={(e) => {
-                                    dispatch(setFormData({...formData, orderAddress: e.target.value}));
-                                    searchAddress(e.target.value);
+                                    dispatch(setFormData({...formData, location: e.target.value}));
+                                    if (e.target.value) {searchAddress(e.target.value);}
                                     field.onChange(e.target.value || '');
-                                    dispatch(setCoordinates(null));
+                                    dispatch(setFormData({...formData, coordinates: null}));
                                 }}
                             />
                         }
@@ -170,12 +172,12 @@ const CustomerRequestForm = () => {
                     <div className='customer-request-form-field__result dsbswp' style={{display: searchResult ? 'block' : 'none'}}>
                         {renderAddressSuggestions()}
                     </div>
-                    <span className="error">{errors.orderAddress?.message}</span>
+                    <span className="error">{errors.location?.message}</span>
                 </div>
                 <div className='customer-request-form-field'>
                     <Label className='input-label' htmlFor="order-photos" style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '10px'}} value="Добавить фотографии" />
                     <Controller
-                        name="orderPhotos"
+                        name="img"
                         id="order-photos"
                         control={control}
                         render={({ field }) => <FileInput
@@ -190,12 +192,36 @@ const CustomerRequestForm = () => {
                             />
                         }
                     />
-                    <span className="error">{errors.orderPhotos?.message}</span>
+                    <span className="error">{errors.img?.message}</span>
                 </div>
                 <div className='customer-request-form-field'>
-                    <FloatingLabel theme={FloatingLabelCustomerTheme} ref={(el) => inputRefs.current.push(el)} variant='standard' label='Комментарий волонтёру'/>
+                    <Controller
+                        name='description'
+                        className="customer-request-form-img"
+                        control={control}
+                        defaultValue={formData.description}
+                        render={({ field }) => <FloatingLabel
+                                theme={FloatingLabelCustomerTheme}
+                                ref={(el) => inputRefs.current.push(el)}
+                                variant='standard'
+                                label='Комментарий волонтёру'
+                                onChange={(e) => {
+                                    field.onChange(e.target.value);
+                                    dispatch(setFormData({...formData, description: e.target.value}));
+                                }}
+                            />
+                        }
+                    />
                 </div>
-                <Button className='customer-request-form-submit' type='submit' color={appMode === 'customer' ? 'green' : 'purple'}  theme={ButtonTheme} size='xl'>Создать</Button>
+                <Button
+                    className='customer-request-form-submit'
+                    type='submit'
+                    color={appMode === 'customer' ? 'green' : 'purple'}
+                    theme={ButtonTheme}
+                    size='xl'
+                    isProcessing={formState === 'sending'}
+                    processingSpinner={<Spinner theme={{ base: "inline animate-spin text-main-accent-color", color: { info: "fill-main-color" } }}/>}
+                >Создать</Button>
             </form>
     );
 };
