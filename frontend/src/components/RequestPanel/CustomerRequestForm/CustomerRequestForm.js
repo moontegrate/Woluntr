@@ -17,6 +17,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { sendFormData, setFormData, setSearchResult } from './customerRequestFormSlice';
+import { setIsModalOpen as setLoginModal } from '../../LoginModal/loginModalSlice';
 
 import { getRequest } from '../../../services/http';
 import { _key } from '../../Map/Map';
@@ -24,6 +25,7 @@ import { _key } from '../../Map/Map';
 const CustomerRequestForm = () => {
     const dispatch = useDispatch();
 
+    const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
     const appMode = useSelector((state) => state.appMode.appMode);
     const currentLocation = useSelector((state) => state.map.currentLocation);
     const formData = useSelector((state) => state.customerRequestForm.formData);
@@ -50,7 +52,7 @@ const CustomerRequestForm = () => {
 
     // Валидация формы
     const schema = yup.object().shape({
-        title: yup.string().required('Заполните описание'),
+        title: yup.string().required('Заполните описание').max(255, 'Описание не должно превышать 255 символов'),
         location: yup.string().required('Укажите адрес'),
         img: yup.array().test('is-valid-files', 'Недопустимый тип файла или слишком большой размер (5 МБ)', function (files) {
             const validTypes = ['image/png', 'image/jpeg'];
@@ -82,8 +84,8 @@ const CustomerRequestForm = () => {
 
     // Обработка отправки формы
     const onSubmit = handleSubmit((data) => {
-        console.log(data)
-        dispatch(sendFormData(data));
+        console.log({...data, latitude: formData.latitude, longitude: formData.longitude});
+        dispatch(sendFormData({...data, latitude: formData.latitude, longitude: formData.longitude}));
     });
 
     // Поиск по адресу
@@ -108,7 +110,7 @@ const CustomerRequestForm = () => {
                     onClick={() => {
                         dispatch(setFormData({...formData, location: item.address_name}));
                         dispatch(setSearchResult(null));
-                        dispatch(setFormData({...formData, coordinates: [item.point.lon, item.point.lat]}));
+                        dispatch(setFormData({...formData, latitude: item.point.lat, longitude: item.point.lon}));
                         setValue('location', item.address_name);
                         document.activeElement.blur();
                     }}
@@ -123,7 +125,15 @@ const CustomerRequestForm = () => {
     };
 
     return (
-        <form className='customer-request-form' encType='multipart/form-data' onSubmit={handleSubmit(onSubmit)}>
+        <form className='customer-request-form' encType='multipart/form-data' onSubmit={(e) => {
+            e.preventDefault();
+
+            if (isAuthorized) {
+                onSubmit();
+            } else {
+                dispatch(setLoginModal(true));
+            };
+        }}>
                 <div className='customer-request-form__head'>
                     <img src='https://cdn.lovattro.kz/woluntr/task.svg' alt='task'/>
                     <span>Создать задание</span>
@@ -164,7 +174,7 @@ const CustomerRequestForm = () => {
                                     dispatch(setFormData({...formData, location: e.target.value}));
                                     if (e.target.value) {searchAddress(e.target.value);}
                                     field.onChange(e.target.value || '');
-                                    dispatch(setFormData({...formData, coordinates: null}));
+                                    dispatch(setFormData({...formData, latitude: null, longitude: null}));
                                 }}
                             />
                         }

@@ -24,10 +24,10 @@ const RequestPanel = () => {
     const appMode = useSelector((state) => state.appMode.appMode);
 
     const [isDragging, setIsDragging] = useState(false);
-    const [height, setHeight] = useState(window.innerWidth > 925 ? 'auto' : '100px');
+    const [translate, setTranslate] = useState(0);
     const [transition, setTransition] = useState('0s');
     const [startY, setStartY] = useState(0);
-    const [startHeight, setStartHeight] = useState(100);
+    const [startTranslate, setStartTranslate] = useState(0);
 
     // Начало кода для обработки свайпа панели
     const handleMouseDown = (e) => {
@@ -43,14 +43,14 @@ const RequestPanel = () => {
     const handleMouseMove = (e) => {
         if (isDragging) {
             const newY = startY - e.touches[0].clientY;
-            setHeight((startHeight + newY) < 600 ? startHeight + newY : 600);
+            setTranslate((startTranslate + newY) < 450 ? startTranslate + newY : 450);
         };
     };
 
     const handleMouseUp = () => {
-        setTransition('.3s height');
-        setHeight(height > 200 ? 461 : 100);
-        setStartHeight(height > 200 ? 461 : 100);
+        setTransition('.3s transform ease');
+        setTranslate(translate > 200 ? 355 : 0);
+        setStartTranslate(translate > 200 ? 355 : 0);
         setIsDragging(false);
     };
     // Конец кода для обработки свайпа панели
@@ -58,10 +58,10 @@ const RequestPanel = () => {
     return (
         <div
             className='request-panel'
-            style={{ height: height, transition: transition }}
         >
             <div
                 className='request-panel__container'
+                style={{ transition: transition, transform: `translateY(${-translate}px)` }}
                 onTouchStart={handleMouseDown}
                 onTouchMove={handleMouseMove}
                 onTouchEnd={handleMouseUp}

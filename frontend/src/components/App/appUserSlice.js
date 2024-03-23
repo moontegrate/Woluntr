@@ -1,10 +1,10 @@
 // RTK
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
-// Запросы на сервер
+// http
 import { getRequest } from "../../services/http";
 
-// Уведомления
+// notifications
 import toast from "react-hot-toast";
 
 export const appUserAdapter = createEntityAdapter();

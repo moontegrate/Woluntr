@@ -21,12 +21,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUserInfo, setIsAuthorized } from './appUserSlice';
-
-// Notifications
-import { useSelector } from 'react-redux';
-
+import { getAllOrders } from './ordersSlice';
 
 // layouts for routes
 const IndexLayout = lazy(() => import("../../pages/layouts/index"));
@@ -58,6 +55,8 @@ const App = () => {
                     localStorage.removeItem('refresh_token');
                 });
         };
+
+        dispatch(getAllOrders());
         // eslint-disable-next-line
     }, []);
 

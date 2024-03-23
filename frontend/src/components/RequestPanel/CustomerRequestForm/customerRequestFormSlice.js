@@ -12,7 +12,8 @@ const initialState = {
     formData: {
         title: '',
         location: null,
-        coordinates: null,
+        latitude: null,
+        longitude: null,
         description: ''
     },
     formState: 'idle',
@@ -46,6 +47,7 @@ const customerRequestFormSlice = createSlice({
                 position: 'bottom-right',
                 icon: '🤩'
             });
+            state.formData = initialState.formData;
         })
         .addCase(sendFormData.rejected, state => {
             state.formState = 'error';
@@ -54,9 +56,9 @@ const customerRequestFormSlice = createSlice({
                 icon: '🫢'
             });
             state.formState = 'idle';
-        })
+        });
     }
 });
 
 export default customerRequestFormSlice.reducer;
-export const { setCoordinates, setFormData, setSearchResult } = customerRequestFormSlice.actions;
+export const { setFormData, setSearchResult } = customerRequestFormSlice.actions;
