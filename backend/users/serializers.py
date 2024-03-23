@@ -1,9 +1,19 @@
 from rest_framework import serializers
 from django.conf import settings
-from .models import Skill
+from .models import Skill, CustomUser
 
 class skillSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Skill
         fields = '__all__'
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'email', 'nickname', 'first_name', 'last_name', 'avatar', 'teams', 'organization_name', 'skills']
+        read_only_fields = ['email', 'avatar', 'teams', 'organization_name', 'skills']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        return data

@@ -133,6 +133,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 MEDIA_URL = "MEDIA/"
+MEDIA_ROOT = 'MEDIA/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -141,11 +142,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:3000'
-    
-    
-# ]
 CORS_ORIGIN_WHITELIST =[
     'http://localhost:8000',
     'http://localhost:3000',
