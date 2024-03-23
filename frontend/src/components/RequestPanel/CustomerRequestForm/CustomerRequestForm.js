@@ -75,8 +75,8 @@ const CustomerRequestForm = () => {
         
         try {
             dispatch(setSearchResult(response.result.items));
-        } catch (error) {
-            console.error(error);
+        } catch (e) {
+            dispatch(setSearchResult(null));
         };
     };
 
@@ -139,12 +139,13 @@ const CustomerRequestForm = () => {
                                 theme={FloatingLabelCustomerTheme}
                                 ref={(el) => inputRefs.current.push(el)}
                                 variant='standard'
-                                defaultValue={field.value}
+                                value={field.value || ''}
                                 label='Укажите адрес'
                                 onChange={(e) => {
-                                    searchAddress(e.target.value);
-                                    field.onChange(e.target.value);
                                     dispatch(setFormData({...formData, orderAddress: e.target.value}));
+                                    searchAddress(e.target.value);
+                                    field.onChange(e.target.value || '');
+                                    dispatch(setCoordinates(null));
                                 }}
                             />
                         }

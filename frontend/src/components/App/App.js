@@ -25,7 +25,6 @@ import { useDispatch } from 'react-redux';
 import { getCurrentUserInfo, setIsAuthorized } from './appUserSlice';
 
 // Notifications
-import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 
 
