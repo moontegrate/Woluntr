@@ -11,14 +11,14 @@ import { useEffect, useState } from 'react';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentLocation } from './mapSlice';
-import { selectAll } from '../App/ordersSlice';
+// import { setOrders } from '../App/ordersSlice';
 
 export const _key = '8aa9d22a-14aa-408d-bbdd-faa892eb1d05'
 
 const Map = () => {
     const dispatch = useDispatch();
 
-    const orders = useSelector(selectAll);
+    // const orders = useSelector((state) => state.orders.orders);
 
     const [map, setMap] = useState(null);
     // eslint-disable-next-line
@@ -42,12 +42,14 @@ const Map = () => {
         });
     };
 
-    orders.forEach((order) => {
-        console.log(order)
-        if (order.coordinates) {
-            // new map.Marker()
-        }
-    })
+    // if (orders) {
+    //     orders.forEach((order) => {
+    //         console.log(order)
+    //         if (order.latitude && order.longitude) {
+    //             // new map.Marker()
+    //         }
+    //     });
+    // };
 
     useEffect(() => {
         let mapInstance = null;

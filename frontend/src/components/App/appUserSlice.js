@@ -1,5 +1,5 @@
 // RTK
-import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // http
 import { getRequest } from "../../services/http";
@@ -7,9 +7,7 @@ import { getRequest } from "../../services/http";
 // notifications
 import toast from "react-hot-toast";
 
-export const appUserAdapter = createEntityAdapter();
-
-const initialState = appUserAdapter.getInitialState({
+const initialState = {
     data: {
         id: null,
         firstName: '',
@@ -19,7 +17,7 @@ const initialState = appUserAdapter.getInitialState({
     },
     dataState: 'idle',
     isAuthorized: false
-});
+};
 
 export const getCurrentUserInfo = createAsyncThunk(
     'appUser/getCurrentUserInfo',
@@ -51,6 +49,7 @@ const appUser = createSlice({
                 icon: '😰'
             });
         })
+        .addDefaultCase(() => {})
     }
 });
 

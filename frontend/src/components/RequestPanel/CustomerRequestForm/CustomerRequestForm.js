@@ -84,8 +84,7 @@ const CustomerRequestForm = () => {
 
     // Обработка отправки формы
     const onSubmit = handleSubmit((data) => {
-        console.log({...data, latitude: formData.latitude, longitude: formData.longitude});
-        dispatch(sendFormData({...data, latitude: formData.latitude, longitude: formData.longitude}));
+        dispatch(sendFormData({...data, latitude: formData.latitude || null, longitude: formData.longitude || null}));
     });
 
     // Поиск по адресу
