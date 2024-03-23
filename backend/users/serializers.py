@@ -1,14 +1,19 @@
 from rest_framework import serializers
 from django.conf import settings
+from .models import Skill, CustomUser
 
-user = settings.AUTH_USER_MODEL 
-
-class UserSerializer(serializers.ModelSerializer):
+class skillSerializer(serializers.ModelSerializer):
+    
     class Meta:
-        model = user
-        fields = ['username', 'email', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        model = Skill
+        fields = '__all__'
 
-    def create(self, validated_data):
-        user = user.objects.create_user(**validated_data)
-        return user
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'email', 'nickname', 'first_name', 'last_name', 'avatar', 'teams', 'organization_name', 'skills']
+        read_only_fields = ['email', 'avatar', 'teams', 'organization_name', 'skills']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        return data
