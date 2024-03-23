@@ -110,8 +110,8 @@
 
             &-menu {
                 position: absolute;
-                top: -10px;
-                left: -10px;
+                top: -20px;
+                left: -20px;
                 padding: 40px;
                 flex-direction: column;
                 justify-content: start;
@@ -156,6 +156,11 @@
         &__bar {
             height: 60px;
             padding: 10px;
+
+            &-menu {
+                top: -10px;
+                left: -10px;
+            }
         }
 
         &__login-btn {

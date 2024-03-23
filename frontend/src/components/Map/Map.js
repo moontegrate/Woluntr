@@ -72,7 +72,7 @@ const Map = () => {
                     setCurrentLocationMarker(markerInstance);
                 }).catch((e) => console.error(e));
             })
-            .catch((e) => console.error(e));
+            .catch((e) => console.log(e));
         };
 
         loadMap();

@@ -70,7 +70,8 @@ const CustomerRequestForm = () => {
 
     // Поиск по адресу
     const searchAddress = async (address) => {
-        const response = await getRequest(`https://catalog.api.2gis.ru/3.0/items/geocode?type=street%2Cbuilding%2Cattraction%2Cstation_platform%2Cadm_div.place%2Cadm_div.city%2Cadm_div.district&key=${_key}&fields=items.point%2Citems.region_id%2Citems.segment_id&location=${currentLocation[0]}%2C${currentLocation[1]}&q=${address}`);
+        const targetLocation = currentLocation ? currentLocation : [71.43, 51.12]
+        const response = await getRequest(`https://catalog.api.2gis.ru/3.0/items/geocode?type=street%2Cbuilding%2Cattraction%2Cstation_platform%2Cadm_div.place%2Cadm_div.city%2Cadm_div.district&key=${_key}&fields=items.point%2Citems.region_id%2Citems.segment_id&location=${targetLocation[0]}%2C${targetLocation[1]}&q=${address}`);
         
         try {
             dispatch(setSearchResult(response.result.items));
@@ -85,7 +86,7 @@ const CustomerRequestForm = () => {
             const result = searchResult.map((item, i) => {
                 return <div
                     key={i}
-                    className='customer-request-form-field__result-item'
+                    className='customer-request-form-field__result-item dsbswp'
                     onClick={() => {
                         dispatch(setFormData({...formData, orderAddress: item.address_name}));
                         dispatch(setSearchResult(null));
@@ -93,8 +94,8 @@ const CustomerRequestForm = () => {
                         setValue('orderAddress', item.address_name);
                     }}
                 >
-                    <p className='customer-request-form-field__result-item_name'>{item.name}</p>
-                    <p className='customer-request-form-field__result-item_address'>{item.address_name}</p>
+                    <p className='customer-request-form-field__result-item_name dsbswp'>{item.name}</p>
+                    <p className='customer-request-form-field__result-item_address dsbswp'>{item.address_name}</p>
                 </div>
             });
     
@@ -138,7 +139,7 @@ const CustomerRequestForm = () => {
                                 theme={FloatingLabelCustomerTheme}
                                 ref={(el) => inputRefs.current.push(el)}
                                 variant='standard'
-                                value={formData.orderAddress}
+                                defaultValue={field.value}
                                 label='Укажите адрес'
                                 onChange={(e) => {
                                     searchAddress(e.target.value);
@@ -148,7 +149,7 @@ const CustomerRequestForm = () => {
                             />
                         }
                     />
-                    <div className='customer-request-form-field__result'>
+                    <div className='customer-request-form-field__result dsbswp'>
                         {renderAddressSuggestions()}
                     </div>
                     <span className="error">{errors.orderAddress?.message}</span>

@@ -70,3 +70,13 @@
         cursor: auto;
     }
 }
+
+@media (max-width: 925px) {
+    .customer-request-form {
+        &-field {
+            &__result {
+                max-height: 250px;
+            }
+        }
+    }
+}

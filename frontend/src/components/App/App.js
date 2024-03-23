@@ -7,6 +7,8 @@ import LoginModal from '../LoginModal/LoginModal';
 import RegisterModal from '../RegisterModal/RegisterModal';
 import { Spinner } from 'flowbite-react';
 import TokenRefresher from '../TokenRefresher/TokenRefresher';
+import RotateToContinue from '../RotateToContinue/RotateToContinue';
+import { Toaster } from 'react-hot-toast';
 
 // Helper functions
 import getTokens from '../../services/getTokens';
@@ -54,19 +56,25 @@ const App = () => {
                 })
                 .catch((e) => {
                     console.log("Token refresh error", e.response?.data);
-                    toast('Ошибка при обновлении данных авторизации. Пожалуйста, обновите страницу.', {
-                        position: 'bottom-right',
-                        icon: '😰'
-                    });
+                    localStorage.removeItem('refresh_token');
                 });
         };
+        // eslint-disable-next-line
     }, []);
 
     return (
         <Router>
             <HelmetProvider>
                 <div className="App">
+                    <RotateToContinue/>
                     <TokenRefresher/>
+                    <Toaster
+                        toastOptions={{
+                            style: {
+                                borderRadius: '20px'
+                            }
+                        }}
+                    />
                     <Header />
                     <Suspense fallback={<div className='fallback'><Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}>
                         <Routes>
