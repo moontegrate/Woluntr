@@ -11,6 +11,12 @@ class Team(models.Model):
     time_create = models.DateTimeField(auto_now_add=True)
     opened = models.BooleanField(default=False)
 
+class TeamMember(models.Model):
+    member = models.ForeignKey(user, on_delete = models.CASCADE)
+    team = models.ForeignKey(Team, on_delete= models.CASCADE)
+    time_joined = models.DateTimeField(auto_now_add = True)
+
+
 class TeamInvite(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     user = models.ForeignKey(user, on_delete=models.CASCADE)

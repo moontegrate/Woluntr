@@ -3,7 +3,6 @@ from django.conf import settings
 from .models import Skill, CustomUser
 
 class skillSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = Skill
         fields = '__all__'

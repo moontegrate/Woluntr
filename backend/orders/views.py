@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework import permissions
+from django.core.exceptions import PermissionDenied
 from .models import Order, OrderComplete
 from .serializers import OrderSerializer, OrderCompleteSerializer
 
@@ -10,6 +11,16 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(customer=self.request.user)
+
+    def perform_update(self, serializer):
+        instance = self.get_object()
+
+        # Check if the user updating the order is the same as the order's customer
+        if self.request.user == instance.customer:
+            return super().perform_update(serializer)
+        else:
+            # Handle unauthorized update attempt
+            raise PermissionDenied("You do not have permission to update this order.")
 
 class OrderCompleteViewSet(viewsets.ModelViewSet):
     queryset = OrderComplete.objects.all()

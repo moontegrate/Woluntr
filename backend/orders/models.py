@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
 
 from teams.models import Team
 from users.models import Skill
@@ -25,6 +26,7 @@ class Order(models.Model):
     description = models.TextField(blank = True)
     difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, blank= True, null=True)
     location = models.CharField(max_length=255, blank = True)
+    coordinates = ArrayField(models.FloatField(),size=2,blank = True, null = True)
     skills = models.ManyToManyField(Skill, blank=True)
     img = models.ImageField(upload_to='images/orders/', blank=True)
     
