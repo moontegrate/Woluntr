@@ -5,22 +5,21 @@ from .models import Order, OrderComplete
 from teams.models import Team
 from teams.serializers import TeamTitleSerializer
 from users.serializers import skillSerializer
-
-user = settings.AUTH_USER_MODEL
-
+from users.models import CustomUser
 
 
 class UserNameSerializer(serializers.ModelSerializer):
     class Meta:
-        model = user
+        model = CustomUser
         fields = ['id','first_name', 'last_name']
 
 class OrderSerializer(serializers.ModelSerializer):
     customer = UserNameSerializer(read_only = True)
-    skills = skillSerializer(read_only = True, many = True)
+    skills = skillSerializer(read_only = True,many = True)
+    
     class Meta:
         model = Order
-        fields = ['id','title','description', 'difficulty', 'location', 'coordinates','skills', 'img', 'time_create','customer']
+        fields = ['id','title','description', 'difficulty', 'location', 'latitude','longitude','skills', 'img', 'time_create','customer']
     
 
 class OrderCompleteSerializer(serializers.ModelSerializer):
