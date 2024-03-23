@@ -97,7 +97,7 @@ class OrderStatusUpdateView(APIView):
     def post(self, request):
         if request.is_authenticated:
             OrderStatus = request.POST.get('status',False)
-            OrderCompleteId = request.POST.get('Order_Complete_Id',False)
+            OrderCompleteId = request.POST.get('order_Complete_id',False)
             if OrderStatus and OrderCompleteId:
                 try:
                     order_complete = OrderComplete.objects.get(pk = OrderCompleteId)
