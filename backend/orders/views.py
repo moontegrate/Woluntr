@@ -1,8 +1,9 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 from rest_framework import permissions
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
+
 from .models import Order, OrderComplete
 from .serializers import OrderSerializer, OrderCompleteSerializer
 
@@ -52,11 +53,11 @@ class OrderCompleteViewSet(viewsets.ModelViewSet):
         if self.request.POST.get('executor_team', False):
             return serializer.save(executor_team = self.request.POST['executor_team'])
         return serializer.save(executor = self.request.user)
-
-class MyOrderViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Order.objects.all
+    
+class MyOrderListAPIView(generics.ListAPIView):
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
-    
+
     def get_queryset(self):
-        return Order.objects.filter(customer = self.request.user)
+        user = self.request.user
+        return Order.objects.filter(customer=user)

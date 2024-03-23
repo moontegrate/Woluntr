@@ -26,7 +26,8 @@ class Order(models.Model):
     description = models.TextField(blank = True)
     difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, blank= True, null=True)
     location = models.CharField(max_length=255, blank = True)
-    coordinates = ArrayField(models.FloatField(),size=2,blank = True, null = True)
+    latitude = models.FloatField(blank = True, null = True)
+    longitude = models.FloatField(blank = True, null = True)
     skills = models.ManyToManyField(Skill, blank=True)
     img = models.ImageField(upload_to='images/orders/', blank=True)
     
