@@ -53,6 +53,10 @@ class OrderCompleteViewSet(viewsets.ModelViewSet):
             return serializer.save(executor_team = self.request.POST['executor_team'])
         return serializer.save(executor = self.request.user)
 
-class MyOrderViewSet(viewsets.ModelViewSet):
+class MyOrderViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Order.objects.all
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
     
+    def get_queryset(self):
+        return Order.objects.filter(customer = self.request.user)
