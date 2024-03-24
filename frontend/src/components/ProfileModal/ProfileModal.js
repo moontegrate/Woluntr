@@ -23,7 +23,7 @@ const ProfileModal = () => {
                         <img src={userData.profilePic ? userData.profilePic : 'https://cdn.lovattro.kz/woluntr/avatar.svg'} alt='profile'/>
                     </div>
                     <div className='profile-modal__name'>
-                        <p className='title'>{userData.firstName + ' ' + userData.lastName}</p>
+                        <p className='title'>{userData.first_name + ' ' + userData.last_name}</p>
                         <p className='subtitle'>{userData.email}</p>
                     </div>
                 </div>

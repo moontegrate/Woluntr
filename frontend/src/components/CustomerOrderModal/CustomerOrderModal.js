@@ -39,7 +39,24 @@ const CustomerOrderModal = () => {
                     </div>
                 </Modal.Header>
                 <Modal.Body>
-                    Тело окна
+                    <div className='customer-order-modal__info'>
+                        <div className='customer-order-modal__info-item'>
+                            <p className='customer-order-modal__label'>Описание задания:</p>
+                            <p className='customer-order-modal__value'>{order.title}</p>
+                        </div>
+                        <div className='customer-order-modal__info-item'>
+                            <p className='customer-order-modal__label'>Адрес:</p>
+                            <p className='customer-order-modal__value'>{order.location}</p>
+                        </div>
+                        <div className='customer-order-modal__info-item'>
+                            <p className='customer-order-modal__label'>Комментарий волонтёру:</p>
+                            <p className='customer-order-modal__value'>{order.description}</p>
+                        </div>
+                        <div className='customer-order-modal__info-item'>
+                            <p className='customer-order-modal__label'>Пользователь:</p>
+                            <p className='customer-order-modal__value'>{order.customer.first_name + ' ' + order.customer.last_name}</p>
+                        </div>
+                    </div>
                 </Modal.Body>
             </> : <div className='fallback'><Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}
             

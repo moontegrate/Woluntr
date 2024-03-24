@@ -27,7 +27,7 @@ const Profile = () => {
                 <img src={userData.profilePic ? userData.profilePic : 'https://cdn.lovattro.kz/woluntr/avatar.svg'} alt='profile'/>
             </div>}>
             <Dropdown.Header>
-                <span className="block text-sm">{userData.firstName + ' ' + userData.lastName}</span>
+                <span className="block text-sm">{userData.first_name + ' ' + userData.last_name}</span>
                 <span className="block truncate text-sm font-medium">{userData.email}</span>
             </Dropdown.Header>
             <Dropdown.Item onClick={() => dispatch(setProfileModal(true))}>Профиль</Dropdown.Item>

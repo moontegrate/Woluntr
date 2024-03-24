@@ -5,7 +5,7 @@
     height: 100vh;
 
     &__content {
-        padding: 140px 20px 20px;
+        padding: 120px 20px 20px;
         opacity: 0;
 
         animation-delay: 1s;
@@ -69,7 +69,7 @@
 
 .genericon {
     position: absolute;
-    top: -50px;
+    top: -40px;
     text-align: center;
     color: #686868;
     opacity: 0;
@@ -86,7 +86,7 @@
 
 .ptr-loading .loading {
     display: flex;
-    padding-bottom: 20px;
+    padding: 20px 0 10px;
     justify-content: center;
 }
 

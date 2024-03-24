@@ -12,13 +12,11 @@ import { getFormattedDate } from '../../services/getFormattedDate';
 // components
 import ReactPullTpRefresh from 'react-pull-to-refresh';
 import { Spinner } from 'flowbite-react';
-import { IoRefreshOutline } from "react-icons/io5";
 
 const CustomerOrdersList = () => {
     const dispatch = useDispatch();
 
     const orders = useSelector((state) => state.orders.orders);
-    const ordersLoadingState = useSelector((state) => state.orders.ordersLoadingState);
 
     const renderList = () => {
         const result = orders.map((order, i) => {
