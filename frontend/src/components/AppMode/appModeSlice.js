@@ -8,7 +8,10 @@ const appMode = createSlice({
     name: 'appMode',
     initialState,
     reducers: {
-        setMode: (state, action) => {state.appMode = action.payload}
+        setMode: (state, action) => {
+            state.appMode = action.payload;
+            localStorage.setItem('appMode', action.payload);
+        }
     }
 });
 

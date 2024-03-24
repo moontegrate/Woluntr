@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { postRequest } from "../../services/http";
+import { _server, postRequest } from "../../services/http";
 
 import { setIsAuthorized } from "../App/appUserSlice";
 import { setIsModalOpen } from "../LoginModal/loginModalSlice";
@@ -18,7 +18,7 @@ const initialState = {
 export const authorize = createAsyncThunk(
     'loginForm/authorize',
     async (data, {dispatch}) => {
-        const result = await postRequest('http://localhost:8000/auth/jwt/create/', data, {
+        const result = await postRequest(`${_server}/auth/jwt/create/`, data, {
             "Accept": "application/json"
         });
 

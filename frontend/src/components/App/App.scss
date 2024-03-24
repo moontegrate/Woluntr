@@ -11,7 +11,7 @@
         animation-delay: 1s;
         animation-fill-mode: forwards;
         animation-name: fadeDown;
-        animation-duration: 1s;
+        animation-duration: .7s;
     }
 }
 
@@ -77,7 +77,7 @@
     animation-delay: 1s;
     animation-fill-mode: forwards;
     animation-name: fadeDown;
-    animation-duration: 1s;
+    animation-duration: .7s;
 }
 
 .loading {
@@ -93,5 +93,13 @@
 @media (max-width: 925px) {
     .App__content {
         padding: 90px 10px 30px;
+    }
+
+    .genericon {
+        top: -50px;
+    }
+
+    .ptr-loading .loading {
+        padding: 10px 0 20px;
     }
 }

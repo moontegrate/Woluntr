@@ -2,7 +2,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // http
-import { getRequest } from "../../services/http";
+import { getRequest, _server } from "../../services/http";
 
 // notifications
 import toast from "react-hot-toast";
@@ -22,7 +22,7 @@ const initialState = {
 export const getCurrentUserInfo = createAsyncThunk(
     'appUser/getCurrentUserInfo',
     async () => {
-        return await getRequest('http://localhost:8000/api/v1/users/me/', {
+        return await getRequest(`${_server}/api/v1/users/me/`, {
             "Accept": "application/json",
             'Authorization': `JWT ${localStorage.getItem('access_token')}`
         });

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsModalOpen as setProfileModal } from '../../ProfileModal/profileModalSlice';
 import { setIsModalOpen as setSettingsModal } from '../../SettingsModal/settingsModalSlice';
 import { setIsAuthorized } from '../../App/appUserSlice';
+import { setMode } from '../../AppMode/appModeSlice';
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Profile = () => {
         localStorage.removeItem('access_token');
         localStorage.removeItem('rememberMe');
         dispatch(setIsAuthorized(false));
+        dispatch(setMode('customer'));
     };
 
     return (

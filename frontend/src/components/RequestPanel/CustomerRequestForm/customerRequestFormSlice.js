@@ -2,7 +2,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // http
-import { postRequest } from "../../../services/http";
+import { _server, postRequest } from "../../../services/http";
 
 // notifications
 import toast from "react-hot-toast";
@@ -23,7 +23,7 @@ const initialState = {
 export const sendFormData = createAsyncThunk(
     'customRequestForm/sendFormData',
     async (data) => {
-        return await postRequest('http://localhost:8000/api/v1/orders/', data, {
+        return await postRequest(`${_server}/api/v1/orders/`, data, {
             "Content-Type": "multipart/form-data",
             "Accept": "application/json",
             'Authorization': `JWT ${localStorage.getItem('access_token')}`
@@ -56,7 +56,8 @@ const customerRequestFormSlice = createSlice({
                 icon: '🫢'
             });
             state.formState = 'idle';
-        });
+        })
+        .addDefaultCase(() => {})
     }
 });
 

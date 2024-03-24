@@ -24,6 +24,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUserInfo, setIsAuthorized } from './appUserSlice';
 import { getAllOrders } from './ordersSlice';
+import { setMode } from '../AppMode/appModeSlice';
 
 // layouts for routes
 const IndexLayout = lazy(() => import("../../pages/layouts/index"));
@@ -36,29 +37,42 @@ const TeamsLayout = lazy(() => import("../../pages/layouts/teams"));
 // lazy components
 const ProfileModal = lazy(() => import("../../components/ProfileModal/ProfileModal"));
 const SettingsModal = lazy(() => import("../../components/SettingsModal/SettingsModal"));
+const VolunteerOrderModal = lazy(() => import("../../components/VolunteerOrderModal/VolunteerOrderModal"));
 
 const App = () => {
     const dispatch = useDispatch();
 
+    const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
+    const appMode = useSelector((state) => state.appMode.appMode);
     const isProfileModalOpen = useSelector((state) => state.profileModal.isModalOpen);
     const isSettingsModalOpen = useSelector((state) => state.settingsModal.isModalOpen);
+    const isVolunteerOrderModalOpen = useSelector((state) => state.volunteerOrderModal.isModalOpen);
 
     useEffect(() => {
         if (localStorage.getItem('refresh_token') && localStorage.getItem('rememberMe')) {
             getTokens()
-                .then(() => {
-                    dispatch(setIsAuthorized(true));
-                    dispatch(getCurrentUserInfo());
-                    dispatch(getAllOrders());
-                })
-                .catch((e) => {
-                    console.log("Token refresh error", e.response?.data);
-                    localStorage.removeItem('refresh_token');
-                });
+            .then(() => {
+                dispatch(setIsAuthorized(true));
+                dispatch(getCurrentUserInfo());
+                dispatch(getAllOrders());
+            })
+            .catch((e) => {
+                console.log("Token refresh error", e.response?.data);
+                localStorage.removeItem('refresh_token');
+            });
+
+            if (localStorage.getItem('appMode')) {
+                dispatch(setMode(localStorage.getItem('appMode')));
+            };
         } else {
             localStorage.removeItem('refresh_token');
             localStorage.removeItem('access_token');
             localStorage.removeItem('rememberMe');
+
+            if (localStorage.getItem('appMode')) {
+                localStorage.removeItem('appMode');
+                dispatch(setMode('customer'));
+            };
         };
         // eslint-disable-next-line
     }, []);
@@ -93,6 +107,7 @@ const App = () => {
                 <Suspense fallback={<div className='fallback'><Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}>
                     {isProfileModalOpen ? <ProfileModal/> : null}
                     {isSettingsModalOpen ? <SettingsModal/> : null}
+                    {appMode === 'volunteer' && isVolunteerOrderModalOpen ? <VolunteerOrderModal/> : null}
                 </Suspense>
             </HelmetProvider>
         </Router>

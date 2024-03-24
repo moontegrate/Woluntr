@@ -17,6 +17,7 @@ import { setFormData } from './loginFormSlice';
 import { authorize } from './loginFormSlice';
 import { setIsModalOpen as openRegModal } from '../RegisterModal/registerModalSlice';
 import { getCurrentUserInfo } from '../App/appUserSlice';
+import { getAllOrders } from '../App/ordersSlice';
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const LoginForm = () => {
             'password': data.password
         })).finally(() => {
             dispatch(getCurrentUserInfo());
+            dispatch(getAllOrders());
         });
 
         if (data.rememberMe) {

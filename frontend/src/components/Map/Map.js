@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentLocation } from './mapSlice';
 import { setOrders } from '../App/ordersSlice';
 
+// http
+import { _host } from '../../services/http';
+
 export const _key = '8aa9d22a-14aa-408d-bbdd-faa892eb1d05'
 
 const Map = () => {
@@ -75,7 +78,7 @@ const Map = () => {
                     const [longitude, latitude] = coordinates;
                     markerInstance = new mapglAPI.Marker(mapInstance, {
                         coordinates: [longitude, latitude],
-                        icon: 'http://localhost:3000/user-marker.svg',
+                        icon: `${_host}:3000/user-marker.svg`,
                         size: [30, 30]
                     });
                     mapInstance.setCenter(coordinates);

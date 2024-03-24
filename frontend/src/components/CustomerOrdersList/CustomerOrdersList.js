@@ -4,7 +4,7 @@ import './customerOrdersList.scss';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsModalOpen, setTargetOrder } from '../CustomerOrderModal/customerOrderModalSlice';
-import { getAllOrders } from '../App/ordersSlice';
+import { getAllPersonalOrders } from './customerOrdersListSlice';
 
 // services
 import { getFormattedDate } from '../../services/getFormattedDate';
@@ -12,11 +12,19 @@ import { getFormattedDate } from '../../services/getFormattedDate';
 // components
 import ReactPullTpRefresh from 'react-pull-to-refresh';
 import { Spinner } from 'flowbite-react';
+import { useEffect } from 'react';
 
 const CustomerOrdersList = () => {
     const dispatch = useDispatch();
 
-    const orders = useSelector((state) => state.orders.orders);
+    useEffect(() => {
+        dispatch(getAllPersonalOrders());
+
+        // eslint-disable-next-line
+    }, []);
+
+    const orders = useSelector((state) => state.customerOrdersList.orders);
+    const ordersLoadingState = useSelector((state) => state.customerOrdersList.ordersLoadingState);
 
     const renderList = () => {
         const result = orders.map((order, i) => {
@@ -71,14 +79,14 @@ const CustomerOrdersList = () => {
 
     return (
         <ReactPullTpRefresh
-            onRefresh={() => dispatch(getAllOrders())}
+            onRefresh={() => dispatch(getAllPersonalOrders())}
             icon={<div className='genericon genericon-next'>Потяните вниз, чтобы обновить</div>}
             loading={<div className='loading'>
                 <Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="md" />
             </div>}
         >
             <div className='customer-orders-list'>
-                {renderList()}
+            {orders && ordersLoadingState === 'idle' ? renderList() : <Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="md" />}
             </div>
         </ReactPullTpRefresh>
     );

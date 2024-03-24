@@ -8,34 +8,34 @@ import { getRequest, _server } from "../../services/http";
 import toast from "react-hot-toast";
 
 const initialState = {
-    orders: [],
+    orders: null,
     ordersLoadingState: 'idle',
 };
 
-export const getAllOrders = createAsyncThunk(
-    'orders/getAllOrders',
+export const getAllPersonalOrders = createAsyncThunk(
+    'customerOrdersList/getAllPersonalOrders',
     async () => {
-        return await getRequest(`${_server}/api/v1/orders/`, {
+        return await getRequest(`${_server}/api/v1/orders/my/`, {
             "Accept": "application/json",
             'Authorization': `JWT ${localStorage.getItem('access_token')}`
         });
     }
 );
 
-const orders = createSlice({
-    name: 'orders',
+const customerOrdersList = createSlice({
+    name: 'customerOrdersList',
     initialState,
     reducers: {
         setOrders: (state, action) => {state.orders = action.payload}
     },
     extraReducers: (builder) => {
         builder
-        .addCase(getAllOrders.pending, (state) => {state.ordersLoadingState = 'fetching'})
-        .addCase(getAllOrders.fulfilled, (state, action) => {
+        .addCase(getAllPersonalOrders.pending, (state) => {state.ordersLoadingState = 'fetching'})
+        .addCase(getAllPersonalOrders.fulfilled, (state, action) => {
             state.ordersLoadingState = 'idle';
             state.orders = action.payload;
         })
-        .addCase(getAllOrders.rejected, () => {
+        .addCase(getAllPersonalOrders.rejected, () => {
             toast('Упс! Что-то пошло не так.', {
                 position: 'bottom-right',
                 icon: '😰'
@@ -45,5 +45,5 @@ const orders = createSlice({
     }
 });
 
-export default orders.reducer;
-export const { setOrders } = orders.actions;
+export default customerOrdersList.reducer;
+export const { setOrders } = customerOrdersList.actions;

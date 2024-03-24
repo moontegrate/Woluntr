@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { postRequest } from "../../services/http";
+import { _server, postRequest } from "../../services/http";
 
 // Исходные состояния (состояния по умолчанию)
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
 export const register = createAsyncThunk(
     'registerForm/register',
     async (data, {dispatch}) => {
-        const response = await postRequest('http://localhost:8000/auth/users/', data, {
+        const response = await postRequest(`${_server}/auth/users/`, data, {
             "Content-Type": "multipart/form-data",
             "Accept": "application/json"
         });

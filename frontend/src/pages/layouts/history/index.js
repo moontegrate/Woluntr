@@ -1,20 +1,23 @@
 // Работа с метаданными
 import { Helmet } from "react-helmet-async"
 
-// Redux
-import { useSelector } from "react-redux";
+// components
+import VolunteerOrdersList from "../../../components/VolunteerOrdersList/VolunteerOrdersList";
+import VolunteerOrderPersonalModal from "../../../components/VolunteerOrderPersonalModal/VolunteerOrderPersonalModal";
 
 const HistoryLayout = () => {
-    const appMode = useSelector((state) => state.appMode.appMode);
-
     return (
         <>
             <Helmet>
                 <meta name="description" content="Woluntr volunteers app" />
                 <title>История заданий - Woluntr</title>
-                <link rel="icon" href={appMode === 'customer' ? "https://cdn.lovattro.kz/woluntr/logo.svg" : "https://cdn.lovattro.kz/woluntr/logo-volunteer.svg"} />                
+                <link rel="icon" href="https://cdn.lovattro.kz/woluntr/logo-volunteer.svg"/>                
             </Helmet>
             
+            <div className="App__content">
+                <VolunteerOrdersList/>
+                <VolunteerOrderPersonalModal/>
+            </div>
         </>
     );
 };
