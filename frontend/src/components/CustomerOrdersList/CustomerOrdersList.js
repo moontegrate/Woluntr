@@ -4,14 +4,21 @@ import './customerOrdersList.scss';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsModalOpen, setTargetOrder } from '../CustomerOrderModal/customerOrderModalSlice';
+import { getAllOrders } from '../App/ordersSlice';
 
 // services
 import { getFormattedDate } from '../../services/getFormattedDate';
+
+// components
+import ReactPullTpRefresh from 'react-pull-to-refresh';
+import { Spinner } from 'flowbite-react';
+import { IoRefreshOutline } from "react-icons/io5";
 
 const CustomerOrdersList = () => {
     const dispatch = useDispatch();
 
     const orders = useSelector((state) => state.orders.orders);
+    const ordersLoadingState = useSelector((state) => state.orders.ordersLoadingState);
 
     const renderList = () => {
         const result = orders.map((order, i) => {
@@ -65,9 +72,17 @@ const CustomerOrdersList = () => {
     };
 
     return (
-        <div className='customer-orders-list'>
-            {renderList()}
-        </div>
+        <ReactPullTpRefresh
+            onRefresh={() => dispatch(getAllOrders())}
+            icon={<div className='genericon genericon-next'>Потяните вниз, чтобы обновить</div>}
+            loading={<div className='loading'>
+                <Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="md" />
+            </div>}
+        >
+            <div className='customer-orders-list'>
+                {renderList()}
+            </div>
+        </ReactPullTpRefresh>
     );
 };
 

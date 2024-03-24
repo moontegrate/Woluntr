@@ -10,7 +10,7 @@ const OrdersLayout = () => {
     const appMode = useSelector((state) => state.appMode.appMode);
 
     return (
-        <div>
+        <>
             <Helmet>
                 <meta name="description" content="Woluntr volunteers app" />
                 <title>Мои задания - Woluntr</title>
@@ -21,7 +21,7 @@ const OrdersLayout = () => {
                 <CustomerOrdersList/>
                 <CustomerOrderModal/>
             </div>
-        </div>
+        </>
     );
 };
 

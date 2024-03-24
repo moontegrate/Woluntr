@@ -13,7 +13,7 @@ const IndexLayout = () => {
     const appMode = useSelector((state) => state.appMode.appMode);
 
     return (
-        <div>
+        <>
             <Helmet>
                 <meta name="description" content="Woluntr volunteers app" />
                 <title>Главная страница - Woluntr</title>
@@ -22,7 +22,7 @@ const IndexLayout = () => {
             <Map/>
             <RequestPanel/>
             <AppMode/>
-        </div>
+        </>
     );
 };
 
