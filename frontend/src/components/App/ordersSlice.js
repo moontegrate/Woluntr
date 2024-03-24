@@ -8,7 +8,7 @@ import { getRequest, _server } from "../../services/http";
 import toast from "react-hot-toast";
 
 const initialState = {
-    orders: [],
+    orders: null,
     ordersLoadingState: 'idle',
 };
 

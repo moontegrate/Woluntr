@@ -3,7 +3,7 @@
 .header {
     width: 100%;
     padding: 20px;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 2;
@@ -28,7 +28,7 @@
         border-radius: 40px;
         height: 95px;
         width: 100%;
-        box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.15);
+        box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.1);
 
         &-logo {
             cursor: pointer;

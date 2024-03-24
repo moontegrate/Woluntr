@@ -1,11 +1,8 @@
 @import '../../style/variables.scss';
 
 .App {
-    overflow: hidden;
-    height: 100vh;
-
     &__content {
-        padding: 120px 20px 20px;
+        padding-top: 70px;
         opacity: 0;
 
         animation-delay: 1s;
@@ -13,6 +10,15 @@
         animation-name: fadeDown;
         animation-duration: .7s;
     }
+}
+
+.non-scroll-block {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
 }
 
 .fallback {
@@ -59,47 +65,4 @@
     color: rgb(255, 70, 82);
     font-size: 0.875rem;
     line-height: 1.25rem;
-}
-
-.ptr-element {
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
-
-.genericon {
-    position: absolute;
-    top: -40px;
-    text-align: center;
-    color: #686868;
-    opacity: 0;
-
-    animation-delay: 1s;
-    animation-fill-mode: forwards;
-    animation-name: fadeDown;
-    animation-duration: .7s;
-}
-
-.loading {
-    display: none;
-}
-
-.ptr-loading .loading {
-    display: flex;
-    padding: 20px 0 10px;
-    justify-content: center;
-}
-
-@media (max-width: 925px) {
-    .App__content {
-        padding: 90px 10px 30px;
-    }
-
-    .genericon {
-        top: -50px;
-    }
-
-    .ptr-loading .loading {
-        padding: 10px 0 20px;
-    }
 }

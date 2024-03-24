@@ -3,6 +3,11 @@
 }
 
 @media (max-device-width: 925px) and (orientation: landscape) {
+    * {
+        height: 75%;
+        overflow: hidden;
+    }
+    
     .rotate-to-continue {
         position: absolute;
         top: 0;
@@ -17,6 +22,7 @@
         justify-content: center;
 
         p {
+            height: auto;
             font-weight: 700;
             margin-bottom: 20px;
         }

@@ -1,11 +1,25 @@
-// Работа с метаданными
+// metadata
 import { Helmet } from "react-helmet-async"
 
 // components
 import VolunteerOrdersList from "../../../components/VolunteerOrdersList/VolunteerOrdersList";
 import VolunteerOrderPersonalModal from "../../../components/VolunteerOrderPersonalModal/VolunteerOrderPersonalModal";
 
+// Redux
+import { useSelector } from "react-redux";
+
+// hooks
+import { useNavigate } from "react-router";
+
 const HistoryLayout = () => {
+    const navigate = useNavigate();
+
+    const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
+
+    if (!isAuthorized) {
+        navigate('/');
+    };
+
     return (
         <>
             <Helmet>

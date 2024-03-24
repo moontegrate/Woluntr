@@ -10,7 +10,7 @@ import { getAllPersonalOrders, getOrder } from './volunteerOrdersListSlice';
 import { getFormattedDate } from '../../services/getFormattedDate';
 
 // components
-import ReactPullTpRefresh from 'react-pull-to-refresh';
+import PullToRefresh from 'react-simple-pull-to-refresh';
 import { Spinner } from 'flowbite-react';
 import { useEffect } from 'react';
 
@@ -54,17 +54,17 @@ const VolunteerOrdersList = () => {
     };
 
     return (
-        <ReactPullTpRefresh
+        <PullToRefresh
             onRefresh={() => dispatch(getAllPersonalOrders())}
-            icon={<div className='genericon genericon-next'>Потяните вниз, чтобы обновить</div>}
-            loading={<div className='loading'>
+            pullingContent={<div className='genericon genericon-next'>Потяните вниз, чтобы обновить</div>}
+            refreshingContent={<div className='loading'>
                 <Spinner theme={{ color: { info: "fill-volunteer-color" } }} aria-label="Extra large spinner example" size="md" />
             </div>}
         >
             <div className='volunteer-orders-list'>
                 {orders && ordersLoadingState === 'idle' ? renderList() : <Spinner theme={{ color: { info: "fill-volunteer-color" } }} aria-label="Extra large spinner example" size="md" />}
             </div>
-        </ReactPullTpRefresh>
+        </PullToRefresh>
     );
 };
 

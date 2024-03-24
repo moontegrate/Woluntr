@@ -13,8 +13,6 @@ const getTokens = async () => {
     const { access } = response;
 
     localStorage.setItem("access_token", access);
-
-    return access;
 };
 
 export default getTokens;

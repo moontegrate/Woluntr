@@ -5,9 +5,22 @@ import { Helmet } from "react-helmet-async"
 import { useSelector } from "react-redux";
 import CustomerOrdersList from "../../../components/CustomerOrdersList/CustomerOrdersList";
 import CustomerOrderModal from "../../../components/CustomerOrderModal/CustomerOrderModal";
+import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 const OrdersLayout = () => {
+
+    const navigate = useNavigate();
+
+    const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
     const appMode = useSelector((state) => state.appMode.appMode);
+
+    useEffect(() => {
+        if (!isAuthorized) {
+            navigate('/');
+        };
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <>

@@ -9,13 +9,18 @@ import { setIsModalOpen, setTargetOrder } from '../../VolunteerOrderModal/volunt
 import sortListByField from '../../../services/sortList';
 import { getFormattedDate } from '../../../services/getFormattedDate';
 
+// components
+import { Spinner } from 'flowbite-react';
+
 const VolunteerOrdersPanel = () => {
     const dispatch = useDispatch();
 
     const orders = useSelector((state) => state.orders.orders);
-    const sortedOrders = sortListByField(orders, 'time_create', true);
+    const ordersLoadingState = useSelector((state) => state.orders.ordersLoadingState);
 
     const renderList = () => {
+        const sortedOrders = sortListByField(orders || [], 'time_create', true);
+
         const result = sortedOrders.map((order, i) => {
             return (
                 <div key={i} className='orders-panel__item' onClick={() => {
@@ -45,7 +50,7 @@ const VolunteerOrdersPanel = () => {
                 <span>Новые задания</span>
             </div>
             <div className='orders-panel__list'>
-                {renderList()}
+                {orders || ordersLoadingState === 'idle' ? renderList() : <Spinner theme={{ color: { info: "fill-volunteer-color" } }} aria-label="Extra large spinner example" size="md" />}
             </div>
         </div>
     );

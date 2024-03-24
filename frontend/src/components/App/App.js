@@ -14,8 +14,11 @@ import { Toaster } from 'react-hot-toast';
 import getTokens from '../../services/getTokens';
 
 // Routing
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+// hooks
+import { useEffect, useLayoutEffect } from 'react';
 
 // React Helmet
 import { HelmetProvider } from "react-helmet-async";
@@ -42,25 +45,26 @@ const VolunteerOrderModal = lazy(() => import("../../components/VolunteerOrderMo
 const App = () => {
     const dispatch = useDispatch();
 
-    const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
     const appMode = useSelector((state) => state.appMode.appMode);
     const isProfileModalOpen = useSelector((state) => state.profileModal.isModalOpen);
     const isSettingsModalOpen = useSelector((state) => state.settingsModal.isModalOpen);
     const isVolunteerOrderModalOpen = useSelector((state) => state.volunteerOrderModal.isModalOpen);
 
+    useLayoutEffect(() => {
+        getTokens()
+        .then(() => {
+            dispatch(setIsAuthorized(true));
+            dispatch(getCurrentUserInfo());
+        })
+        .catch((e) => {
+            console.log("Token refresh error", e.response?.data);
+            localStorage.removeItem('refresh_token');
+        });
+        // eslint-disable-next-line
+    }, []);
+
     useEffect(() => {
         if (localStorage.getItem('refresh_token') && localStorage.getItem('rememberMe')) {
-            getTokens()
-            .then(() => {
-                dispatch(setIsAuthorized(true));
-                dispatch(getCurrentUserInfo());
-                dispatch(getAllOrders());
-            })
-            .catch((e) => {
-                console.log("Token refresh error", e.response?.data);
-                localStorage.removeItem('refresh_token');
-            });
-
             if (localStorage.getItem('appMode')) {
                 dispatch(setMode(localStorage.getItem('appMode')));
             };
@@ -74,6 +78,8 @@ const App = () => {
                 dispatch(setMode('customer'));
             };
         };
+
+        dispatch(getAllOrders());
         // eslint-disable-next-line
     }, []);
 

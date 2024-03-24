@@ -8,9 +8,20 @@ import RequestPanel from "../../../components/RequestPanel/RequestPanel";
 
 // Redux
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const IndexLayout = () => {
     const appMode = useSelector((state) => state.appMode.appMode);
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        document.body.style.height = '100vh';
+
+        return () => {
+            document.body.style.overflow = 'auto';
+            document.body.style.height = 'auto';
+        }
+    }, [])
 
     return (
         <>
@@ -19,9 +30,11 @@ const IndexLayout = () => {
                 <title>Главная страница - Woluntr</title>
                 <link rel="icon" href={appMode === 'customer' ? "https://cdn.lovattro.kz/woluntr/logo.svg" : "https://cdn.lovattro.kz/woluntr/logo-volunteer.svg"} />                
             </Helmet>
-            <Map/>
-            <RequestPanel/>
-            <AppMode/>
+            <div className="non-scroll-block">
+                <Map/>
+                <RequestPanel/>
+                <AppMode/>
+            </div>
         </>
     );
 };
