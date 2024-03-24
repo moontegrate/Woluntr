@@ -1,17 +1,31 @@
-// Стилистические импорты
+// Style imports
 import './map.scss';
 import { PiNavigationArrowBold } from "react-icons/pi";
 
-// Прочие библиотеки
+// Libs
 import { load } from '@2gis/mapgl';
 
-// Хуки
+// Hooks
 import { useEffect, useState } from 'react';
 
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentLocation } from './mapSlice';
+import { setOrders } from '../App/ordersSlice';
+
+// http
+import { _host } from '../../services/http';
+
+export const _key = '8aa9d22a-14aa-408d-bbdd-faa892eb1d05'
+
 const Map = () => {
+    const dispatch = useDispatch();
+
+    const orders = useSelector((state) => state.orders.orders);
+
     const [map, setMap] = useState(null);
     // eslint-disable-next-line
-    const [marker, setMarker] = useState(null);
+    const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
     const [zoom, setZoom] = useState(10);
 
     const getUserLocation = () => {
@@ -31,38 +45,61 @@ const Map = () => {
         });
     };
 
-    useEffect(() => {
-        load().then((mapglAPI) => {
-            getUserLocation().then((coordinates) => {
-                const [longitude, latitude] = coordinates;
-
-                const map = new mapglAPI.Map('map-wrapper', {
-                    key: '8aa9d22a-14aa-408d-bbdd-faa892eb1d05',
-                    center: [longitude, latitude],
-                    zoom: 10,
-                    zoomControl: false
-                });
-                setMap(map);
-
-                const marker = new mapglAPI.Marker(map, {
-                    coordinates: [longitude, latitude],
-                    icon: 'https://cdn.lovattro.kz/woluntr/user-marker.svg',
-                    size: [30, 30]
-                });
-                setMarker(marker);
-            })
-            .catch(() => {
-                const map = new mapglAPI.Map('map-wrapper', {
-                    key: '8aa9d22a-14aa-408d-bbdd-faa892eb1d05',
-                    center: [71.43, 51.12],
-                    zoom: 10,
-                    zoomControl: false
-                });
-                setMap(map);
-            });
-
-            
+    if (orders) {
+        orders.forEach((order) => {
+            console.log(order)
+            if (order.latitude && order.longitude) {
+                // new map.Marker()
+            }
         });
+    };
+
+    useEffect(() => {
+        let mapInstance = null;
+        let markerInstance = null;
+
+        const loadMap = async () => {
+            load()
+            .then((mapglAPI) => {
+                try {
+                    mapInstance = new mapglAPI.Map('map-wrapper', {
+                        key: _key,
+                        center: [71.43, 51.12],
+                        zoom: 10,
+                        zoomControl: false
+                    });
+                    setMap(mapInstance);
+                } catch (error) {
+                    console.error('Error loading map:', error);
+                };
+
+                getUserLocation()
+                .then((coordinates) => {
+                    const [longitude, latitude] = coordinates;
+                    markerInstance = new mapglAPI.Marker(mapInstance, {
+                        coordinates: [longitude, latitude],
+                        icon: `${_host}:3000/user-marker.svg`,
+                        size: [30, 30]
+                    });
+                    mapInstance.setCenter(coordinates);
+                    mapInstance.setZoom(15);
+                    dispatch(setCurrentLocation(coordinates));
+                    setCurrentLocationMarker(markerInstance);
+                }).catch((e) => console.error(e));
+            })
+            .catch((e) => console.log(e));
+        };
+
+        loadMap();
+
+        return () => {
+            if (mapInstance) {
+                mapInstance.destroy();
+            }
+            if (markerInstance) {
+                markerInstance.destroy();
+            }
+        };
         // eslint-disable-next-line
     }, []);
 
@@ -81,9 +118,16 @@ const Map = () => {
                 }}>-</div>
             </div>
             <div className='current-location' onClick={() => {
-                getUserLocation().then((coordinates) => {
+                getUserLocation()
+                .then((coordinates) => {
                     map.setCenter(coordinates);
-                });
+                    map.setZoom(15);
+                    dispatch(setCurrentLocation(coordinates));
+                    if (currentLocationMarker) {
+                        currentLocationMarker.setCoordinates(coordinates);
+                    };
+                })
+                .catch((e) => console.error(e));
             }}>
                 <PiNavigationArrowBold/>
             </div>

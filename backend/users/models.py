@@ -1,29 +1,43 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Table
-from sqlalchemy.orm import relationship
-from backend.database import Base
+from django.db import models
+from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.utils.translation import gettext_lazy as _
 
-association_table = Table('user_skills', Base.metadata,
-                          Column('user_id', Integer, ForeignKey('users.id')),
-                          Column('skill_id', Integer, ForeignKey('skills.id'))
-                         )
+from .managers import UserManager
 
-class User(Base):
-    __tablename__ = 'users'
+from teams.models import Team
 
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    username = Column(String, unique=True, index=True)
-    password = Column(String)
-    avatar = Column(String)  # File path or reference
-    company = Column(String)
-    rating_volunteer = Column(Integer)
-    rating_customer = Column(Integer)
+class Skill(models.Model):
+    name = models.CharField(max_length=100)
 
-    skills = relationship("Skill", secondary=association_table, backref="users")
-    teams = relationship("Team", back_populates="leader")
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(_('email'), unique=True)
+    nickname = models.CharField(max_length = 20, blank = True)
+    first_name = models.CharField(_('name'), max_length=30, blank=True)
+    last_name = models.CharField(_('surname'), max_length=30, blank=True)
+    date_joined = models.DateTimeField(_('registered'), auto_now_add=True)
+    is_active = models.BooleanField(_('is_active'), default=True)
+    is_superuser = models.BooleanField(_('is_superuser'), default=False)
+    is_staff = models.BooleanField(_('is_staff'), default=False)
+    avatar = models.ImageField(upload_to='images/avatars/', null=True, blank=True)
+    checked_email = models.BooleanField(default = False)
+    teams = models.ManyToManyField(Team, blank=True)
+    organization_name = models.CharField(blank = True, null = True, max_length = 200)
+    skills = models.ManyToManyField(Skill, blank=True)
 
-class Skill(Base):
-    __tablename__ = 'skills'
+    objects = UserManager()
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    class Meta:
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
+
+    def get_full_name(self):
+        '''
+        Возвращает first_name и last_name с пробелом между ними.
+        '''
+        full_name = '%s %s' % (self.first_name, self.last_name)
+        return full_name.strip()
+    

@@ -1,167 +1,172 @@
 @import '../../style/variables.scss';
 
 .header {
-  width: 100%;
-  padding: 20px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  opacity: 0;
-
-  animation-delay: 1s;
-  animation-fill-mode: forwards;
-  animation-name: fadeDown;
-  animation-duration: 1s;
-
-  &__burger {
-    display: none;
-  }
-
-  &__bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 50px;
-    padding: 15px 27px;
-    background-color: #FFF;
-    border-radius: 40px;
-    height: 95px;
     width: 100%;
-    box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0;
 
-    &-logo {
-      cursor: pointer;
-      min-width: 135px;
-      height: 30px;
-      transition: .2s all;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    animation-name: fadeDown;
+    animation-duration: .7s;
 
-      img {
-        height: 30px;
-      }
-
-      &:hover {
-        transform: scale(1.05);
-      }
-    }
-
-    &-menu {
-      display: flex;
-      gap: 50px;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 4;
-
-      &-item {
-        cursor: pointer;
-        color: #24494F;
-        font-family: "Gotham Pro";
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 400;
-        text-align: center;
-        line-height: 20px;
-        transition: .2s color;
-
-        &-active {
-          font-weight: 700;
-        }
-      }
-    }
-  }
-
-  &__login-btn {
-    height: 50px;
-    width: 50px;
-    padding: 10px;
-    box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.05);
-    
-    span {
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    &:hover {
-      box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.1);
-    }
-  }
-}
-
-@media (max-width: 1000px) {
-  .header {
-    &__bar {
-      gap: 20px;
-
-      &-menu {
-        gap: 20px;
-      }
-    }
-  }
-}
-
-@media (max-width: 925px) {
-  .header {
     &__burger {
-      display: block;
+        display: none;
     }
 
     &__bar {
-      position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 50px;
+        padding: 15px 27px;
+        background-color: #FFF;
+        border-radius: 40px;
+        height: 95px;
+        width: 100%;
+        box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.15);
 
-      &-menu {
-        position: absolute;
-        top: -10px;
-        left: -10px;
-        padding: 40px;
-        flex-direction: column;
-        justify-content: start;
-        align-items: start;
-        background-color: #fff;
-        box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.1);
-        transform: translateX(-120%);
-        transition: .2s transform;
-        z-index: 4;
-
-        &-wrapper {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 100%;
-          width: 100%;
-          background-color: #000;
-          display: none;
-          opacity: 0;
-          z-index: 4;
-          transition: .2s all;
-
-          &-active {
-            display: block;
-            opacity: 0.1;
+        &-logo {
+            cursor: pointer;
+            min-width: 135px;
+            height: 30px;
             transition: .2s all;
-          }
+
+            img {
+                height: 30px;
+            }
+
+            &:hover {
+                transform: scale(1.05);
+            }
         }
 
-        &-active {
-          transform: translateX(0);
+        &-menu {
+            display: flex;
+            gap: 50px;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 4;
+
+            &-item {
+                cursor: pointer;
+                color: #24494F;
+                font-family: "Gotham Pro";
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 400;
+                text-align: center;
+                line-height: 20px;
+                transition: .2s color;
+
+                &-active {
+                    font-weight: 700;
+                }
+            }
         }
-      }
-    }
-  }
-}
-
-@media (max-width: 560px) {
-  .header {
-    padding: 10px;
-
-    &__bar {
-      height: 60px;
-      padding: 10px;
     }
 
     &__login-btn {
-      width: 40px;
-      min-width: 40px;
-      height: 40px;
+        height: 50px;
+        width: 50px;
+        padding: 10px;
+        box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.05);
+
+        span {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        &:hover {
+            box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.1);
+        }
     }
-  }
+}
+
+@media (max-width: 1000px) {
+    .header {
+        &__bar {
+            gap: 20px;
+
+            &-menu {
+                gap: 20px;
+            }
+        }
+    }
+}
+
+@media (max-width: 925px) {
+    .header {
+        &__burger {
+            display: block;
+        }
+
+        &__bar {
+            position: relative;
+
+            &-menu {
+                position: absolute;
+                top: -20px;
+                left: -20px;
+                padding: 40px;
+                flex-direction: column;
+                justify-content: start;
+                align-items: start;
+                background-color: #fff;
+                box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.1);
+                transform: translateX(-120%);
+                transition: .2s transform;
+                z-index: 4;
+
+                &-wrapper {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                    background-color: #000;
+                    display: none;
+                    opacity: 0;
+                    z-index: 4;
+                    transition: .2s all;
+
+                    &-active {
+                        display: block;
+                        opacity: 0.1;
+                        transition: .2s all;
+                    }
+                }
+
+                &-active {
+                    transform: translateX(0);
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 560px) {
+    .header {
+        padding: 10px;
+
+        &__bar {
+            height: 60px;
+            padding: 10px;
+
+            &-menu {
+                top: -10px;
+                left: -10px;
+            }
+        }
+
+        &__login-btn {
+            width: 40px;
+            min-width: 40px;
+            height: 40px;
+        }
+    }
 }

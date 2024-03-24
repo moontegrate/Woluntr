@@ -34,11 +34,11 @@ export const ModalTheme = {
         "inner": "relative rounded-[30px] bg-white shadow dark:bg-gray-700 flex flex-col max-h-[90dvh]"
     },
     "body": {
-        "base": "p-10 flex-1 overflow-auto",
+        "base": "p-7 flex-1 overflow-auto",
         "popup": "pt-0"
     },
     "header": {
-        "base": "flex items-start justify-between rounded-t dark:border-gray-600 border-b p-5",
+        "base": "flex items-start justify-between rounded-t dark:border-gray-600 border-b p-7",
         "popup": "p-2 border-b-0",
         "title": "text-xl font-medium text-gray-900 dark:text-white",
         "close": {

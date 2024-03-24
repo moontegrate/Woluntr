@@ -1,45 +1,105 @@
 @import '../../style/variables.scss';
 
 .App {
-  overflow: hidden;
-  height: 100%
+    overflow: hidden;
+    height: 100vh;
+
+    &__content {
+        padding: 120px 20px 20px;
+        opacity: 0;
+
+        animation-delay: 1s;
+        animation-fill-mode: forwards;
+        animation-name: fadeDown;
+        animation-duration: .7s;
+    }
 }
 
 .fallback {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .customer {
-  &-bg-accent {
-    background-color: $main-accent-color;
-  }
-
-  &-hover {
-    &:hover {
-      color: $main-color;
+    &-bg-accent {
+        background-color: $main-accent-color;
     }
-  }
+
+    &-hover {
+        &:hover {
+            color: $main-color;
+        }
+    }
 }
 
 .volunteer {
-  &-bg-accent {
-    background-color: $volunteer-accent-color;
-  }
-
-  &-hover {
-    &:hover {
-      color: $volunteer-color;
+    &-bg-accent {
+        background-color: $volunteer-accent-color;
     }
-  }
+
+    &-hover {
+        &:hover {
+            color: $volunteer-color;
+        }
+    }
 }
 
 .title {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.5;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.5;
 }
 
+.error {
+    display: block;
+    margin-top: 8px;
+    color: rgb(255, 70, 82);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.ptr-element {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.genericon {
+    position: absolute;
+    top: -40px;
+    text-align: center;
+    color: #686868;
+    opacity: 0;
+
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    animation-name: fadeDown;
+    animation-duration: .7s;
+}
+
+.loading {
+    display: none;
+}
+
+.ptr-loading .loading {
+    display: flex;
+    padding: 20px 0 10px;
+    justify-content: center;
+}
+
+@media (max-width: 925px) {
+    .App__content {
+        padding: 90px 10px 30px;
+    }
+
+    .genericon {
+        top: -50px;
+    }
+
+    .ptr-loading .loading {
+        padding: 10px 0 20px;
+    }
+}
