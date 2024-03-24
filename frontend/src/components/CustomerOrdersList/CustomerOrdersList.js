@@ -2,12 +2,15 @@
 import './customerOrdersList.scss';
 
 // Redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsModalOpen, setTargetOrder } from '../CustomerOrderModal/customerOrderModalSlice';
 
 // services
 import { getFormattedDate } from '../../services/getFormattedDate';
 
 const CustomerOrdersList = () => {
+    const dispatch = useDispatch();
+
     const orders = useSelector((state) => state.orders.orders);
 
     const renderList = () => {
@@ -39,7 +42,10 @@ const CustomerOrdersList = () => {
             }
 
             return (
-                <div className='customer-orders-list__item' key={i}>
+                <div className='customer-orders-list__item' key={i} onClick={() => {
+                    dispatch(setTargetOrder(order));
+                    dispatch(setIsModalOpen(true));
+                }}>
                     <p className='customer-orders-list__item-title'>{'Задание №' + order.id}</p>
                     <p className='customer-orders-list__item-date'>
                         {'Дата создания: ' + getFormattedDate("ru-RU", new Date(order.time_create).toString(), {

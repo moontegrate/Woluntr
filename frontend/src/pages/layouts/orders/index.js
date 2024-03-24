@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async"
 // Redux
 import { useSelector } from "react-redux";
 import CustomerOrdersList from "../../../components/CustomerOrdersList/CustomerOrdersList";
+import CustomerOrderModal from "../../../components/CustomerOrderModal/CustomerOrderModal";
 
 const OrdersLayout = () => {
     const appMode = useSelector((state) => state.appMode.appMode);
@@ -18,6 +19,7 @@ const OrdersLayout = () => {
             
             <div className="App__content">
                 <CustomerOrdersList/>
+                <CustomerOrderModal/>
             </div>
         </div>
     );

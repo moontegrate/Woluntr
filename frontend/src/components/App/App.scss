@@ -60,3 +60,9 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
 }
+
+@media (max-width: 925px) {
+    .App__content {
+        padding: 90px 10px 30px;
+    }
+}
