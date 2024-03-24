@@ -19,7 +19,7 @@ class OrderCompleteSerializer(serializers.ModelSerializer):
     executor_team = TeamTitleSerializer(read_only=True)
     class Meta:
         model = OrderComplete
-        fields = ['id','executor', 'executor_team', 'order', 'img', 'stars', 'time_accept']
+        fields = ['id','executor', 'executor_team', 'order', 'img', 'stars', 'notes','time_accept']
         read_only_fields = ['id', 'time_accept']
 
 class OrderSerializer(serializers.ModelSerializer):

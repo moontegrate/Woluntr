@@ -39,6 +39,7 @@ class OrderComplete(models.Model):
     executor = models.ForeignKey(user, on_delete=models.DO_NOTHING, null = True, blank = True)
     executor_team = models.ForeignKey(Team, on_delete=models.DO_NOTHING, null = True, blank = True)
     order = models.OneToOneField(Order, on_delete=models.DO_NOTHING)
+    notes = models.TextField(blank = True, null = True)
     time_accept = models.DateTimeField(auto_now_add = True)
     stars = models.IntegerField(blank = True, null=True)
     img = models.ImageField(upload_to='images/order-complete/', blank=True)

@@ -73,10 +73,10 @@ class OrderCompleteViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            order_id = self.request.POST['order']
+            order_id = self.request.POST.get('order', False)
             Order.objects.filter(id = order_id).update(status='In Process')
-            if self.request.POST.get('executor_team', False):
-                return serializer.save(executor_team = self.request.POST['executor_team'])
+            # if self.request.POST.get('executor_team', False):
+            #     return serializer.save(executor_team = self.request.POST['executor_team'])
             return serializer.save(executor = self.request.user)
     
 class MyOrderListAPIView(generics.ListAPIView):

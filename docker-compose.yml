@@ -15,7 +15,7 @@ services:
       DB_NAME: fastapi_dev
       DB_USER: postgres
       DB_PASSWORD: password
-    command: bash -c "python backend/manage.py migrate && python backend/manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python backend/manage.py makemigrations && python backend/manage.py migrate && python backend/manage.py runserver 0.0.0.0:8000"
 
   db:
     image: postgres:16.2-alpine
