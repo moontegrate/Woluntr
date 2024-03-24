@@ -1,13 +1,13 @@
-from rest_framework import viewsets, status, generics
+from rest_framework import viewsets, status, generics, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import permissions
+from rest_framework.decorators import api_view
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 
 from .models import Order, OrderComplete
 from teams.models import Team
-from .serializers import OrderSerializer, OrderCompleteSerializer
+from .serializers import OrderSerializer, OrderCompleteSerializer, OrderCompleteUpdateSerializer
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
@@ -93,20 +93,23 @@ class MyOrderListAPIView(generics.ListAPIView):
         return context
     
 
-class OrderStatusUpdateView(APIView):
-    def post(self, request):
-        if request.is_authenticated:
-            OrderStatus = request.POST.get('status',False)
-            OrderCompleteId = request.POST.get('order_Complete_id',False)
-            if OrderStatus and OrderCompleteId:
-                try:
-                    order_complete = OrderComplete.objects.get(pk = OrderCompleteId)
-                    if order_complete.executor == request.user:
-                        OrderToChange = OrderComplete.objects.get(pk = OrderCompleteId).order
-                        OrderToChange.update(status = OrderStatus)
-                        return Response({"detail": "Успешно обновлено"}, status=status.HTTP_200_OK)
-                    else:
-                        return Response({"detail": "У вас нет доступа к этой записи."}, status=status.HTTP_403_FORBIDDEN)
-                except:
-                     return Response({"detail": "Запись не найдена"}, status=status.HTTP_404_NOT_FOUND)
-        return Response({"detail": "У вас нет доступа к этой записи."}, status=status.HTTP_403_FORBIDDEN)
+@api_view(['POST'])
+def update_order_status(request, order_complete_pk):
+    try:
+        order_complete = OrderComplete.objects.get(pk=order_complete_pk)
+    except OrderComplete.DoesNotExist:
+        return Response({"error": "OrderComplete with given pk does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    
+    # Проверяем, что пользователь, делающий запрос, является исполнителем данного заказа
+    if order_complete.executor != request.user:
+        return Response({"error": "Only the executor of the order can change its status"}, status=status.HTTP_403_FORBIDDEN)
+    
+    # Обновляем статус заказа
+    serializer = OrderCompleteUpdateSerializer(data=request.data)
+    if serializer.is_valid():
+        new_status = serializer.validated_data['status']
+        order_complete.order.status = new_status
+        order_complete.order.save()
+        return Response({"success": "Order status updated successfully"}, status=status.HTTP_200_OK)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
