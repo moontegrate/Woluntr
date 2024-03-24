@@ -9,6 +9,7 @@ import loginModal from '../components/LoginModal/loginModalSlice';
 import map from '../components/Map/mapSlice';
 import orders from '../components/App/ordersSlice';
 import profileModal from '../components/ProfileModal/profileModalSlice';
+import registerForm from '../components/RegisterForm/registerFormSlice';
 import registerModal from '../components/RegisterModal/registerModalSlice';
 import settingsModal from '../components/SettingsModal/settingsModalSlice';
 
@@ -23,6 +24,7 @@ const store = configureStore({
         map,
         orders,
         profileModal,
+        registerForm,
         registerModal,
         settingsModal
     },

@@ -16,6 +16,7 @@ import { setIsModalOpen } from '../LoginModal/loginModalSlice';
 import { setFormData } from './loginFormSlice';
 import { authorize } from './loginFormSlice';
 import { setIsModalOpen as openRegModal } from '../RegisterModal/registerModalSlice';
+import { getCurrentUserInfo } from '../App/appUserSlice';
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -43,10 +44,13 @@ const LoginForm = () => {
         dispatch(authorize({
             'email': data.email,
             'password': data.password
-        }));
+        })).finally(() => {
+            dispatch(getCurrentUserInfo());
+        });
+
         if (data.rememberMe) {
-            localStorage.setItem('rememberMe', true)
-        }
+            localStorage.setItem('rememberMe', true);
+        };
     });
 
     return (

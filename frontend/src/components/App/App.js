@@ -49,14 +49,17 @@ const App = () => {
                 .then(() => {
                     dispatch(setIsAuthorized(true));
                     dispatch(getCurrentUserInfo());
+                    dispatch(getAllOrders());
                 })
                 .catch((e) => {
                     console.log("Token refresh error", e.response?.data);
                     localStorage.removeItem('refresh_token');
                 });
+        } else {
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('rememberMe');
         };
-
-        dispatch(getAllOrders());
         // eslint-disable-next-line
     }, []);
 

@@ -18,6 +18,7 @@ const Profile = () => {
     const logout = () => {
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('access_token');
+        localStorage.removeItem('rememberMe');
         dispatch(setIsAuthorized(false));
     };
 

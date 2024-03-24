@@ -19,7 +19,6 @@ export const authorize = createAsyncThunk(
     'loginForm/authorize',
     async (data, {dispatch}) => {
         const result = await postRequest('http://localhost:8000/auth/jwt/create/', data, {
-            "Content-Type": "multipart/form-data",
             "Accept": "application/json"
         });
 

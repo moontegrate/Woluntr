@@ -11,10 +11,10 @@ export const refreshToken = localStorage.getItem("refresh_token");
 const csrfToken = getCookie('csrftoken');
 
 // Настройки axios
-// if (csrfToken) {
-//     axios.defaults.headers.common['X-CSRFToken'] = csrfToken;
-// }
-// axios.defaults.withCredentials = true;
+if (csrfToken) {
+    axios.defaults.headers.common['X-CSRFToken'] = csrfToken;
+}
+axios.defaults.withCredentials = true;
 
 // Функция для метода DELETE
 export const deleteRequest = async (url, data, headers) => {

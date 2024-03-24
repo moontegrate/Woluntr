@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async"
 
 // Redux
 import { useSelector } from "react-redux";
+import CustomerOrdersList from "../../../components/CustomerOrdersList/CustomerOrdersList";
 
 const OrdersLayout = () => {
     const appMode = useSelector((state) => state.appMode.appMode);
@@ -15,6 +16,9 @@ const OrdersLayout = () => {
                 <link rel="icon" href={appMode === 'customer' ? "https://cdn.lovattro.kz/woluntr/logo.svg" : "https://cdn.lovattro.kz/woluntr/logo-volunteer.svg"} />                
             </Helmet>
             
+            <div className="App__content">
+                <CustomerOrdersList/>
+            </div>
         </div>
     );
 };

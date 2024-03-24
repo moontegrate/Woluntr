@@ -16,7 +16,8 @@ export const getAllOrders = createAsyncThunk(
     'orders/getAllOrders',
     async () => {
         return await getRequest('http://localhost:8000/api/v1/orders/', {
-            "Accept": "application/json"
+            "Accept": "application/json",
+            'Authorization': `JWT ${localStorage.getItem('access_token')}`
         });
     }
 );
