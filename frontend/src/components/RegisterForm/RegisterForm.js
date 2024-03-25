@@ -16,7 +16,8 @@ import { setIsModalOpen } from '../RegisterModal/registerModalSlice';
 import { register, resetForm, setFormData } from './registerFormSlice';
 import { setIsModalOpen as openLoginModal } from '../LoginModal/loginModalSlice';
 import { authorize } from '../LoginForm/loginFormSlice';
-import { getCurrentUserInfo } from '../App/appUserSlice';
+import { getCurrentUserInfo, setIsAuthorized } from '../App/appUserSlice';
+import { getAllOrders } from '../App/ordersSlice';
 
 // libs
 import toast from 'react-hot-toast';
@@ -50,6 +51,7 @@ const RegisterForm = () => {
     // Обработка отправки формы
     const onSubmit = async (data) => {
         dispatch(register({
+            'first_name': data.firstName,
             'email': data.email,
             'password': data.password
         }))
@@ -61,8 +63,17 @@ const RegisterForm = () => {
                     'email': data.email,
                     'password': data.password
                 }))
-                .finally(() => {
-                    dispatch(getCurrentUserInfo());
+                .then((response) => {
+                    if (response.meta.requestStatus === 'fulfilled') {
+                        localStorage.setItem('refresh_token', response.payload.refresh)
+                        localStorage.setItem('access_token', response.payload.access)
+                        dispatch(setIsAuthorized(true));
+                        dispatch(setIsModalOpen(false));
+                        dispatch(getCurrentUserInfo());
+                        dispatch(getAllOrders());
+                    } else if (response.meta.requestStatus === 'rejected') {
+                        console.error('Error while signing in after registration.')
+                    }
                 });
                 
                 toast('Ура! Регистрация прошла успешно.', {

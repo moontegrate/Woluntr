@@ -16,7 +16,7 @@ import { setIsModalOpen } from '../LoginModal/loginModalSlice';
 import { setFormData } from './loginFormSlice';
 import { authorize } from './loginFormSlice';
 import { setIsModalOpen as openRegModal } from '../RegisterModal/registerModalSlice';
-import { getCurrentUserInfo } from '../App/appUserSlice';
+import { getCurrentUserInfo, setIsAuthorized } from '../App/appUserSlice';
 import { getAllOrders } from '../App/ordersSlice';
 
 const LoginForm = () => {
@@ -31,7 +31,7 @@ const LoginForm = () => {
         password: yup.string().required('Введите пароль'),
     });
 
-    const { control, handleSubmit, formState: { errors } } = useForm({
+    const { control, handleSubmit, formState: { errors }, clearErrors, setError} = useForm({
         defaultValue: {
             email: formData.email,
             password: formData.password,
@@ -42,12 +42,21 @@ const LoginForm = () => {
 
     // Обработка отправки формы
     const onSubmit = handleSubmit((data) => {
+        clearErrors();
         dispatch(authorize({
-            'email': data.email,
-            'password': data.password
-        })).finally(() => {
-            dispatch(getCurrentUserInfo());
-            dispatch(getAllOrders());
+            email: data.email,
+            password: data.password
+        })).then((response) => {
+            if (response.meta.requestStatus === 'fulfilled') {
+                localStorage.setItem('refresh_token', response.payload.refresh)
+                localStorage.setItem('access_token', response.payload.access)
+                dispatch(setIsAuthorized(true));
+                dispatch(setIsModalOpen(false));
+                dispatch(getCurrentUserInfo());
+                dispatch(getAllOrders());
+            } else if (response.meta.requestStatus === 'rejected') {
+                setError('password', {message: 'Неправильный email или пароль.'})
+            };
         });
 
         if (data.rememberMe) {
