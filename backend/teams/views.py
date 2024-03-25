@@ -27,7 +27,7 @@ class TeamViewSet(viewsets.ModelViewSet):
 
 class TeamLeaderInviteViewSet(viewsets.ViewSet):
     """
-    ViewSet to leader of team to send, see, 
+    ViewSet to leader of team to send, see invites 
     """
     #TODO
     def list(self, request):
