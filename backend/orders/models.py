@@ -32,8 +32,8 @@ class Order(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     img = models.ImageField(upload_to='images/orders/', blank=True)
     
-    def get_order_complete(self):
-        return OrderComplete.objects.filter(order=self)
+    # def get_order_complete(self):
+    #     return OrderComplete.objects.filter(order=self)
     
 
 class OrderComplete(models.Model):

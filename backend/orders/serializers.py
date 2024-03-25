@@ -25,9 +25,17 @@ class OrderCompleteSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     customer = UserNameSerializer(read_only = True)
     skills = skillSerializer(read_only = True,many = True)
+    order_complete = serializers.SerializerMethodField()
+
     class Meta:
         model = Order
-        fields = ['id','title','description', 'difficulty', 'location', 'latitude','longitude','skills', 'img', 'time_create','customer', 'status']
-        read_only_fields = ['status','customer', 'skills']
-    
+        fields = ['id','title','description', 'difficulty', 'location', 'latitude','longitude','skills', 'img', 'time_create','customer', 'status', 'order_complete']
+        read_only_fields = ['status','customer', 'skills', 'order_complete']
+
+    def get_order_complete(self, obj):
+        try:
+            order_complete_obj = OrderComplete.objects.get(order=obj)
+            return OrderCompleteSerializer(order_complete_obj).data
+        except OrderComplete.DoesNotExist:
+            return None
 
