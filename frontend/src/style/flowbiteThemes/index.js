@@ -6,6 +6,8 @@ import { FileInputTheme } from "./fileInput";
 import { FloatingLabelCustomerTheme } from "./floatingLabelCustomer";
 import { FloatingLabelVolunteerTheme } from "./floatingLabelVolunteer";
 import { ModalTheme } from "./modal";
+import { TextareaTheme } from "./textarea";
+import { TextInputTheme } from "./textInput";
 
 export {
     AppModeBtnTheme,
@@ -15,5 +17,7 @@ export {
     FileInputTheme,
     FloatingLabelCustomerTheme,
     FloatingLabelVolunteerTheme,
-    ModalTheme
+    ModalTheme,
+    TextareaTheme,
+    TextInputTheme
 };

@@ -43,14 +43,14 @@ const RequestPanel = () => {
     const handleMouseMove = (e) => {
         if (isDragging) {
             const newY = startY - e.touches[0].clientY;
-            setTranslate((startTranslate + newY) < 450 ? startTranslate + newY : 450);
+            setTranslate((startTranslate + newY) < 550 ? startTranslate + newY : 550);
         };
     };
 
     const handleMouseUp = () => {
         setTransition('.3s transform ease');
-        setTranslate(translate > 200 ? 355 : 0);
-        setStartTranslate(translate > 200 ? 355 : 0);
+        setTranslate(translate > 200 ? 420 : 0);
+        setStartTranslate(translate > 200 ? 420 : 0);
         setIsDragging(false);
     };
     // Конец кода для обработки свайпа панели
@@ -66,7 +66,7 @@ const RequestPanel = () => {
                 onTouchMove={handleMouseMove}
                 onTouchEnd={handleMouseUp}
             >
-                <Suspense fallback={<div className='fallback'><Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}>
+                <Suspense fallback={<div className='fallback'><Spinner theme={{ color: { info: appMode === 'customer' ? "fill-main-color" : "fill-volunteer-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}>
                     {appMode === 'customer' ? <CustomerRequestForm/> : <VolunteerOrdersPanel/>}
                 </Suspense>
             </div>

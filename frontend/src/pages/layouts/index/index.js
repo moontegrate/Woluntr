@@ -14,14 +14,25 @@ const IndexLayout = () => {
     const appMode = useSelector((state) => state.appMode.appMode);
 
     useEffect(() => {
-        document.body.style.overflow = 'hidden';
-        document.body.style.height = '100vh';
+        document.body.style.cssText = 'overflow: hidden; height: 100vh;';
+
+        const handleBodyStyle = () => {
+            if (document.body.style.overflow !== 'hidden') {
+                document.body.style.cssText = 'overflow: hidden; height: 100vh;';
+            };
+        };
+
+        window.addEventListener('touchstart', handleBodyStyle);
 
         return () => {
-            document.body.style.overflow = 'auto';
-            document.body.style.height = 'auto';
-        }
-    }, [])
+            document.body.style.cssText = 'overflow: auto; height: auto;';
+            window.removeEventListener('touchstart', handleBodyStyle);
+        };
+    }, []);
+
+    window.addEventListener('touchstart', () => {
+        document.body.style.cssText = 'overflow: hidden; height: 100vh;';
+    });
 
     return (
         <>

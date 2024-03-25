@@ -23,19 +23,19 @@ const VolunteerOrdersPanel = () => {
 
         const result = sortedOrders.map((order, i) => {
             return (
-                <div key={i} className='orders-panel__item' onClick={() => {
+                <div key={i} className='orders-panel__item dsbswp' onClick={() => {
                     dispatch(setTargetOrder(order));
                     dispatch(setIsModalOpen(true));
                 }}>
-                    <p className='orders-panel__item-title'>{"Задание №" + order.id}</p>
-                    <p className='orders-panel__item-date'>{getFormattedDate("ru-RU", new Date(order.time_create).toString(), {
+                    <p className='orders-panel__item-title dsbswp'>{order.title}</p>
+                    <p className='orders-panel__item-date dsbswp'>{getFormattedDate("ru-RU", new Date(order.time_create).toString(), {
                             day: "numeric",
                             month: "long",
                             year: "numeric",
                             hour: "numeric",
                             minute: "numeric"
                         })}</p>
-                    <p className='orders-panel__item-address'>{order.location}</p>
+                    <p className='orders-panel__item-address dsbswp'>{order.location}</p>
                 </div>
             );
         });

@@ -22,10 +22,11 @@ const Header = () => {
     const appMode = useSelector((state) => state.appMode.appMode);
     const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
     const isHamburgerToggled = useSelector((state) => state.header.hamburgerToggled);
+    const volunterExecutionOrders = useSelector((state) => state.volunteerOrdersList.orders);
+    const execuctionCount = volunterExecutionOrders ? volunterExecutionOrders.length : null
 
     const hamburgerClass = isHamburgerToggled ? 'header__bar-menu header__bar-menu-active' : 'header__bar-menu';
     const wrapperClass = isHamburgerToggled ? 'header__bar-menu-wrapper header__bar-menu-wrapper-active' : 'header__bar-menu-wrapper';
-
     const screenWidth = window.innerWidth;
 
     const customerMenu = (
@@ -39,7 +40,7 @@ const Header = () => {
     const volunteerMenu = (
         <>
             <div onClick={() => {navigate('/'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>Выполнить задание</div>
-            <div onClick={() => {navigate('/history'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>История заданий</div>
+            <div onClick={() => {navigate('/history'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'} id='exec-history'>История заданий<span id='exec-count'>{execuctionCount}</span></div>
             <div onClick={() => {navigate('/teams'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>Команды</div>
         </>
     );

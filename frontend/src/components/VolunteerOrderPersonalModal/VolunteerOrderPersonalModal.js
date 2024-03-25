@@ -7,10 +7,13 @@ import { Button, Modal, Spinner } from 'flowbite-react';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsModalOpen, setTargetOrder } from './volunteerOrderPersonalModalSlice';
+import { markAsDone, setIsModalOpen, setTargetOrder } from './volunteerOrderPersonalModalSlice';
 
 // services
 import { getFormattedDate } from '../../services/getFormattedDate';
+
+// notifications
+import toast from 'react-hot-toast';
 
 const VolunteerOrderPersonalModal = () => {
     const dispatch = useDispatch();
@@ -18,12 +21,24 @@ const VolunteerOrderPersonalModal = () => {
     const isModalOpen = useSelector((state) => state.volunteerOrderPersonalModal.isModalOpen);
     const dataState = useSelector((state) => state.volunteerOrderModal.modalDataState);
     const order = useSelector((state) => state.volunteerOrderPersonalModal.targetOrder);
+    const complete = useSelector((state) => state.volunteerOrderPersonalModal.targetComplete);
 
-    const handleExecution = () => {
+    const handleMarkAsDone = () => {
+        dispatch(markAsDone(complete.id))
+        .finally(() => {
+            dispatch(setIsModalOpen(false));
+        })
+        .catch((e) => {
+            console.error(e);
+            toast('Упс! Что-то пошло не так.', {
+                position: 'bottom-right',
+                icon: '😰'
+            });
+        })
     };
     
     return (
-        <Modal className='profile-modal' theme={ModalTheme} show={isModalOpen} dismissible onClose={() => {
+        <Modal className='profile-modal' theme={ModalTheme} show={isModalOpen} dismissible onClose={(e) => {
             dispatch(setIsModalOpen(false));
             dispatch(setTargetOrder(null));
         }}>
@@ -69,8 +84,8 @@ const VolunteerOrderPersonalModal = () => {
                             color='purple'
                             size='xl'
                             isProcessing={dataState === 'sending'}
-                            processingSpinner={<Spinner theme={{ base: "inline animate-spin text-volunteer-accent-color", color: { info: "fill-main-color" } }}/>}
-                            onClick={handleExecution}
+                            processingSpinner={<Spinner theme={{ base: "inline animate-spin text-volunteer-accent-color", color: { info: "fill-volunteer-color" } }}/>}
+                            onClick={handleMarkAsDone}
                         >Выполнено</Button>
                     </div>
                 </Modal.Body>

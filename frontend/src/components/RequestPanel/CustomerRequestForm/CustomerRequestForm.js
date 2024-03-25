@@ -1,10 +1,9 @@
 // Style imports
 import './customerRequestForm.scss';
-import { FloatingLabelCustomerTheme } from '../../../style/flowbiteThemes';
+import { ButtonTheme, FileInputTheme, TextareaTheme, TextInputTheme } from '../../../style/flowbiteThemes';
 
 // Components
-import { Button, FileInput, FloatingLabel, Label, Spinner } from 'flowbite-react';
-import { ButtonTheme, FileInputTheme } from '../../../style/flowbiteThemes';
+import { Button, FileInput, Label, Spinner, TextInput, Textarea } from 'flowbite-react';
 
 // Hooks
 import { useRef } from 'react';
@@ -138,16 +137,17 @@ const CustomerRequestForm = () => {
                     <span>Создать задание</span>
                 </div>
                 <div className='customer-request-form-field'>
+                    <Label className='input-label' htmlFor="title" style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '5px', 'marginLeft': '10px'}} value="Назовите задачу" />
                     <Controller
                         name="title"
                         control={control}
                         defaultValue={formData.title}
-                        render={({ field }) => <FloatingLabel
-                                theme={FloatingLabelCustomerTheme}
+                        render={({ field }) => <TextInput
+                                theme={TextInputTheme}
                                 ref={(el) => inputRefs.current.push(el)}
-                                variant='standard'
+                                id='title'
                                 defaultValue={formData.title}
-                                label='Опишите задачу'
+                                placeholder='Введите название'
                                 onChange={(e) => {
                                     field.onChange(e.target.value);
                                     dispatch(setFormData({...formData, title: e.target.value}));
@@ -158,17 +158,40 @@ const CustomerRequestForm = () => {
                     <span className="error">{errors.title?.message}</span>
                 </div>
                 <div className='customer-request-form-field'>
+                    <Label className='input-label' htmlFor="title" style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '5px', 'marginLeft': '10px'}} value="Опишите задачу" />
+                    <Controller
+                        name='description'
+                        className="customer-request-form-img"
+                        control={control}
+                        defaultValue={formData.description}
+                        render={({ field }) => <Textarea
+                                color="gray"
+                                className='dsbswp'
+                                theme={TextareaTheme}
+                                ref={(el) => inputRefs.current.push(el)}
+                                rows={4}
+                                style={{':focus:border': 'none'}}
+                                placeholder='Введите описание'
+                                onChange={(e) => {
+                                    field.onChange(e.target.value);
+                                    dispatch(setFormData({...formData, description: e.target.value}));
+                                }}
+                            />
+                        }
+                    />
+                </div>
+                <div className='customer-request-form-field'>
+                    <Label className='input-label' htmlFor="title" style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '5px', 'marginLeft': '10px'}} value="Укажите адрес" />
                     <Controller
                         name="location"
                         className='customer-request-form-address'
                         control={control}
                         defaultValue={formData.location}
-                        render={({ field }) => <FloatingLabel
-                                theme={FloatingLabelCustomerTheme}
+                        render={({ field }) => <TextInput
+                                theme={TextInputTheme}
                                 ref={(el) => inputRefs.current.push(el)}
-                                variant='standard'
                                 value={field.value || ''}
-                                label='Укажите адрес'
+                                placeholder='Введите адрес'
                                 onChange={(e) => {
                                     dispatch(setFormData({...formData, location: e.target.value}));
                                     if (e.target.value) {searchAddress(e.target.value);}
@@ -184,7 +207,7 @@ const CustomerRequestForm = () => {
                     <span className="error">{errors.location?.message}</span>
                 </div>
                 <div className='customer-request-form-field'>
-                    <Label className='input-label' htmlFor="order-photos" style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '10px'}} value="Добавить фотографии" />
+                    <Label className='input-label' htmlFor="order-photos" style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '5px', 'marginLeft': '10px'}} value="Добавить фотографии" />
                     <Controller
                         name="img"
                         id="order-photos"
@@ -202,25 +225,6 @@ const CustomerRequestForm = () => {
                         }
                     />
                     <span className="error">{errors.img?.message}</span>
-                </div>
-                <div className='customer-request-form-field'>
-                    <Controller
-                        name='description'
-                        className="customer-request-form-img"
-                        control={control}
-                        defaultValue={formData.description}
-                        render={({ field }) => <FloatingLabel
-                                theme={FloatingLabelCustomerTheme}
-                                ref={(el) => inputRefs.current.push(el)}
-                                variant='standard'
-                                label='Комментарий волонтёру'
-                                onChange={(e) => {
-                                    field.onChange(e.target.value);
-                                    dispatch(setFormData({...formData, description: e.target.value}));
-                                }}
-                            />
-                        }
-                    />
                 </div>
                 <Button
                     className='customer-request-form-submit'

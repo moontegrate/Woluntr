@@ -22,7 +22,7 @@
 @media (max-width: 925px) {
     .request-panel {
         top: auto;
-        bottom: -490px;
+        bottom: -590px;
         max-width: 100%;
         padding: 0;
         animation-name: fadeUp;
@@ -30,7 +30,7 @@
 
         &__container {
             border-radius: 40px 40px 0 0;
-            height: 600px;
+            height: 700px;
         }
     }
 }

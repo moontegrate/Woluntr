@@ -27,6 +27,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUserInfo, setIsAuthorized } from './appUserSlice';
 import { getAllOrders } from './ordersSlice';
+import { getAllPersonalOrders } from '../VolunteerOrdersList/volunteerOrdersListSlice';
 import { setMode } from '../AppMode/appModeSlice';
 
 // layouts for routes
@@ -46,42 +47,51 @@ const App = () => {
     const dispatch = useDispatch();
 
     const appMode = useSelector((state) => state.appMode.appMode);
+    const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
     const isProfileModalOpen = useSelector((state) => state.profileModal.isModalOpen);
     const isSettingsModalOpen = useSelector((state) => state.settingsModal.isModalOpen);
     const isVolunteerOrderModalOpen = useSelector((state) => state.volunteerOrderModal.isModalOpen);
 
     useLayoutEffect(() => {
-        getTokens()
-        .then(() => {
-            dispatch(setIsAuthorized(true));
-            dispatch(getCurrentUserInfo());
-        })
-        .catch((e) => {
-            console.log("Token refresh error", e.response?.data);
-            localStorage.removeItem('refresh_token');
-        });
-        // eslint-disable-next-line
-    }, []);
-
-    useEffect(() => {
         if (localStorage.getItem('refresh_token') && localStorage.getItem('rememberMe')) {
-            if (localStorage.getItem('appMode')) {
-                dispatch(setMode(localStorage.getItem('appMode')));
-            };
+            getTokens()
+            .then(() => {
+                dispatch(setIsAuthorized(true));
+                dispatch(getCurrentUserInfo());
+            })
+            .then(() => {
+                if ( localStorage.getItem('appMode')) {
+                    dispatch(setMode(localStorage.getItem('appMode')));
+                } else {
+                    localStorage.removeItem('appMode');
+                    dispatch(setMode('customer'));
+                };
+            })
+            .finally(() => {
+                dispatch(getAllOrders());
+            })
+            .catch((e) => {
+                console.log("Token refresh error", e.response?.data);
+                localStorage.removeItem('refresh_token');
+            });
         } else {
             localStorage.removeItem('refresh_token');
             localStorage.removeItem('access_token');
             localStorage.removeItem('rememberMe');
-
-            if (localStorage.getItem('appMode')) {
-                localStorage.removeItem('appMode');
-                dispatch(setMode('customer'));
-            };
         };
-
-        dispatch(getAllOrders());
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        if (appMode === 'volunteer' && isAuthorized) {
+            dispatch(getAllPersonalOrders());
+        };
+    }, [appMode]);
 
     return (
         <Router>

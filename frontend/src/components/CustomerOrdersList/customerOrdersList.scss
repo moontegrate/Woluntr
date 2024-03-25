@@ -1,10 +1,10 @@
 .customer-orders-list {
+    margin-top: 50px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    overflow: visible;
 
     &__item {
         cursor: pointer;
@@ -46,6 +46,7 @@
 
 @media (max-width: 925px) {
     .customer-orders-list {
+        margin-top: 0;
         gap: 15px;
 
         &__item {

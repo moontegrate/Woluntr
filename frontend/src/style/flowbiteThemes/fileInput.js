@@ -3,9 +3,9 @@ export const FileInputTheme = {
         "base": "flex"
     },
     "field": {
-        "base": "relative w-full",
+        "base": "relative border rounded-[20px] w-full",
         "input": {
-            "base": "rounded-[15px] overflow-hidden block w-full disabled:cursor-not-allowed disabled:opacity-50",
+            "base": "rounded-[20px] overflow-hidden block w-full disabled:cursor-not-allowed disabled:opacity-50",
             "sizes": {
                 "sm": "sm:text-xs",
                 "md": "text-sm",

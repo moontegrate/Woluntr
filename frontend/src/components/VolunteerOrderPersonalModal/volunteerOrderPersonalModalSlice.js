@@ -4,15 +4,16 @@ import { _server, postRequest } from "../../services/http";
 const initialState = {
     isModalOpen: false,
     targetOrder: null,
+    targetComplete: null,
     modalDataState: 'idle'
 };
 
 export const markAsDone = createAsyncThunk(
     'volunteerOrderPersonalModal/markAsDone',
-    async (data) => {
+    async (id) => {
         const temp = new FormData();
-        temp.append('order', data)
-        return await postRequest(`${_server}/api/v1/order/`, temp, {
+        temp.append('status', 'Complete')
+        return await postRequest(`${_server}/api/v1/order/${id}/status/`, temp, {
             "Content-Type": "multipart/form-data",
             "Accept": "application/json",
             'Authorization': `JWT ${localStorage.getItem('access_token')}`
@@ -26,7 +27,8 @@ const volunteerOrderPersonalModal = createSlice({
     reducers: {
         setIsModalOpen: (state, action) => {state.isModalOpen = action.payload},
         setModalDataState: (state, action) => {state.modalDataState = action.payload},
-        setTargetOrder: (state, action) => {state.targetOrder = action.payload}
+        setTargetOrder: (state, action) => {state.targetOrder = action.payload},
+        setTargetComplete: (state, action) => {state.targetComplete = action.payload}
     },
     extraReducers: (builder) => {
         builder
@@ -43,4 +45,4 @@ const volunteerOrderPersonalModal = createSlice({
 });
 
 export default volunteerOrderPersonalModal.reducer;
-export const { setIsModalOpen, setModalDataState, setTargetOrder } = volunteerOrderPersonalModal.actions;
+export const { setIsModalOpen, setModalDataState, setTargetOrder, setTargetComplete } = volunteerOrderPersonalModal.actions;

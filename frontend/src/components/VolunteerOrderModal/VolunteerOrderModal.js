@@ -5,12 +5,16 @@ import { ButtonTheme, ModalTheme } from '../../style/flowbiteThemes';
 // components
 import { Button, Modal, Spinner } from 'flowbite-react';
 
+// notifications
+import toast from 'react-hot-toast';
+
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsModalOpen, toExecution } from './volunteerOrderModalSlice';
 
 // services
 import { getFormattedDate } from '../../services/getFormattedDate';
+import { getAllPersonalOrders } from '../VolunteerOrdersList/volunteerOrdersListSlice';
 
 const VolunteerOrderModal = () => {
     const dispatch = useDispatch();
@@ -20,7 +24,18 @@ const VolunteerOrderModal = () => {
     const order = useSelector((state) => state.volunteerOrderModal.targetOrder);
 
     const handleExecution = () => {
-        dispatch(toExecution(order.id));
+        dispatch(toExecution(order.id))
+        .then(() => {
+            dispatch(setIsModalOpen(false));
+            dispatch(getAllPersonalOrders());
+        })
+        .catch((e) => {
+            console.error(e);
+            toast('Упс! Что-то пошло не так.', {
+                position: 'bottom-right',
+                icon: '😰'
+            });
+        });
     };
     
     return (
@@ -67,12 +82,12 @@ const VolunteerOrderModal = () => {
                             color='purple'
                             size='xl'
                             isProcessing={dataState === 'sending'}
-                            processingSpinner={<Spinner theme={{ base: "inline animate-spin text-main-accent-color", color: { info: "fill-main-color" } }}/>}
+                            processingSpinner={<Spinner theme={{ base: "inline animate-spin text-volunteer-accent-color", color: { info: "fill-volunteer-color" } }}/>}
                             onClick={handleExecution}
                         >Взять на исполнение</Button>
                     </div>
                 </Modal.Body>
-            </> : <div className='fallback'><Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}
+            </> : <div className='fallback'><Spinner theme={{ color: { info: "fill-volunteer-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}
             
         </Modal>
     );

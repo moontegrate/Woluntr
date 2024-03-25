@@ -3,7 +3,7 @@ import './volunteerOrdersList.scss';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsModalOpen } from '../VolunteerOrderPersonalModal/volunteerOrderPersonalModalSlice';
+import { setIsModalOpen, setTargetComplete } from '../VolunteerOrderPersonalModal/volunteerOrderPersonalModalSlice';
 import { getAllPersonalOrders, getOrder } from './volunteerOrdersListSlice';
 
 // services
@@ -31,6 +31,9 @@ const VolunteerOrdersList = () => {
             return (
                 <div className='volunteer-orders-list__item' key={i} onClick={() => {
                     dispatch(getOrder(order.order))
+                    .then(() => {
+                        dispatch(setTargetComplete(order));
+                    })
                     .finally(() => {
                         dispatch(setIsModalOpen(true));
                     });
@@ -45,7 +48,6 @@ const VolunteerOrdersList = () => {
                             minute: "numeric"
                         })}
                     </p>
-                    <p className='volunteer-orders-list__item-location'>{'Адрес: ' + order.location}</p>
                 </div>
             );
         })
@@ -56,8 +58,10 @@ const VolunteerOrdersList = () => {
     return (
         <PullToRefresh
             onRefresh={() => dispatch(getAllPersonalOrders())}
-            pullingContent={<div className='genericon genericon-next'>Потяните вниз, чтобы обновить</div>}
-            refreshingContent={<div className='loading'>
+            pullDownThreshold={100}
+            maxPullDownDistance={120}
+            pullingContent={<div style={{'textAlign': 'center', 'marginTop': '20px'}}>Потяните вниз, чтобы обновить</div>}
+            refreshingContent={<div style={{'marginTop': '20px'}}>
                 <Spinner theme={{ color: { info: "fill-volunteer-color" } }} aria-label="Extra large spinner example" size="md" />
             </div>}
         >

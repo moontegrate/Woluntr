@@ -13,7 +13,6 @@ const OrdersLayout = () => {
     const navigate = useNavigate();
 
     const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
-    const appMode = useSelector((state) => state.appMode.appMode);
 
     useEffect(() => {
         if (!isAuthorized) {
@@ -27,7 +26,7 @@ const OrdersLayout = () => {
             <Helmet>
                 <meta name="description" content="Woluntr volunteers app" />
                 <title>Мои задания - Woluntr</title>
-                <link rel="icon" href={appMode === 'customer' ? "https://cdn.lovattro.kz/woluntr/logo.svg" : "https://cdn.lovattro.kz/woluntr/logo-volunteer.svg"} />                
+                <link rel="icon" href="https://cdn.lovattro.kz/woluntr/logo.svg"/>                
             </Helmet>
             
             <div className="App__content">

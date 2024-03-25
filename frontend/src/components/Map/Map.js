@@ -16,7 +16,8 @@ import { setOrders } from '../App/ordersSlice';
 // http
 import { _host } from '../../services/http';
 
-export const _key = '8aa9d22a-14aa-408d-bbdd-faa892eb1d05'
+// export const _key = '8aa9d22a-14aa-408d-bbdd-faa892eb1d05'
+export const _key = 'fake'
 
 const Map = () => {
     const dispatch = useDispatch();
@@ -47,7 +48,6 @@ const Map = () => {
 
     if (orders) {
         orders.forEach((order) => {
-            console.log(order)
             if (order.latitude && order.longitude) {
                 // new map.Marker()
             }

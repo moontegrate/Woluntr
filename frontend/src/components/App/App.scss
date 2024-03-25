@@ -1,9 +1,12 @@
 @import '../../style/variables.scss';
 
 .App {
+    height: 100%;
+
     &__content {
         padding-top: 70px;
         opacity: 0;
+        height: 100%;
 
         animation-delay: 1s;
         animation-fill-mode: forwards;

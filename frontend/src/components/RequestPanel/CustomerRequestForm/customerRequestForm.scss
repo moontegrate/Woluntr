@@ -3,7 +3,7 @@
 .customer-request-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     
     &__head {
         display: flex;
@@ -19,10 +19,6 @@
     }
 
     &-field {
-        input {
-            font-size: 20px;
-            line-height: 1.5;
-        }
 
         label {
             font-size: 20px;
@@ -54,6 +50,10 @@
 
     &-address {
         position: relative;
+    }
+
+    textarea {
+        resize: none;
     }
 
     &-submit {

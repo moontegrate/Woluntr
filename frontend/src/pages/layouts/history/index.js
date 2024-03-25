@@ -10,15 +10,19 @@ import { useSelector } from "react-redux";
 
 // hooks
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 const HistoryLayout = () => {
     const navigate = useNavigate();
 
     const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
 
-    if (!isAuthorized) {
-        navigate('/');
-    };
+    useEffect(() => {
+        if (!isAuthorized) {
+            navigate('/');
+        };
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <>
