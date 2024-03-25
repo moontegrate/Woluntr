@@ -2,7 +2,7 @@
 import { Helmet } from "react-helmet-async"
 
 // Components
-import Map from "../../../components/Map/Map"
+import MainMap from "../../../components/Map/Map"
 import AppMode from "../../../components/AppMode/AppMode"
 import RequestPanel from "../../../components/RequestPanel/RequestPanel";
 
@@ -42,7 +42,7 @@ const IndexLayout = () => {
                 <link rel="icon" href={appMode === 'customer' ? "https://cdn.lovattro.kz/woluntr/logo.svg" : "https://cdn.lovattro.kz/woluntr/logo-volunteer.svg"} />                
             </Helmet>
             <div className="non-scroll-block">
-                <Map/>
+                <MainMap/>
                 <RequestPanel/>
                 <AppMode/>
             </div>
