@@ -24,6 +24,7 @@ const MainMap = () => {
     const orders = useSelector((state) => state.orders.orders);
     const zoom = useSelector((state) => state.map.zoom);
     const center = useSelector((state) => state.map.center);
+    const currentLocation = useSelector((state) => state.map.currentLocation);
 
     const getUserLocation = () => {
         return new Promise((resolve, reject) => {
@@ -42,11 +43,28 @@ const MainMap = () => {
         });
     };
 
+    useEffect(() => {
+        getUserLocation()
+        .then((coordinates) => {
+            dispatch(setCenter(coordinates));
+            dispatch(setZoom(15));
+            dispatch(setCurrentLocation(coordinates));
+        }).catch((e) => {
+            console.error(e);
+            dispatch(setCurrentLocation(null));
+        });
+    });
+
     return (
         <div id='map-wrapper'>
             <YMaps>
-                <Map state={{center: center, zoom: zoom}} height='100vh' width='100vw'>
-                    <Placemark geometry={[55.684758, 37.738521]} />
+                <Map state={{ center: center, zoom: zoom }} height='100vh' width='100vw'>
+                    {currentLocation ? <Placemark geometry={currentLocation} options={{
+                        iconLayout: 'default#image',
+                        iconImageHref: 'https://cdn.lovattro.kz/woluntr/user-marker.svg',
+                        iconImageSize: [30, 30],
+                        // iconImageOffset: [-15, -30] 
+                    }}/> : null}
                 </Map>
             </YMaps>
             <div className='map-controls'>
@@ -56,16 +74,15 @@ const MainMap = () => {
                 </div>
                 <div className='current-location' onClick={() => {
                     getUserLocation()
-                    .then((coordinates) => {
-                        console.log(coordinates)
-                        dispatch(setCenter(coordinates));
-                        dispatch(setZoom(15));
-                        dispatch(setCurrentLocation(coordinates));
-                        // if (currentLocationMarker) {
-                        //     currentLocationMarker.setCoordinates(coordinates);
-                        // };
-                    })
-                    .catch((e) => console.error(e));
+                        .then((coordinates) => {
+                            dispatch(setCenter(coordinates));
+                            dispatch(setZoom(15));
+                            dispatch(setCurrentLocation(coordinates));
+                            // if (currentLocationMarker) {
+                            //     currentLocationMarker.setCoordinates(coordinates);
+                            // };
+                        })
+                        .catch((e) => console.error(e));
                 }}>
                     <PiNavigationArrowBold />
                 </div>
