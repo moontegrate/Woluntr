@@ -105,7 +105,7 @@ def update_order_status(request, order_complete_pk):
         return Response({"error": "OrderComplete with given pk does not exist"}, status=status.HTTP_404_NOT_FOUND)
     
     # Проверяем, что пользователь, делающий запрос, является исполнителем данного заказа
-    if order_complete.executor != request.user:
+    if order_complete.executor != request.user or order_complete.order.customer != request.user:
         return Response({"error": "Only the executor of the order can change its status"}, status=status.HTTP_403_FORBIDDEN)
     
     # Обновляем статус заказа

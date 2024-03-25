@@ -10,6 +10,7 @@ user = settings.AUTH_USER_MODEL
 # Create your models here.
 class Order(models.Model):
     STATUS_CHOICES = (
+        ('Approved', 'Approved'),
         ('Complete', 'Complete'),
         ('In Process', 'In Process'),
         ('Not Complete', 'Not Complete')
