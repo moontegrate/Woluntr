@@ -1,22 +1,34 @@
-// Хуки
+// hooks
 import { useEffect } from "react";
 
-// Redux
-import { useAppSelector } from "../../hooks/state";
+// redux
+import { useSelector } from "react-redux";
+
+// libs
+import toast from "react-hot-toast";
+
+// services
+import getTokens from "../../services/getTokens";
 
 const TokenRefresher = () => {
-    const { getNewTokens } = useAPI();
-    const isAuthorized = useAppSelector((state) => state.auth.isAuthorized);
+    const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
 
     useEffect(() => {
         const intervalId = setInterval(async () => {
             if (isAuthorized) {
-                await getNewTokens();
-            }
-        }, 180000);
+                await getTokens()
+                .catch((e) => {
+                    console.log("Token refresh error", e.response?.data);
+                    toast('Ошибка при обновлении данных авторизации. Пожалуйста, повторите вход.', {
+                        position: 'bottom-right',
+                        icon: '😰'
+                    });
+                });
+            };
+        }, 86400000);
 
         return () => clearInterval(intervalId);
-    }, [getNewTokens, isAuthorized]);
+    }, [isAuthorized]);
 
     return null;
 };

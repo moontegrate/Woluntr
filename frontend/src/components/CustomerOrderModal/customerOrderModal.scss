@@ -1,0 +1,11 @@
+.customer-order-modal {
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    &__label {
+        font-weight: 700;
+    }
+}

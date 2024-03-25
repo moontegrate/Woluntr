@@ -20,17 +20,19 @@ const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const appMode = useSelector((state) => state.appMode.appMode);
+    const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
     const isHamburgerToggled = useSelector((state) => state.header.hamburgerToggled);
+    const volunterExecutionOrders = useSelector((state) => state.volunteerOrdersList.orders);
+    const execuctionCount = volunterExecutionOrders ? volunterExecutionOrders.length : null
 
     const hamburgerClass = isHamburgerToggled ? 'header__bar-menu header__bar-menu-active' : 'header__bar-menu';
     const wrapperClass = isHamburgerToggled ? 'header__bar-menu-wrapper header__bar-menu-wrapper-active' : 'header__bar-menu-wrapper';
-
     const screenWidth = window.innerWidth;
 
     const customerMenu = (
         <>
             <div onClick={() => {navigate('/'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item customer-hover'}>Создать задание</div>
-            <div onClick={() => {navigate('/orders'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item customer-hover'}>Мои задания</div>
+            <div onClick={() => {if (isAuthorized) {navigate('/orders')} else {dispatch(setLoginModal(true))}; dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item customer-hover'}>Мои задания</div>
             <div onClick={() => {navigate('/best-volunteers'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item customer-hover'}>Лучшие волонтеры</div>
         </>
     );
@@ -38,7 +40,7 @@ const Header = () => {
     const volunteerMenu = (
         <>
             <div onClick={() => {navigate('/'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>Выполнить задание</div>
-            <div onClick={() => {navigate('/history'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>История заданий</div>
+            <div onClick={() => {navigate('/history'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'} id='exec-history'>История заданий<span id='exec-count'>{execuctionCount}</span></div>
             <div onClick={() => {navigate('/teams'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>Команды</div>
         </>
     );
@@ -63,8 +65,7 @@ const Header = () => {
                     <div onClick={() => {navigate('/support'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item ' + appMode + '-hover'}>Поддержка</div>
                 </div>
 
-                {/* Кнопка "Войти" */}
-                {/* <Button
+                {isAuthorized ? <Profile/> : <Button
                     className='header__login-btn'
                     color={appMode === 'customer' ? 'green' : 'purple'}
                     theme={ButtonTheme}
@@ -72,10 +73,8 @@ const Header = () => {
                     size='xl'
                 >
                     <TbLogin2 size={window.innerWidth > 560 ? 30 : 20}/>
-                </Button> */}
+                </Button>}
 
-                {/* Кнопка профиля */}
-                <Profile/>
             </div>
 
 

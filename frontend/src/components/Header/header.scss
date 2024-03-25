@@ -3,7 +3,7 @@
 .header {
     width: 100%;
     padding: 20px;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 2;
@@ -12,7 +12,7 @@
     animation-delay: 1s;
     animation-fill-mode: forwards;
     animation-name: fadeDown;
-    animation-duration: 1s;
+    animation-duration: .7s;
 
     &__burger {
         display: none;
@@ -28,7 +28,7 @@
         border-radius: 40px;
         height: 95px;
         width: 100%;
-        box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.15);
+        box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.1);
 
         &-logo {
             cursor: pointer;
@@ -60,12 +60,34 @@
                 font-style: normal;
                 font-weight: 400;
                 text-align: center;
+                text-wrap: nowrap;
                 line-height: 20px;
                 transition: .2s color;
+                width: min-content;
 
                 &-active {
                     font-weight: 700;
                 }
+            }
+
+            #exec-history {
+                position: relative;
+            }
+
+            #exec-count {
+                position: absolute;
+                display: block;
+                width: 20px;
+                height: 20px;
+                border: 2px solid $volunteer-accent-color;
+                border-radius: 50%;
+                top: -10px;
+                right: -10px;
+                font-weight: 700;
+                font-size: 12px;
+                text-align: center;
+                line-height: 1.5;
+                background-color: $volunteer-color;
             }
         }
     }
@@ -79,10 +101,24 @@
         span {
             font-size: 20px;
             font-weight: 700;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         &:hover {
             box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
+@media (max-width: 1120px) {
+    .header {
+        &__bar {
+            &-menu {
+                &-item {
+                    text-wrap: wrap;
+                    text-align: start;
+                }
+            }
         }
     }
 }
@@ -93,7 +129,7 @@
             gap: 20px;
 
             &-menu {
-                gap: 20px;
+                gap: 30px;
             }
         }
     }
@@ -101,12 +137,16 @@
 
 @media (max-width: 925px) {
     .header {
+        padding: 10px;
+
         &__burger {
             display: block;
         }
 
         &__bar {
             position: relative;
+            height: 60px;
+            padding: 10px;
 
             &-menu {
                 position: absolute;
@@ -145,17 +185,6 @@
                     transform: translateX(0);
                 }
             }
-        }
-    }
-}
-
-@media (max-width: 560px) {
-    .header {
-        padding: 10px;
-
-        &__bar {
-            height: 60px;
-            padding: 10px;
         }
 
         &__login-btn {

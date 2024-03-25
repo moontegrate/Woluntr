@@ -15,7 +15,11 @@ class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Order.objects.filter(status = 'Not Complete')
+        order_id = self.kwargs.get('pk')
+        if order_id:
+            return Order.objects.all()
+        else:
+            return Order.objects.filter(status='Not Complete')
 
     def perform_create(self, serializer):
         return serializer.save(customer=self.request.user)

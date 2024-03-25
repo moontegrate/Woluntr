@@ -1,7 +1,9 @@
+@import '../../../style/variables.scss';
+
 .customer-request-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     
     &__head {
         display: flex;
@@ -17,15 +19,41 @@
     }
 
     &-field {
-        input {
-            font-size: 20px;
-            line-height: 1.5;
-        }
 
         label {
             font-size: 20px;
             line-height: 1.5;
         }
+
+        &__result {
+            position: absolute;
+            z-index: 2;
+            max-height: 350px;
+            overflow-y: scroll;
+            background-color: #fff;
+            border: 0.5px solid $border-color;
+            border-radius: 10px;
+
+            &-item {
+                cursor: pointer;
+                padding: 10px 20px;
+                background-color: #fff;
+                border: 0.5px solid $border-color;
+
+                &_address {
+                    font-size: 14px;
+                    color: #606060;
+                }
+            }
+        }
+    }
+
+    &-address {
+        position: relative;
+    }
+
+    textarea {
+        resize: none;
     }
 
     &-submit {
@@ -35,6 +63,20 @@
         span {
             font-size: 20px;
             font-weight: 700;
+        }
+    }
+
+    .input-label {
+        cursor: auto;
+    }
+}
+
+@media (max-width: 925px) {
+    .customer-request-form {
+        &-field {
+            &__result {
+                max-height: 250px;
+            }
         }
     }
 }

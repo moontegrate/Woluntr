@@ -8,7 +8,8 @@ import { Spinner } from 'flowbite-react';
 import { useState } from 'react';
 
 // Redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchResult } from './CustomerRequestForm/customerRequestFormSlice';
 
 // React lazy
 import { lazy, Suspense } from 'react';
@@ -18,51 +19,54 @@ const CustomerRequestForm = lazy(() => import("../../components/RequestPanel/Cus
 const VolunteerOrdersPanel = lazy(() => import("../../components/RequestPanel/VolunteerOrdersPanel/VolunteerOrdersPanel"));
 
 const RequestPanel = () => {
-    const [height, setHeight] = useState(window.innerWidth > 925 ? 'auto' : '100px');
-    const [transition, setTransition] = useState('0s');
-    const [isDragging, setIsDragging] = useState(false);
+    const dispatch = useDispatch();
 
     const appMode = useSelector((state) => state.appMode.appMode);
 
-    const handleMouseDown = () => {
-        setIsDragging(true);
-        setTransition('0s');
+    const [isDragging, setIsDragging] = useState(false);
+    const [translate, setTranslate] = useState(0);
+    const [transition, setTransition] = useState('0s');
+    const [startY, setStartY] = useState(0);
+    const [startTranslate, setStartTranslate] = useState(0);
+
+    // Начало кода для обработки свайпа панели
+    const handleMouseDown = (e) => {
+        if (!e.target.className.includes('dsbswp')) {
+            setIsDragging(true);
+            document.activeElement.blur();
+            dispatch(setSearchResult(null))
+            setTransition('0s');
+            setStartY(e.touches[0].clientY);
+        };
     };
 
     const handleMouseMove = (e) => {
         if (isDragging) {
-            document.activeElement.blur();
-            const newY = window.innerHeight - e.touches[0].clientY;
-            if (newY >= 0 && newY <= 500) {
-                setHeight(newY);
-            };
+            const newY = startY - e.touches[0].clientY;
+            setTranslate((startTranslate + newY) < 550 ? startTranslate + newY : 550);
         };
     };
 
     const handleMouseUp = () => {
-        setTransition('.3s height');
-
-        if (height > 200) {
-            setHeight('374px');
-        } else if (height < 200) {
-            setHeight('100px');
-        };
-        
+        setTransition('.3s transform ease');
+        setTranslate(translate > 200 ? 420 : 0);
+        setStartTranslate(translate > 200 ? 420 : 0);
         setIsDragging(false);
     };
+    // Конец кода для обработки свайпа панели
 
     return (
         <div
             className='request-panel'
-            style={{ height: height, transition: transition }}
         >
             <div
                 className='request-panel__container'
+                style={{ transition: transition, transform: `translateY(${-translate}px)` }}
                 onTouchStart={handleMouseDown}
                 onTouchMove={handleMouseMove}
                 onTouchEnd={handleMouseUp}
             >
-                <Suspense fallback={<div className='fallback'><Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}>
+                <Suspense fallback={<div className='fallback'><Spinner theme={{ color: { info: appMode === 'customer' ? "fill-main-color" : "fill-volunteer-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}>
                     {appMode === 'customer' ? <CustomerRequestForm/> : <VolunteerOrdersPanel/>}
                 </Suspense>
             </div>

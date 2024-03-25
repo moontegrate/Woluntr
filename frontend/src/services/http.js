@@ -2,8 +2,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import getCookie from './getCookie';
 
-export const _apiBase = 'http://localhost:8000/api/';
-export const _authBase = 'http://localhost:8000/auth/';
+export const _host = 'http://localhost';
+export const _server = `${_host}:8000`;
+export const _apiBase = `http://${_server}/api/`;
+export const _authBase = `http://${_server}/auth/`;
 export const accessToken = localStorage.getItem('access_token');
 export const refreshToken = localStorage.getItem("refresh_token");
 

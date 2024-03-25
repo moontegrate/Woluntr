@@ -15,4 +15,35 @@
             height: 25px;
         }
     }
+    
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 440px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        border-radius: 20px;
+    }
+
+    &__item {
+        cursor: pointer;
+        background-color: #f4f4f4;
+        padding: 15px;
+        border-radius: 20px;
+        transition: .2s transform;
+
+        &:hover {
+            transform: scale(1.01);;
+        }
+
+        &-title {
+            font-weight: 700;
+        }
+
+        &-date, &-address {
+            color: rgb(54, 54, 54);
+            font-size: 14px;
+        }
+    }
 }

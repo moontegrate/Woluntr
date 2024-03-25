@@ -1,19 +1,18 @@
+import { _server, postRequest } from "./http";
+
 const getTokens = async () => {
     localStorage.removeItem("access_token");
 
-    const response = await postRequest<TokenResponse>(`${_authBase}refresh/`, {
-        refresh_token: refreshToken
+    const response = await postRequest(`${_server}/auth/jwt/refresh/`, {
+        refresh: localStorage.getItem('refresh_token')
     }, {
         "Content-Type": "application/json",
         "Accept": "application/json"
     });
 
-    const { access, refresh } = response;
+    const { access } = response;
 
     localStorage.setItem("access_token", access);
-    localStorage.setItem("refresh_token", refresh);
-
-    return access;
 };
 
 export default getTokens;
