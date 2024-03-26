@@ -7,7 +7,7 @@ router.register(r'orders', OrderViewSet)
 router.register(r'order-complete', OrderCompleteViewSet)
 
 urlpatterns = [
-    path('order/<int:order_complete_pk>/status/', update_order_status, name='update_order_status'),
+    path('order-complete/<int:order_complete_pk>/status/', update_order_status, name='update_order_status'),
     path('orders/my/', MyOrderListAPIView.as_view(), name='my'),
     path('', include(router.urls)),
 ]

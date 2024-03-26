@@ -10,6 +10,7 @@ user = settings.AUTH_USER_MODEL
 # Create your models here.
 class Order(models.Model):
     STATUS_CHOICES = (
+        ('Approved', 'Approved'),
         ('Complete', 'Complete'),
         ('In Process', 'In Process'),
         ('Not Complete', 'Not Complete')
@@ -31,14 +32,15 @@ class Order(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     img = models.ImageField(upload_to='images/orders/', blank=True)
     
-    def get_order_complete(self):
-        return OrderComplete.objects.filter(order=self)
+    # def get_order_complete(self):
+    #     return OrderComplete.objects.filter(order=self)
     
 
 class OrderComplete(models.Model):
     executor = models.ForeignKey(user, on_delete=models.DO_NOTHING, null = True, blank = True)
     executor_team = models.ForeignKey(Team, on_delete=models.DO_NOTHING, null = True, blank = True)
     order = models.OneToOneField(Order, on_delete=models.DO_NOTHING)
+    notes = models.TextField(blank = True, null = True)
     time_accept = models.DateTimeField(auto_now_add = True)
     stars = models.IntegerField(blank = True, null=True)
     img = models.ImageField(upload_to='images/order-complete/', blank=True)

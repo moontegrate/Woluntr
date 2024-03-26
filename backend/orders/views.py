@@ -77,10 +77,10 @@ class OrderCompleteViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            order_id = self.request.POST['order']
+            order_id = self.request.POST.get('order', False)
             Order.objects.filter(id = order_id).update(status='In Process')
-            if self.request.POST.get('executor_team', False):
-                return serializer.save(executor_team = self.request.POST['executor_team'])
+            # if self.request.POST.get('executor_team', False):
+            #     return serializer.save(executor_team = self.request.POST['executor_team'])
             return serializer.save(executor = self.request.user)
     
 class MyOrderListAPIView(generics.ListAPIView):
@@ -105,7 +105,7 @@ def update_order_status(request, order_complete_pk):
         return Response({"error": "OrderComplete with given pk does not exist"}, status=status.HTTP_404_NOT_FOUND)
     
     # Проверяем, что пользователь, делающий запрос, является исполнителем данного заказа
-    if order_complete.executor != request.user:
+    if order_complete.executor != request.user or order_complete.order.customer != request.user:
         return Response({"error": "Only the executor of the order can change its status"}, status=status.HTTP_403_FORBIDDEN)
     
     # Обновляем статус заказа
