@@ -37,6 +37,7 @@ class Migration(migrations.Migration):
                 ('checked_email', models.BooleanField(default=False)),
                 ('avatar', models.ImageField(blank=True, upload_to='images/avatars/')),
                 ('organization_name', models.CharField(blank=True, max_length=200, null=True)),
+                ('rate_elo', models.IntegerField(default=500)),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
                 ('skills', models.ManyToManyField(blank=True, to='users.skill')),
                 ('teams', models.ManyToManyField(blank=True, to='teams.team')),
