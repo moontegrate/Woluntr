@@ -37,9 +37,9 @@ const SupportLayout = lazy(() => import("../../pages/layouts/support"));
 const HistoryLayout = lazy(() => import("../../pages/layouts/history"));
 const OrdersLayout = lazy(() => import("../../pages/layouts/orders"));
 const TeamsLayout = lazy(() => import("../../pages/layouts/teams"));
+const ProfileLayout = lazy(() => import("../../pages/layouts/profile"));
 
 // lazy components
-const ProfileModal = lazy(() => import("../../components/ProfileModal/ProfileModal"));
 const SettingsModal = lazy(() => import("../../components/SettingsModal/SettingsModal"));
 const VolunteerOrderModal = lazy(() => import("../../components/VolunteerOrderModal/VolunteerOrderModal"));
 
@@ -48,7 +48,6 @@ const App = () => {
 
     const appMode = useSelector((state) => state.appMode.appMode);
     const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
-    const isProfileModalOpen = useSelector((state) => state.profileModal.isModalOpen);
     const isSettingsModalOpen = useSelector((state) => state.settingsModal.isModalOpen);
     const isVolunteerOrderModalOpen = useSelector((state) => state.volunteerOrderModal.isModalOpen);
 
@@ -115,13 +114,13 @@ const App = () => {
                             <Route path="/history" element={<HistoryLayout />} />
                             <Route path="/orders" element={<OrdersLayout />} />
                             <Route path="/teams" element={<TeamsLayout />} />
+                            <Route path="/profile" element={<ProfileLayout />} />
                         </Routes>
                     </Suspense>
                 </div>
                 <LoginModal />
                 <RegisterModal />
                 <Suspense fallback={<div className='fallback'><Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="xl" /></div>}>
-                    {isProfileModalOpen ? <ProfileModal/> : null}
                     {isSettingsModalOpen ? <SettingsModal/> : null}
                     {appMode === 'volunteer' && isVolunteerOrderModalOpen ? <VolunteerOrderModal/> : null}
                 </Suspense>

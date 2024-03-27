@@ -10,8 +10,8 @@ import toast from "react-hot-toast";
 const initialState = {
     data: {
         id: null,
-        firstName: '',
-        lastName: '',
+        firstN_nme: '',
+        last_name: '',
         email: '',
         profilePic: ''
     },
