@@ -160,13 +160,14 @@ const CustomerRequestForm = () => {
                 </div>
                 <div className="max-w-md">
                     <div className="mb-2 block">
-                        <Label htmlFor="kind" value="Выберите тип помощи" />
+                        <Label className='input-label' style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '5px', 'marginLeft': '10px'}} htmlFor="kind" value="Выберите тип помощи" />
                     </div>
                     <Select theme={SelectTheme} id="kind" required>
                         <option value="Material">Материальная</option>
                         <option value="Physical">Физическая</option>
                         <option value="Other">Другое</option>
                     </Select>
+                    <span className="error"></span>
                 </div>
                 <div className='customer-request-form-field'>
                     <Label className='input-label' htmlFor="description" style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '5px', 'marginLeft': '10px'}} value="Опишите задачу" />
@@ -191,6 +192,7 @@ const CustomerRequestForm = () => {
                             />
                         }
                     />
+                    <span className="error"></span>
                 </div>
                 <div className='customer-request-form-field'>
                     <Label className='input-label' htmlFor="title" style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '5px', 'marginLeft': '10px'}} value="Укажите адрес" />

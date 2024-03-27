@@ -3,7 +3,7 @@
 .customer-request-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     
     &__head {
         display: flex;
@@ -11,6 +11,7 @@
         align-items: center;
         font-size: 20px;
         font-weight: 700;
+        margin-bottom: 5px;
 
         img {
             width: 25px;
@@ -57,6 +58,7 @@
     }
 
     &-submit {
+        margin-top: 5px;
         padding: 10px;
         box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.05);
 

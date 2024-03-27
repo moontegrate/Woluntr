@@ -43,14 +43,14 @@ const RequestPanel = () => {
     const handleMouseMove = (e) => {
         if (isDragging) {
             const newY = startY - e.touches[0].clientY;
-            setTranslate((startTranslate + newY) < 550 ? startTranslate + newY : 550);
+            setTranslate((startTranslate + newY) < 604 ? startTranslate + newY : 604);
         };
     };
 
     const handleMouseUp = () => {
         setTransition('.3s transform ease');
-        setTranslate(translate > 200 ? 420 : 0);
-        setStartTranslate(translate > 200 ? 420 : 0);
+        setTranslate(translate > 200 ? 492 : 0);
+        setStartTranslate(translate > 200 ? 492 : 0);
         setIsDragging(false);
     };
     // Конец кода для обработки свайпа панели
