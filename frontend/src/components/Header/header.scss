@@ -2,12 +2,10 @@
 
 .header {
     width: 100%;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
+    padding: 15px 20px 0;
     z-index: 2;
     opacity: 0;
+    position: relative;
 
     animation-delay: 1s;
     animation-fill-mode: forwards;
@@ -24,11 +22,10 @@
         justify-content: space-between;
         gap: 50px;
         padding: 15px 27px;
-        background-color: #FFF;
+        background-color: $block-color;
         border-radius: 40px;
         height: 95px;
         width: 100%;
-        box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.1);
 
         &-logo {
             cursor: pointer;
@@ -141,8 +138,6 @@
 
 @media (max-width: 925px) {
     .header {
-        padding: 10px;
-
         &__burger {
             display: block;
         }
@@ -154,9 +149,9 @@
 
             &-menu {
                 position: absolute;
-                top: -10px;
-                left: -10px;
-                padding: 40px;
+                top: -15px;
+                left: -20px;
+                padding: 30px;
                 flex-direction: column;
                 justify-content: start;
                 align-items: start;

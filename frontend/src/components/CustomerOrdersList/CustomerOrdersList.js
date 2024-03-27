@@ -82,20 +82,24 @@ const CustomerOrdersList = () => {
     };
 
     return (
-        <PullToRefresh
-            onRefresh={() => dispatch(getAllPersonalOrders())}
-            pullDownThreshold={100}
-            maxPullDownDistance={120}
-            className='customer-orders-list__pull-wrapper'
-            pullingContent={<div className='pulling-content'>Потяните вниз, чтобы обновить</div>}
-            refreshingContent={<div className='refreshing-content'>
-                <Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="md" />
-            </div>}
-        >
-            <div className='customer-orders-list'>
-            {orders && ordersLoadingState === 'idle' ? renderList() : <Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="md" />}
+        <>
+            <div className='customer-orders-list__wrapper'>
+                <PullToRefresh
+                    onRefresh={() => dispatch(getAllPersonalOrders())}
+                    pullDownThreshold={100}
+                    maxPullDownDistance={120}
+                    className='customer-orders-list__pull-wrapper'
+                    pullingContent={<div className='pulling-content'>Потяните вниз, чтобы обновить</div>}
+                    refreshingContent={<div className='refreshing-content'>
+                        <Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="md" />
+                    </div>}
+                >
+                    <div className='customer-orders-list'>
+                    {orders && ordersLoadingState === 'idle' ? renderList() : <Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="md" />}
+                    </div>
+                </PullToRefresh>
             </div>
-        </PullToRefresh>
+        </>
     );
 };
 

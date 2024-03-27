@@ -1,3 +1,6 @@
+// style imports
+import './index.scss';
+
 // React Helmet
 import { Helmet } from "react-helmet-async"
 

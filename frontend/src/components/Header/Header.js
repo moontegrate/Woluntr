@@ -23,7 +23,9 @@ const Header = () => {
     const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
     const isHamburgerToggled = useSelector((state) => state.header.hamburgerToggled);
     const volunterExecutionOrders = useSelector((state) => state.volunteerOrdersList.orders);
-    const execuctionCount = volunterExecutionOrders ? volunterExecutionOrders.length : null
+    const execuctionCount = volunterExecutionOrders ? volunterExecutionOrders.length : null;
+    // eslint-disable-next-line no-restricted-globals
+    const pathname = location.pathname;
 
     const hamburgerClass = isHamburgerToggled ? 'header__bar-menu header__bar-menu-active' : 'header__bar-menu';
     const wrapperClass = isHamburgerToggled ? 'header__bar-menu-wrapper header__bar-menu-wrapper-active' : 'header__bar-menu-wrapper';
@@ -44,11 +46,18 @@ const Header = () => {
             <div onClick={() => {navigate('/teams'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>Команды</div>
         </>
     );
-
+    
     return (
-        <header className="header">
+        <header className="header" style={pathname === '/' ? {
+            position: 'absolute',
+            top: 0,
+            left: 0
+        } : null}>
             <div className={wrapperClass} style={{'height': screenWidth < 925 ? window.innerHeight : '100%'}} onClick={() => dispatch(setHamburgerToggled())}></div>
-            <div className='header__bar'>
+            <div className='header__bar' style={pathname === '/' ? {
+                    backgroundColor: '#ffffff',
+                    boxShadow: '0px 4px 26.3px 0px rgba(0, 0, 0, 0.1)'
+                } : null}>
                 {/* Кнопка-бургер (появляется на мобильных устройствах) */}
                 <div className='header__burger'>
                     <Hamburger toggled={isHamburgerToggled} size={window.innerWidth > 560 ? 30 : 25} onToggle={() => dispatch(setHamburgerToggled())}/>
