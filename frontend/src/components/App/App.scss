@@ -4,7 +4,7 @@
     height: 100%;
 
     &__content {
-        padding-top: 70px;
+        padding: 135px 20px 0;
         opacity: 0;
         height: 100%;
 
@@ -25,12 +25,12 @@
 }
 
 .pulling-content {
+    margin-top: 20px;
     text-align: center;
-    margin-top: 70px;
 }
 
 .refreshing-content {
-    margin-top: 70px;
+    margin-top: 20px;
 }
 
 .fallback {
@@ -80,7 +80,9 @@
 }
 
 @media (max-width: 925px) {
-    .pulling-content, .refreshing-content {
-        margin-top: 50px;
+    .App {
+        &__content {
+            padding-top: 70px;
+        }
     }
 }

@@ -1,5 +1,8 @@
+.App__content {
+    padding-top: 115px;
+}
+
 .volunteer-orders-list {
-    margin-top: 50px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -47,7 +50,6 @@
 
 @media (max-width: 925px) {
     .volunteer-orders-list {
-        margin-top: 0px;
         gap: 15px;
 
         &__item {

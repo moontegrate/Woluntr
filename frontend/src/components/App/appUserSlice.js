@@ -13,7 +13,7 @@ const initialState = {
         firstN_nme: '',
         last_name: '',
         email: '',
-        profilePic: ''
+        avatar: ''
     },
     dataState: 'idle',
     isAuthorized: false

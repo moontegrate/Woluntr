@@ -30,7 +30,7 @@ const Profile = () => {
 
     return (
         <Dropdown theme={DropdownTheme} label="Profile" dismissOnClick renderTrigger={() => <div className='profile'>
-                <img src={userData.profilePic ? userData.profilePic : 'https://cdn.lovattro.kz/woluntr/avatar.svg'} alt='profile'/>
+                <img src={userData.avatar ? userData.avatar : 'https://cdn.lovattro.kz/woluntr/avatar.svg'} alt='profile'/>
             </div>}>
             <Dropdown.Header>
                 <span className="block text-sm">{userData.first_name + ' ' + userData.last_name}</span>

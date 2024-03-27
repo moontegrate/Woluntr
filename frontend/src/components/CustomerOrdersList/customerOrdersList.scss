@@ -1,5 +1,8 @@
+.App__content {
+    padding-top: 115px;
+}
+
 .customer-orders-list {
-    margin-top: 50px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -50,7 +53,6 @@
 
 @media (max-width: 925px) {
     .customer-orders-list {
-        margin-top: 0;
         gap: 15px;
 
         &__item {

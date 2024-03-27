@@ -60,6 +60,7 @@ const VolunteerOrdersList = () => {
             onRefresh={() => dispatch(getAllPersonalOrders())}
             pullDownThreshold={100}
             maxPullDownDistance={120}
+            className='volunteer-orders-list__pull-wrapper'
             pullingContent={<div className='pulling-content'>Потяните вниз, чтобы обновить</div>}
             refreshingContent={<div className='refreshing-content'>
                 <Spinner theme={{ color: { info: "fill-volunteer-color" } }} aria-label="Extra large spinner example" size="md" />

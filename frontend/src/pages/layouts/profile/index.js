@@ -3,10 +3,9 @@ import { Helmet } from "react-helmet-async"
 
 // Redux
 import { useSelector } from "react-redux";
-import CustomerOrdersList from "../../../components/CustomerOrdersList/CustomerOrdersList";
-import CustomerOrderModal from "../../../components/CustomerOrderModal/CustomerOrderModal";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
+import ProfileInfoCard from "../../../components/Profile/ProfileInfoCard/ProfileInfoCard";
 
 const ProfileLayout = () => {
 
@@ -31,6 +30,7 @@ const ProfileLayout = () => {
             </Helmet>
             
             <div className="App__content">
+                <ProfileInfoCard/>
             </div>
         </>
     );
