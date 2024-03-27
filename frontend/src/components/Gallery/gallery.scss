@@ -1,0 +1,33 @@
+@import '../../style/variables.scss';
+
+.gallery {
+    img {
+        max-height: 70vh;
+    }
+
+    .swiper {
+        &-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        &-slide {
+            max-height: 70vh;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &-button {
+            &-prev, &-next {
+                color: $main-color;
+            }
+        }
+
+        &-pagination-bullet-active {
+            background-color: $main-color;
+        }
+    }
+}

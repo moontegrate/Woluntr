@@ -25,7 +25,7 @@ const IndexLayout = () => {
         window.addEventListener('touchstart', handleBodyStyle);
 
         return () => {
-            document.body.style.cssText = 'overflow: auto; height: auto;';
+            document.body.style.cssText = 'overflow: auto; height: 100%;';
             window.removeEventListener('touchstart', handleBodyStyle);
         };
     }, []);

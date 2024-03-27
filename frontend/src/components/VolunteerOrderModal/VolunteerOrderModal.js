@@ -10,11 +10,13 @@ import toast from 'react-hot-toast';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
+import { getAllOrders } from '../App/ordersSlice';
 import { setIsModalOpen, toExecution } from './volunteerOrderModalSlice';
+import { getAllPersonalOrders } from '../VolunteerOrdersList/volunteerOrdersListSlice';
 
 // services
 import { getFormattedDate } from '../../services/getFormattedDate';
-import { getAllPersonalOrders } from '../VolunteerOrdersList/volunteerOrdersListSlice';
+
 
 const VolunteerOrderModal = () => {
     const dispatch = useDispatch();
@@ -28,6 +30,7 @@ const VolunteerOrderModal = () => {
         .then(() => {
             dispatch(setIsModalOpen(false));
             dispatch(getAllPersonalOrders());
+            dispatch(getAllOrders());
         })
         .catch((e) => {
             console.error(e);

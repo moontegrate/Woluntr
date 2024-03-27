@@ -16,12 +16,10 @@ const initialState = {
 export const register = createAsyncThunk(
     'registerForm/register',
     async (data) => {
-        const response = await postRequest(`${_server}/auth/users/`, data, {
+        return await postRequest(`${_server}/auth/users/`, data, {
             "Content-Type": "multipart/form-data",
             "Accept": "application/json"
         });
-
-        return response;
     }
 );
 

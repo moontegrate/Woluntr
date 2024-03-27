@@ -16,7 +16,7 @@ import { _host } from '../../services/http';
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
 
 // export const _key = '8aa9d22a-14aa-408d-bbdd-faa892eb1d05'
-export const _key = 'fake'
+export const _key = '14b576e3-d478-4a07-b8c7-d498fc77a0f2'
 
 const MainMap = () => {
     const dispatch = useDispatch();

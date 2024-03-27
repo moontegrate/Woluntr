@@ -34,7 +34,7 @@ const VolunteerOrderPersonalModal = () => {
                 position: 'bottom-right',
                 icon: '😰'
             });
-        })
+        });
     };
     
     return (

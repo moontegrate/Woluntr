@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import getCookie from './getCookie';
 
-export const _host = 'http://localhost';
+export const _host = 'http://192.168.8.102';
 export const _server = `${_host}:8000`;
 export const _apiBase = `http://${_server}/api/`;
 export const _authBase = `http://${_server}/auth/`;
@@ -74,6 +74,21 @@ export const putRequest = async (url, data, headers) => {
 
         if (response.status !== 200 && response.status !== 201) {
             throw new Error(`Could not fetch ${url} (PUT), status: ${response.status}`);
+        };
+
+        return response.data;
+    } catch (error) {
+        throw error;
+    };
+};
+
+// Функция для метода PATCH
+export const patchRequest = async (url, data, headers) => {
+    try {
+        const response = await axios.patch(url, data, { headers });
+
+        if (response.status !== 200 && response.status !== 201) {
+            throw new Error(`Could not fetch ${url} (PATCH), status: ${response.status}`);
         };
 
         return response.data;

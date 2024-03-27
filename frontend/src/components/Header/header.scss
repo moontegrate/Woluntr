@@ -130,6 +130,10 @@
 
             &-menu {
                 gap: 30px;
+
+                &-item {
+                    text-wrap: nowrap;
+                }
             }
         }
     }

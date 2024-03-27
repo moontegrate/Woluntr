@@ -9,7 +9,6 @@ export const TextInputTheme = {
                 "on": "rounded-r-lg",
                 "off": "rounded-[20px]"
             },
-        },
-        
+        }
     }
 };

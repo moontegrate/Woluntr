@@ -8,4 +8,30 @@
     &__label {
         font-weight: 700;
     }
+
+    &__thumb {
+        img {
+            cursor: pointer;
+            margin-top: 10px;
+            width: 75px;
+            height: 75px;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: .2s transform;
+
+            &:hover {
+                transform: scale(0.98);
+            }
+        }
+    }
+
+    &__btn {
+        padding: 10px;
+        box-shadow: 0px 4px 26.3px 0px rgba(0, 0, 0, 0.05);
+
+        span {
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
 }

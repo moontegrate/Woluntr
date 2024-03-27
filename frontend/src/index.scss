@@ -50,6 +50,10 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+select {
+    border-color: rgba($color: #000000, $alpha: .1);
+}
+
 #root {
     height: 100%;
 }

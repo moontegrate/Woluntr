@@ -24,6 +24,13 @@
         overflow-y: scroll;
         overflow-x: hidden;
         border-radius: 20px;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+            width: 0px;
+            background: transparent;
+        }
     }
 
     &__item {

@@ -35,7 +35,9 @@ const CustomerOrdersList = () => {
                     case 'In Process':
                         return 'На исполнении';
                     case 'Complete':
-                        return 'Выполнено';
+                        return 'Ожидает подтверждения';
+                    case 'Approved':
+                        return 'Подтверждено';
                     default:
                         break;
                 }
@@ -49,6 +51,8 @@ const CustomerOrdersList = () => {
                         return 'customer-orders-list__item-status_in-process';
                     case 'Complete':
                         return 'customer-orders-list__item-status_completed';
+                    case 'Approved':
+                        return 'customer-orders-list__item-status_approved';
                     default:
                         break;
                 }
@@ -82,8 +86,8 @@ const CustomerOrdersList = () => {
             onRefresh={() => dispatch(getAllPersonalOrders())}
             pullDownThreshold={100}
             maxPullDownDistance={120}
-            pullingContent={<div style={{'textAlign': 'center', 'marginTop': '20px'}}>Потяните вниз, чтобы обновить</div>}
-            refreshingContent={<div style={{'marginTop': '20px'}}>
+            pullingContent={<div className='pulling-content'>Потяните вниз, чтобы обновить</div>}
+            refreshingContent={<div className='refreshing-content'>
                 <Spinner theme={{ color: { info: "fill-main-color" } }} aria-label="Extra large spinner example" size="md" />
             </div>}
         >

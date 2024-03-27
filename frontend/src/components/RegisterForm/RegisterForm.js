@@ -32,13 +32,10 @@ const RegisterForm = () => {
         firstName: yup.string().required('Введите имя'),
         email: yup.string().email('Проверьте корректность почты').required('Введите почту'),
         password: yup.string().required('Введите пароль'),
-        // repassword: yup.string().when('password', {
-        //     is: (password) => (password && password.length > 0 ? yup.ref('password') : null),
-        //     then: yup.string().oneOf([yup.ref('password')], 'Пароли должны совпадать').required('Повторите пароль'),
-        // }),
+        repassword: yup.string().required('Повторите пароль'),
     });
 
-    const { control, handleSubmit, formState: { errors } } = useForm({
+    const { control, handleSubmit, formState: { errors }, setError } = useForm({
         defaultValue: {
             firstName: formData.firstName,
             email: formData.email,
@@ -50,43 +47,48 @@ const RegisterForm = () => {
 
     // Обработка отправки формы
     const onSubmit = async (data) => {
-        dispatch(register({
-            'first_name': data.firstName,
-            'email': data.email,
-            'password': data.password
-        }))
-        .then((response) => {
-            if (response.meta.requestStatus === 'fulfilled') {
-                dispatch(resetForm());
-                dispatch(setIsModalOpen(false));
-                dispatch(authorize({
-                    'email': data.email,
-                    'password': data.password
-                }))
-                .then((response) => {
-                    if (response.meta.requestStatus === 'fulfilled') {
-                        localStorage.setItem('refresh_token', response.payload.refresh)
-                        localStorage.setItem('access_token', response.payload.access)
-                        dispatch(setIsAuthorized(true));
-                        dispatch(setIsModalOpen(false));
-                        dispatch(getCurrentUserInfo());
-                        dispatch(getAllOrders());
-                    } else if (response.meta.requestStatus === 'rejected') {
-                        console.error('Error while signing in after registration.')
-                    }
-                });
-                
-                toast('Ура! Регистрация прошла успешно.', {
-                    position: 'bottom-right',
-                    icon: '🤩'
-                });
-            } else if (response.meta.requestStatus === 'rejected') {
-                toast('Упс! Что-то пошло не так.', {
-                    position: 'bottom-right',
-                    icon: '😰'
-                });
-            };
-        });
+        if (data.password === data.repassword) {
+            dispatch(register({
+                'first_name': data.firstName,
+                'email': data.email,
+                'password': data.password
+            }))
+            .then((response) => {
+                if (response.meta.requestStatus === 'fulfilled') {
+                    dispatch(resetForm());
+                    dispatch(setIsModalOpen(false));
+                    dispatch(authorize({
+                        'email': data.email,
+                        'password': data.password
+                    }))
+                    .then((response) => {
+                        if (response.meta.requestStatus === 'fulfilled') {
+                            localStorage.setItem('refresh_token', response.payload.refresh)
+                            localStorage.setItem('access_token', response.payload.access)
+                            dispatch(setIsAuthorized(true));
+                            dispatch(setIsModalOpen(false));
+                            dispatch(getCurrentUserInfo());
+                            dispatch(getAllOrders());
+                        } else if (response.meta.requestStatus === 'rejected') {
+                            console.error('Error while signing in after registration.')
+                        }
+                    });
+                    
+                    toast('Ура! Регистрация прошла успешно.', {
+                        position: 'bottom-right',
+                        icon: '🤩'
+                    });
+                } else if (response.meta.requestStatus === 'rejected') {
+                    console.log(response)
+                    toast('Упс! Что-то пошло не так.', {
+                        position: 'bottom-right',
+                        icon: '😰'
+                    });
+                };
+            });
+        } else {
+            setError('repassword', {message: 'Пароли не совпадают.'})
+        }
     };
 
     return (

@@ -13,7 +13,7 @@ export const markAsDone = createAsyncThunk(
     async (id) => {
         const temp = new FormData();
         temp.append('status', 'Complete')
-        return await postRequest(`${_server}/api/v1/order/${id}/status/`, temp, {
+        return await postRequest(`${_server}/api/v1/order-complete/${id}/status/`, temp, {
             "Content-Type": "multipart/form-data",
             "Accept": "application/json",
             'Authorization': `JWT ${localStorage.getItem('access_token')}`

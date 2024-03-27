@@ -1,9 +1,9 @@
 // Style imports
 import './customerRequestForm.scss';
-import { ButtonTheme, FileInputTheme, TextareaTheme, TextInputTheme } from '../../../style/flowbiteThemes';
+import { ButtonTheme, FileInputTheme, SelectTheme, TextareaTheme, TextInputTheme } from '../../../style/flowbiteThemes';
 
 // Components
-import { Button, FileInput, Label, Spinner, TextInput, Textarea } from 'flowbite-react';
+import { Button, FileInput, Label, Select, Spinner, TextInput, Textarea } from 'flowbite-react';
 
 // Hooks
 import { useRef } from 'react';
@@ -89,7 +89,8 @@ const CustomerRequestForm = () => {
     // Поиск по адресу
     const searchAddress = async (address) => {
         const targetLocation = currentLocation ? currentLocation : [71.43, 51.12]
-        const response = await getRequest(`https://catalog.api.2gis.ru/3.0/items/geocode?type=street%2Cbuilding%2Cattraction%2Cstation_platform%2Cadm_div.place%2Cadm_div.city%2Cadm_div.district&key=${_key}&fields=items.point%2Citems.region_id%2Citems.segment_id&location=${targetLocation[0]}%2C${targetLocation[1]}&q=${address}`);
+        // const response = await getRequest(`https://geocode-maps.yandex.ru/1.x?apikey=${_key}&geocode=${address}&ll=${targetLocation[1]}%2C${targetLocation[0]}&spn=0.1%2C0.1&format=json`);
+        const response = await getRequest(`https://geocode-maps.yandex.ru/1.x?apikey=${_key}&geocode=${address}&ll=${targetLocation[0]}%2C${targetLocation[1]}&results=15&bbox=${targetLocation[1]+0.2},${targetLocation[0]+0.2}~${targetLocation[1]-0.2},${targetLocation[0]-0.2}&format=json`);
         
         try {
             dispatch(setSearchResult(response.result.items));
@@ -157,8 +158,18 @@ const CustomerRequestForm = () => {
                     />
                     <span className="error">{errors.title?.message}</span>
                 </div>
+                <div className="max-w-md">
+                    <div className="mb-2 block">
+                        <Label htmlFor="kind" value="Выберите тип помощи" />
+                    </div>
+                    <Select theme={SelectTheme} id="kind" required>
+                        <option value="Material">Материальная</option>
+                        <option value="Physical">Физическая</option>
+                        <option value="Other">Другое</option>
+                    </Select>
+                </div>
                 <div className='customer-request-form-field'>
-                    <Label className='input-label' htmlFor="title" style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '5px', 'marginLeft': '10px'}} value="Опишите задачу" />
+                    <Label className='input-label' htmlFor="description" style={{'fontSize': '14px', 'display': 'block', 'marginBottom': '5px', 'marginLeft': '10px'}} value="Опишите задачу" />
                     <Controller
                         name='description'
                         className="customer-request-form-img"
@@ -166,6 +177,7 @@ const CustomerRequestForm = () => {
                         defaultValue={formData.description}
                         render={({ field }) => <Textarea
                                 color="gray"
+                                id='description'
                                 className='dsbswp'
                                 theme={TextareaTheme}
                                 ref={(el) => inputRefs.current.push(el)}
