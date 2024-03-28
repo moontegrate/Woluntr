@@ -14,13 +14,22 @@ class UserNameSerializer(serializers.ModelSerializer):
         
 class OrderCompleteUpdateSerializer(serializers.Serializer):
     status = serializers.CharField()
+    
+class OrderReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['id', 'status', 'customer', 'title', 'description', 'difficulty', 'location', 'latitude', 'longitude', 'skills', 'img']
+
 
 class OrderCompleteSerializer(serializers.ModelSerializer):
     executor_team = TeamTitleSerializer(read_only=True)
+    order = OrderReadSerializer(read_only = True)  # Добавил сериализатор для отображения Order
+    order_id = serializers.PrimaryKeyRelatedField(queryset=Order.objects.all(), source='order', write_only=True)  # Добавил поле для передачи только id Order
+
     class Meta:
         model = OrderComplete
-        fields = ['id','executor', 'executor_team', 'order', 'img', 'stars', 'notes','time_accept']
-        read_only_fields = ['id', 'time_accept']
+        fields = ['id', 'executor', 'executor_team', 'order', 'order_id', 'img', 'stars', 'notes', 'time_accept']
+        read_only_fields = ['id', 'time_accept', 'order']
 
 class OrderSerializer(serializers.ModelSerializer):
     customer = UserNameSerializer(read_only = True)

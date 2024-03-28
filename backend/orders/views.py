@@ -2,8 +2,10 @@ from rest_framework import viewsets, status, generics, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.db.models import Q
+from django.db import IntegrityError
+
 
 from .models import Order, OrderComplete
 from teams.models import Team
@@ -77,11 +79,12 @@ class OrderCompleteViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            order_id = self.request.POST.get('order', False)
-            Order.objects.filter(id = order_id).update(status='In Process')
-            # if self.request.POST.get('executor_team', False):
-            #     return serializer.save(executor_team = self.request.POST['executor_team'])
-            return serializer.save(executor = self.request.user)
+            order_id = serializer.validated_data.get('order_id')
+            try:
+                Order.objects.filter(id=order_id).update(status='In Process')
+                return serializer.save(executor=self.request.user)
+            except IntegrityError:
+                raise ValidationError("OrderComplete с указанным order_id уже существует.")
     
 class MyOrderListAPIView(generics.ListAPIView):
     serializer_class = OrderSerializer
