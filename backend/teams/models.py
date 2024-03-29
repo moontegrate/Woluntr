@@ -20,3 +20,4 @@ class UserToTeamInvite(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     user = models.ForeignKey(user, on_delete=models.CASCADE)
     status = models.BooleanField(null = True, blank = True)
+
