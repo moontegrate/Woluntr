@@ -4,6 +4,7 @@
 .profile-stat-card {
     @include profile-card;
     max-width: 490px;
+    min-width: 310px;
     grid-area: stat;
 
     &__title {
@@ -16,6 +17,7 @@
         display: grid;
         grid-template-areas: 'desc diag'
                              'legend diag';
+        gap: 20px;
     }
 
     &__desc {
@@ -24,10 +26,14 @@
 
     &__diag {
         grid-area: diag;
+        max-width: 144px;
     }
 
     &__legend {
         grid-area: legend;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
 
         &-item {
             display: flex;
@@ -51,6 +57,18 @@
             &__other {
                 background-color: #FFE08F;
             }
+        }
+    }
+}
+
+@media (max-width: 925px) {
+    .profile-stat-card {
+        max-width: none;
+
+        &__diag {
+            grid-area: diag;
+            max-width: 200px;
+            min-width: 100px;
         }
     }
 }

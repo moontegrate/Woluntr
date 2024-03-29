@@ -3,7 +3,7 @@
 
 .profile-rating-card {
     @include profile-card;
-    width: 100%;
+    min-width: 330px;
 
     &__title {
         margin-bottom: 10px;

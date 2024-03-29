@@ -17,18 +17,22 @@
 
     &__bar {
         position: relative;
-        height: 140px;
+        height: 200px;
+        overflow-x: scroll;
+        overflow-y: visible;
 
         &_level {
             position: absolute;
-            top: -20px;
+            top: 0px;
             display: grid;
             grid-template-columns: 18% 30% 27% 25%;
             width: 100%;
+            min-width: 500px;
 
             &-desc {
                 display: none;
-                height: 72px;
+                height: 80px;
+                font-size: 14px;
                 overflow: hidden;
             }
 

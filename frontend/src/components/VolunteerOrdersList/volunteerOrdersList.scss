@@ -1,15 +1,27 @@
 @import '../../style/variables.scss';
 
-.App__content {
-    padding-top: 115px;
-}
-
 .volunteer-orders-list {
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    max-width: fit-content;
+
+    &__wrapper {
+        display: flex;
+        justify-content: center;
+
+        .ptr__children {
+            max-width: fit-content;
+        }
+    }
+
+    &__pull-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
 
     &__item {
         cursor: pointer;

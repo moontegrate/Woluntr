@@ -5,7 +5,7 @@ import './profileLevelCard.scss';
 import { Progress } from "flowbite-react";
 
 const ProfileLevelCard = () => {
-    const volunteerRating = 200;
+    const volunteerRating = 198;
 
     return (
         <div className='profile-card profile-level-card'>
@@ -13,7 +13,7 @@ const ProfileLevelCard = () => {
             <p className='profile-level-card__text'>Повышай ранг волонтерства: выполняя задания и получая баллы за них. Набери 1000 баллов и мы пришлем электронный сертификат тебе на почту. Одно выполненное задание — это 25 баллов.</p>
             <div className='profile-level-card__bar'>
                 <Progress progress={volunteerRating/1000*100} color='purple' theme={{
-                    base: "w-full overflow-hidden rounded-full bg-main-accent-color dark:bg-main-accent-color",
+                    base: "w-full mt-[20px] overflow-hidden rounded-full bg-main-accent-color dark:bg-main-accent-color",
                     color: {
                         purple: "bg-volunteer-color-dark dark:bg-volunteer-color-dark"
                         }
@@ -23,7 +23,7 @@ const ProfileLevelCard = () => {
                     <div className={'profile-level-card__bar_level-item_active'}>
                         <div className='profile-level-card__bar_level-round'>0</div>
                         <div className='profile-level-card__bar_level-title'>Новичок</div>
-                        <div className='profile-level-card__bar_level-desc' style={{display: (volunteerRating > 200 ? 'none' : 'block')}}>Ты только начал свой путь. Всё ещё впереди!</div>
+                        <div className='profile-level-card__bar_level-desc' style={{display: (volunteerRating >= 200 ? 'none' : 'block')}}>Ты только начал свой путь. Всё ещё впереди!</div>
                     </div>
                     <div className={'profile-level-card__bar_level-item' + (volunteerRating >= 200 ? '_active' : '')}>
                         <div className='profile-level-card__bar_level-round'>200</div>

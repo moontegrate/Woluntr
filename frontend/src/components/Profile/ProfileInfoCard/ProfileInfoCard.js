@@ -11,6 +11,7 @@ import { Button, Spinner } from 'flowbite-react';
 const ProfileInfoCard = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.appUser.data);
+    const appMode = useSelector((state) => state.appMode.appMode);
 
     return (
         <div className='profile-card profile-info-card'>
@@ -23,7 +24,7 @@ const ProfileInfoCard = () => {
                 <Button
                     theme={ButtonTheme}
                     className='profile-info-card__btn'
-                    color='green'
+                    color={appMode === 'customer' ? 'green' : 'purple'}
                     size='xl'
                     isProcessing={user === 'sending'}
                     processingSpinner={<Spinner theme={{ base: "inline animate-spin text-main-accent-color", color: { info: "fill-main-color" } }}/>}
