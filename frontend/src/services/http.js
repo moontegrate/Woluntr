@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import getCookie from './getCookie';
 
-export const _host = 'http://localhost';
+export const _host = 'http://10.1.3.64';
 export const _server = `${_host}:8000`;
 export const _apiBase = `http://${_server}/api/`;
 export const _authBase = `http://${_server}/auth/`;

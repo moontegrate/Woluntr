@@ -12,7 +12,7 @@ const ProfileLevelCard = () => {
             <h3 className='profile-level-card__title title'>Стань лучшим волонтёром</h3>
             <p className='profile-level-card__text'>Повышай ранг волонтерства: выполняя задания и получая баллы за них. Набери 1000 баллов и мы пришлем электронный сертификат тебе на почту. Одно выполненное задание — это 25 баллов.</p>
             <div className='profile-level-card__bar'>
-                <Progress progress={volunteerRating/1000*100} color='purple' theme={{
+                <Progress className='progress' progress={volunteerRating/1000*100} color='purple' theme={{
                     base: "w-full mt-[20px] overflow-hidden rounded-full bg-main-accent-color dark:bg-main-accent-color",
                     color: {
                         purple: "bg-volunteer-color-dark dark:bg-volunteer-color-dark"

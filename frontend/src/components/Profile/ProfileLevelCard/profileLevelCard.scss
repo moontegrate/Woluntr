@@ -126,3 +126,13 @@
         }
     }
 }
+
+@media (max-width: 925px) {
+    .profile-level-card {
+        &__bar {
+            &_level, .progress {
+                width: 700px;
+            }
+        }
+    }
+}
