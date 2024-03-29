@@ -1,0 +1,56 @@
+@import '../../../style/variables.scss';
+@import '../../../style/mixins.scss';
+
+.profile-stat-card {
+    @include profile-card;
+    max-width: 490px;
+    grid-area: stat;
+
+    &__title {
+        margin-bottom: 10px;
+        font-weight: 700;
+        font-size: 18px;
+    }
+
+    &__content {
+        display: grid;
+        grid-template-areas: 'desc diag'
+                             'legend diag';
+    }
+
+    &__desc {
+        grid-area: desc;
+    }
+
+    &__diag {
+        grid-area: diag;
+    }
+
+    &__legend {
+        grid-area: legend;
+
+        &-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        &-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+
+            &__material {
+                background-color: #81E3CC;
+            }
+
+            &__physical {
+                background-color: #C191FF;
+            }
+
+            &__other {
+                background-color: #FFE08F;
+            }
+        }
+    }
+}

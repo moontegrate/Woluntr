@@ -1,0 +1,124 @@
+@import '../../../style/variables.scss';
+@import '../../../style/mixins.scss';
+
+.profile-level-card {
+    @include profile-card;
+    grid-area: level;
+
+    &__title {
+        text-align: left;
+        margin-bottom: 15px;
+    }
+
+    &__text {
+        max-width: 600px;
+        margin-bottom: 50px;
+    }
+
+    &__bar {
+        position: relative;
+        height: 140px;
+
+        &_level {
+            position: absolute;
+            top: -20px;
+            display: grid;
+            grid-template-columns: 18% 30% 27% 25%;
+            width: 100%;
+
+            &-desc {
+                display: none;
+                height: 72px;
+                overflow: hidden;
+            }
+
+            &-item {
+                display: flex;
+                flex-direction: column;
+
+                &:nth-child(1) {
+                    align-items: start;
+                }
+
+                &:nth-child(2) {
+                    align-items: start;
+                }
+
+                &:nth-child(3) {
+                    align-items: start;
+                }
+
+                &:nth-child(4) {
+                    align-items: end;
+                    text-align: end;
+                }
+
+                &_active {
+                    .profile-level-card__bar_level-round {
+                        background-color: $volunteer-color-dark;
+                        color: #fff;
+                    }
+
+                    .profile-level-card__bar_level-title {
+                        color: $volunteer-color-dark;
+                    }
+
+                    .profile-level-card__bar_level-desc {
+                        display: block;
+                    }
+                }
+            }
+
+            &:nth-child(1) {
+                .profile-level-card__bar_level {
+                    &-title, &-desc {
+                        padding-right: 10px;
+                    }
+                }
+            }
+
+            &:nth-child(2) {
+                .profile-level-card__bar_level {
+                    &-title, &-desc {
+                        padding: 0 10px;
+                    }
+                }
+            }
+
+            &:nth-child(3) {
+                .profile-level-card__bar_level {
+                    &-title, &-desc {
+                        padding: 0 10px;
+                    }
+                }
+            }
+
+            &:nth-child(4) {
+                .profile-level-card__bar_level {
+                    &-title, &-desc {
+                        padding-left: 10px;
+                    }
+                }
+            }
+
+            &-round {
+                margin-bottom: 24px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 50px;
+                height: 50px;
+                font-size: 14px;
+                font-weight: 700;
+                border-radius: 50%;
+                background-color: $main-accent-color;
+            }
+
+            &-title {
+                margin-bottom: 10px;
+                font-weight: 700;
+                font-size: 18px;
+            }
+        }
+    }
+}

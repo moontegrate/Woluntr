@@ -1,3 +1,6 @@
+// style imports
+import './index.scss';
+
 // Работа с метаданными
 import { Helmet } from "react-helmet-async"
 
@@ -6,6 +9,9 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import ProfileInfoCard from "../../../components/Profile/ProfileInfoCard/ProfileInfoCard";
+import ProfileLevelCard from "../../../components/Profile/ProfileLevelCard/ProfileLevelCard";
+import ProfileStatCard from '../../../components/Profile/ProfileStatCard/ProfileStatCard';
+import ProfileRatingCard from '../../../components/Profile/ProfileRatingCard/ProfileRatingCard';
 
 const ProfileLayout = () => {
 
@@ -30,7 +36,14 @@ const ProfileLayout = () => {
             </Helmet>
             
             <div className="App__content">
-                <ProfileInfoCard/>
+                <div className="profile-content">
+                    <div className="profile-content__cards">
+                        <ProfileInfoCard/>
+                        <ProfileLevelCard/>
+                        <ProfileStatCard/>
+                        <ProfileRatingCard/>
+                    </div>
+                </div>
             </div>
         </>
     );

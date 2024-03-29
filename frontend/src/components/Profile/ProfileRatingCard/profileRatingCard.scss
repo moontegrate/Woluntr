@@ -1,0 +1,13 @@
+@import '../../../style/variables.scss';
+@import '../../../style/mixins.scss';
+
+.profile-rating-card {
+    @include profile-card;
+    width: 100%;
+
+    &__title {
+        margin-bottom: 10px;
+        font-weight: 700;
+        font-size: 18px;
+    }
+}

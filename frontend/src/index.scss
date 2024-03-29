@@ -67,7 +67,7 @@ code {
 @keyframes fadeDown {
     from {
         opacity: 0;
-        transform: translateY(-20%);
+        transform: translateY(-5%);
     }
 
     to {
@@ -79,7 +79,7 @@ code {
 @keyframes fadeUp {
     from {
         opacity: 0;
-        transform: translateY(20%);
+        transform: translateY(5%);
     }
 
     to {
