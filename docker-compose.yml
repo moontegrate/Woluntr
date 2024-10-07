@@ -26,7 +26,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: fastapi_dev
-      
+
   react-app:
     container_name: woluntr-frontend
     build:

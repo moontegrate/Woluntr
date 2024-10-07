@@ -16,6 +16,8 @@ import { setIsModalOpen as setLoginModal } from '../LoginModal/loginModalSlice';
 // Хуки
 import { useNavigate } from 'react-router-dom';
 
+import { _server } from '../../services/http';
+
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const Header = () => {
     const isAuthorized = useSelector((state) => state.appUser.isAuthorized);
     const isHamburgerToggled = useSelector((state) => state.header.hamburgerToggled);
     const volunterExecutionOrders = useSelector((state) => state.volunteerOrdersList.orders);
-    const execuctionCount = volunterExecutionOrders ? volunterExecutionOrders.length : null;
+    const executionCount = volunterExecutionOrders ? volunterExecutionOrders.length : null;
     // eslint-disable-next-line no-restricted-globals
     const pathname = location.pathname;
 
@@ -42,7 +44,7 @@ const Header = () => {
     const volunteerMenu = (
         <>
             <div onClick={() => {navigate('/'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>Выполнить задание</div>
-            <div onClick={() => {navigate('/history'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'} id='exec-history'>История заданий<span id='exec-count'>{execuctionCount}</span></div>
+            <div onClick={() => {navigate('/history'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'} id='exec-history'>История заданий<span id='exec-count'>{executionCount}</span></div>
             <div onClick={() => {navigate('/teams'); dispatch(setHamburgerToggled(false))}} className={'header__bar-menu-item volunteer-hover'}>Команды</div>
         </>
     );
@@ -65,7 +67,7 @@ const Header = () => {
 
                 {/* Логотип */}
                 <div className='header__bar-logo' onClick={() => navigate('/')}>
-                    <img src={appMode === 'customer' ? 'https://cdn.lovattro.kz/woluntr/logo-line.svg' : 'https://cdn.lovattro.kz/woluntr/logo-line-volunteer.svg'} alt='logo'/>
+                    <img src={appMode === 'customer' ? `${_server}/logo-extended.svg` : `${_server}/logo-extended-volunteer.svg`} alt='logo'/>
                 </div>
                 
                 {/* Навигационное меню */}
